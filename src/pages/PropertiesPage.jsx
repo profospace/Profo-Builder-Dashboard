@@ -16,9 +16,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { base_url } from '../../utils/baseurl';
+import { base_url } from '../utils/baseurl';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPropertyInteractions } from '../../features/properties/propertiesSlice';
+import { fetchPropertyInteractions } from '../features/properties/propertiesSlice';
 
 const PropertiesInteractions = () => {
   // State for properties and selection

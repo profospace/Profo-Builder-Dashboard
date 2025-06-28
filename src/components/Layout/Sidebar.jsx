@@ -164,6 +164,19 @@ const Sidebar = ({ activeRoute }) => {
             badge: '2',
             badgeColor: 'bg-red-500'
         },
+        {
+            title: 'Property Performance',
+            icon: '📊',
+            route: 'performance',
+            hasArrow: true,
+            isNew: true
+        },
+        {
+            title: 'Settings',
+            icon: '⚙️',
+            route: 'settings',
+            hasArrow: true
+        },
         // {
         //     title: 'Matching Buyers',
         //     icon: '👥',
@@ -173,18 +186,6 @@ const Sidebar = ({ activeRoute }) => {
         //     badgeColor: 'bg-gray-500'
         // },
         // {
-        //     title: 'Property Performance',
-        //     icon: '📊',
-        //     route: 'performance',
-        //     hasArrow: true,
-        //     isNew: true
-        // },
-        // {
-        //     title: 'Property Management',
-        //     icon: '⚙️',
-        //     route: 'management',
-        //     hasArrow: true
-        // },
         // {
         //     title: 'Help & Support',
         //     icon: '❓',

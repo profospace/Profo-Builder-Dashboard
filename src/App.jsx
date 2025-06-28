@@ -199,10 +199,12 @@ import axios from 'axios';
 import { base_url } from './utils/baseurl';
 
 import DashboardLayout from './components/Layout/DashboardLayout';
-import PropertiesPage from './components/PropertiesPage/PropertiesPage';
-import EnquiriesPage from './components/EnquiriesPage';
+import PropertiesPage from './pages/PropertiesPage';
+import EnquiriesPage from './pages/EnquiriesPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPropertyInteractions, getAllProperties } from './features/properties/propertiesSlice';
+import Performance from './pages/Performance';
+import Settings from './pages/Settings';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -295,14 +297,14 @@ const App = () => {
   // }, [builderId]);
 
 
- 
-  const { properties, propertyInteraction ,  isLoading, isError, message } = useSelector((state) => state.properties);
+
+  const { properties, propertyInteraction, isLoading, isError, message } = useSelector((state) => state.properties);
 
 
   console.log("properties", properties)
   useEffect(
-    ()=>{
-        dispatch(getAllProperties(builderId))
+    () => {
+      dispatch(getAllProperties(builderId))
     }, [builderId]
   )
 
@@ -341,10 +343,22 @@ const App = () => {
           element={
             <EnquiriesPage
               propertyInteraction={propertyInteraction}
-              // interactions={interactions}
-              // allActivities={allActivities}
-              // isLoading={isLoading}
-              // builderId={builderId}
+            />
+          }
+        />
+        <Route
+          path="/performance"
+          element={
+            <Performance
+              // propertyInteraction={propertyInteraction}
+            />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Settings
+              // propertyInteraction={propertyInteraction}
             />
           }
         />
