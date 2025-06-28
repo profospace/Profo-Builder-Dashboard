@@ -17,13 +17,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { base_url } from '../../utils/baseurl';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPropertyInteractions } from '../../features/properties/propertiesSlice';
 
-const PropertiesInteractions = ({ properties, builderId, interactions }) => {
+const PropertiesInteractions = () => {
   // State for properties and selection
   // const [properties, setProperties] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { properties, isLoading, isError, message } = useSelector((state) => state.properties);
+
   const navigate = useNavigate()
-  
+  const [builderId, setBuilderId] = useState('');
+
+  const dispatch = useDispatch()
 
 
   // State for interactions
@@ -33,14 +38,35 @@ const PropertiesInteractions = ({ properties, builderId, interactions }) => {
   // Builder ID from localStorage
   // const [builderId, setBuilderId] = useState('');
 
-  console.log("interactions", interactions)
- 
+  // console.log("interactions", interactions)
+
+
+  // ✅ Load builder ID from localStorage once
+  useEffect(() => {
+    const data = localStorage.getItem('builder-id');
+    if (data) {
+      const parsed = JSON.parse(data);
+      if (parsed?.id) {
+        setBuilderId(parsed.id);
+        console.log('builder-id loaded:', parsed.id);
+      } else {
+        console.warn('No builder ID found in localStorage');
+      }
+    }
+  }, []);
+
+  // handleGetAllInteractions of selected Property
+  // const handleGetAllInteractions = () => {
+
+  //   // dispatch(fetchPropertyInteractions({builderId , propertyId}))
+  //   navigate('/enquiries')
+
+  // }
 
 
 
 
-  
-  
+
   // const getInteractionCount = (propertyId) => {
   //   return allActivities.filter(activity =>
   //     activity.entityTitle === properties.find(p => p.post_id === propertyId)?.post_title
@@ -206,11 +232,11 @@ const PropertiesInteractions = ({ properties, builderId, interactions }) => {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                           </div>
-                          <span className="text-lg font-semibold text-gray-900">{interactions?.length}</span>
+                          {/* <span className="text-lg font-semibold text-gray-900">{interactions?.length}</span> */}
                           <span className="text-gray-600">Responses</span>
                         </div>
                         <button className="text-red-500 hover:text-red-600 flex items-center space-x-1">
-                          <span className="text-sm font-medium" onClick={() => navigate('/enquiries', { state: { interaction: interactions[0] } })}>View All</span>
+                          <span className="text-sm font-medium" onClick={() => navigate('/enquiries')}>View All</span>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>

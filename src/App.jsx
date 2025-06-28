@@ -201,13 +201,16 @@ import { base_url } from './utils/baseurl';
 import DashboardLayout from './components/Layout/DashboardLayout';
 import PropertiesPage from './components/PropertiesPage/PropertiesPage';
 import EnquiriesPage from './components/EnquiriesPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPropertyInteractions, getAllProperties } from './features/properties/propertiesSlice';
 
 const App = () => {
-  const [properties, setProperties] = useState([]);
+  const dispatch = useDispatch()
+
   const [projects, setProjects] = useState([]);
   const [buildings, setBuildings] = useState([]);
   const [builderId, setBuilderId] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const [interactions, setInteractions] = useState([]);
   const [allActivities, setAllActivities] = useState([]);
@@ -227,69 +230,97 @@ const App = () => {
   }, []);
 
   // ✅ Fetch builder-related data
-  const fetchBuilderData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`${base_url}/api/builders/${builderId}/properties`);
-      const projectResponse = await axios.get(`${base_url}/api/builders/${builderId}/projects`);
+  // const fetchBuilderData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.get(`${base_url}/api/builders/${builderId}/properties`);
+  //     const projectResponse = await axios.get(`${base_url}/api/builders/${builderId}/projects`);
 
-      console.log("response", response)
+  //     console.log("response", response)
 
-      const propertiesData = response?.data?.data?.properties || [];
-      const projectsData = projectResponse?.data?.data?.projects || [];
-      const buildingsData = response?.data?.data?.buildings || [];
+  //     const propertiesData = response?.data?.data?.properties || [];
+  //     const projectsData = projectResponse?.data?.data?.projects || [];
+  //     const buildingsData = response?.data?.data?.buildings || [];
 
-      setProperties(propertiesData);
-      setProjects(projectsData);
-      setBuildings(buildingsData);
-    } catch (error) {
-      console.error('Error fetching builder data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     setProperties(propertiesData);
+  //     setProjects(projectsData);
+  //     setBuildings(buildingsData);
+  //   } catch (error) {
+  //     console.error('Error fetching builder data:', error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // ✅ Fetch interactions for a property
-  const fetchPropertyInteractions = async (propertyId) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        `${base_url}/properties-interaction/api/interactions/stats?propertyId=${propertyId}&builderId=${builderId}&interactionEntity=PROPERTY`
-      );
+  // const fetchPropertyInteractions = async (propertyId) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `${base_url}/properties-interaction/api/interactions/stats?propertyId=${propertyId}&builderId=${builderId}&interactionEntity=PROPERTY`
+  //     );
 
-      const interactionsData = response?.data?.data || [];
-      console.log('interactionsData:', interactionsData);
+  //     const interactionsData = response?.data?.data || [];
+  //     console.log('interactionsData:', interactionsData);
 
-      setInteractions(interactionsData);
+  //     setInteractions(interactionsData);
 
-      const allActivitiesArray = interactionsData.flatMap((interaction) =>
-        interaction.details
-          ? interaction.details.map((detail) => ({
-            ...detail,
-            date: interaction.date,
-          }))
-          : []
-      );
+  //     const allActivitiesArray = interactionsData.flatMap((interaction) =>
+  //       interaction.details
+  //         ? interaction.details.map((detail) => ({
+  //           ...detail,
+  //           date: interaction.date,
+  //         }))
+  //         : []
+  //     );
 
-      allActivitiesArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  //     allActivitiesArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-      setAllActivities(allActivitiesArray);
-    } catch (error) {
-      console.error('Error fetching property interactions:', error);
-      setInteractions([]);
-      setAllActivities([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     setAllActivities(allActivitiesArray);
+  //   } catch (error) {
+  //     console.error('Error fetching property interactions:', error);
+  //     setInteractions([]);
+  //     setAllActivities([]);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // ✅ When builderId is ready, fetch data
+  // useEffect(() => {
+  //   if (builderId) {
+  //     fetchBuilderData();
+  //     fetchPropertyInteractions('PROP1750859327899');
+  //   }
+  // }, [builderId]);
+
+
+ 
+  const { properties, propertyInteraction ,  isLoading, isError, message } = useSelector((state) => state.properties);
+
+
+  console.log("properties", properties)
+  useEffect(
+    ()=>{
+        dispatch(getAllProperties(builderId))
+    }, [builderId]
+  )
+
+
+
+  // Run after properties data is fetched
   useEffect(() => {
-    if (builderId) {
-      fetchBuilderData();
-      fetchPropertyInteractions('PROP1750859327899');
+    if (properties.length > 0) {
+      // dispatch(actionOne(properties));  // Dispatch 1st action
+      // dispatch(actionTwo(properties));  // Dispatch 2nd action
+      properties.forEach(property => {
+        // dispatch(fetchPropertyInteractions({ builderId, property.post_id }))
+        dispatch(fetchPropertyInteractions({ builderId, propertyId: property.post_id }));
+
+      });
     }
-  }, [builderId]);
+  }, [properties, dispatch]);
+
 
   return (
     <DashboardLayout>
@@ -299,7 +330,6 @@ const App = () => {
           path="/properties"
           element={
             <PropertiesPage
-              properties={properties}
               builderId={builderId}
               interactions={interactions}
               isLoading={isLoading}
@@ -310,10 +340,11 @@ const App = () => {
           path="/enquiries"
           element={
             <EnquiriesPage
-              interactions={interactions}
-              allActivities={allActivities}
-              isLoading={isLoading}
-              builderId={builderId}
+              propertyInteraction={propertyInteraction}
+              // interactions={interactions}
+              // allActivities={allActivities}
+              // isLoading={isLoading}
+              // builderId={builderId}
             />
           }
         />
