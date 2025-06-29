@@ -78,64 +78,7 @@ const authSlice = createSlice({
         state.user = null
         state.message = action.payload.message
     })
-    // .addCase(forgotPassword.pending,(state)=>{
-    //     state.isLoading = true
-    // })
-    // .addCase(forgotPassword.fulfilled,(state,action)=>{
-    //     state.isLoading = false
-    //     state.isSuccess = true
-    //     // state.user = null
-    //     if(state.isSuccess) {
-    //         toast.success('password reset link send successfully to your email', {
-    //             position: "top-center",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "dark",
-    //             transition: Bounce,
-    //             });
-    //     }
-        
-    // })
-    // .addCase(forgotPassword.rejected,(state,action)=>{
-    //     state.isLoading = false
-    //     state.isError = true
-    //     state.isSuccess = false
-    //     state.user = null
-    //     state.message = action.payload.message
-    // })
-    // .addCase(resetPassword.pending,(state)=>{
-    //     state.isLoading = true
-    // })
-    // .addCase(resetPassword.fulfilled,(state,action)=>{
-    //     state.isLoading = false
-    //     state.isSuccess = true
-    //     // state.user = null
-    //     if(state.isSuccess){
-    //         toast.success('password reset successfully Login now', {
-    //             position: "top-center",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "dark",
-    //             transition: Bounce,
-    //         });
-    //     }
-        
-    // })
-    // .addCase(resetPassword.rejected,(state,action)=>{
-    //     state.isLoading = false
-    //     state.isError = true
-    //     state.isSuccess = false
-    //     state.user = null
-    //     state.message = action.payload.message
-    // })
+   
   }
 })
 

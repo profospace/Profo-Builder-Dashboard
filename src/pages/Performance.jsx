@@ -36,10 +36,10 @@ const Performance = () => {
 
     // Load builder ID from localStorage
     useEffect(() => {
-        const data = localStorage.getItem('builder-id') && JSON.parse(localStorage.getItem('builder-id'));
+        const data = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
         if (data?.id) {
             setBuilderId(data.id);
-            console.log("builder-id loaded:", data.id);
+            console.log("user loaded:", data.id);
         } else {
             console.warn("No builder ID found in localStorage");
         }
@@ -49,7 +49,7 @@ const Performance = () => {
     const fetchBuilderData = async () => {
         setIsLoading(true);
         try {
-            const payload = JSON.parse(localStorage.getItem('builder-id'));
+            const payload = JSON.parse(localStorage.getItem('user'));
             if (!payload?.id) {
                 console.error("No builder ID available");
                 setIsLoading(false);
