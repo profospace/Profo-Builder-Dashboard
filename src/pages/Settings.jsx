@@ -21,7 +21,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchBuilderInfo = async () => {
       try {
-        const builder = localStorage.getItem('builder-id') && JSON.parse(localStorage.getItem('builder-id'));
+        const builder = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
         if (!builder || !builder.id) {
           toast.error('Builder ID not found, please log in again');
           return;
@@ -84,7 +84,7 @@ const Settings = () => {
   const updateDailyReportSettings = async () => {
     try {
       setUpdating(true);
-      const builder = localStorage.getItem('builder-id') && JSON.parse(localStorage.getItem('builder-id'));
+      const builder = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
 
       const response = await fetch(`${base_url}/builder/update-report-settings/${builder.id}`, {
         method: 'PUT',
@@ -120,7 +120,7 @@ const Settings = () => {
 
     try {
       setUpdating(true);
-      const builder = localStorage.getItem('builder-id') && JSON.parse(localStorage.getItem('builder-id'));
+      const builder = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
 
       const formData = new FormData();
       formData.append('logo', selectedImage);
@@ -138,9 +138,9 @@ const Settings = () => {
 
       if (result.success) {
         // Update the logo in localStorage
-        const builderData = JSON.parse(localStorage.getItem('builder-id'));
+        const builderData = JSON.parse(localStorage.getItem('user'));
         builderData.logo = result.builder.logo;
-        localStorage.setItem('builder-id', JSON.stringify(builderData));
+        localStorage.setItem('user', JSON.stringify(builderData));
 
         toast.success('Profile image updated successfully');
       } else {

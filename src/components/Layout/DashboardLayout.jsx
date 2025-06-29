@@ -1,15 +1,15 @@
-// import React, { useState } from 'react';
+// import React from 'react';
+// import { useLocation } from 'react-router-dom';
 // import Header from './Header';
 // import Sidebar from './Sidebar';
 
-// const DashboardLayout = ({ children, currentRoute = 'properties' }) => {
-//     const [activeRoute, setActiveRoute] = useState(currentRoute);
+// const DashboardLayout = ({ children }) => {
+//     const location = useLocation();
 
-//     const handleRouteChange = (route) => {
-//         setActiveRoute(route);
-//         // Here you can add your routing logic
-//         // For example, using React Router:
-//         // navigate(`/dashboard/${route}`);
+//     // Extract the current route from the pathname
+//     const getCurrentRoute = () => {
+//         const path = location.pathname.replace('/', '');
+//         return path || 'properties';
 //     };
 
 //     return (
@@ -20,10 +20,7 @@
 //             {/* Main Content Area */}
 //             <div className="flex">
 //                 {/* Sidebar */}
-//                 <Sidebar
-//                     activeRoute={activeRoute}
-//                     onRouteChange={handleRouteChange}
-//                 />
+//                 <Sidebar activeRoute={getCurrentRoute()} />
 
 //                 {/* Content Area */}
 //                 <main className="flex-1 lg:ml-0 p-4 lg:p-6 overflow-auto">
@@ -38,13 +35,14 @@
 
 // export default DashboardLayout;
 
-// DashboardLayout.js
+
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
-const DashboardLayout = ({ children }) => {
+
+const DashboardLayout= ({ children }) => {
     const location = useLocation();
 
     // Extract the current route from the pathname
