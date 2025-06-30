@@ -222,6 +222,8 @@ import Profile from './pages/Profile';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPropertyInteractions, getAllProperties } from './features/properties/propertiesSlice';
+import { getAllProjects } from './features/projects/projectsSlice';
+import ProjectsPage from './pages/ProjectsPage';
 
 const App = () => {
   const location = useLocation();
@@ -229,7 +231,7 @@ const App = () => {
 
   const { properties, propertyInteraction, isLoading, isError, message } = useSelector((state) => state.properties);
 
-  console.log("properties", properties);
+  // console.log("properties", properties);
 
   const navigate = useNavigate()
   // Authentication
@@ -254,6 +256,7 @@ const App = () => {
   useEffect(() => {
     if (user) {
       dispatch(getAllProperties(user?.id)); // Builder All Property fetch
+      dispatch(getAllProjects(user?.id)); // Builder All Projects fetch
     }
   }, [user, dispatch]);
 
@@ -285,6 +288,13 @@ const App = () => {
           path="/properties"
           element={
             <PropertiesPage
+            />
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <ProjectsPage
             />
           }
         />

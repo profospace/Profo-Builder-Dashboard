@@ -200,6 +200,12 @@ const Sidebar = ({ activeRoute }) => {
             hasArrow: true
         },
         {
+            title: 'My Projects',
+            icon: Home,
+            route: 'projects',
+            hasArrow: true
+        },
+        {
             title: 'My Enquiries',
             icon: MessageSquare,
             route: 'enquiries',
