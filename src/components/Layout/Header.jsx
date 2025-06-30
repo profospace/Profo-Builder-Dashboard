@@ -84,6 +84,7 @@ import { ChevronDown, User } from 'lucide-react';
 import { signOut } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { resetProperties } from '../../features/properties/propertiesSlice';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const Header = () => {
     const handleLogout = async () => {
         try {
             await dispatch(signOut()).unwrap();
+            dispatch(resetProperties())
             // Navigate to signin page after successful logout
             navigate('/signin');
         } catch (error) {

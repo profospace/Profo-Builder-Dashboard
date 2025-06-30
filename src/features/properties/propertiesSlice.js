@@ -30,10 +30,16 @@ export const fetchPropertyInteractions = createAsyncThunk('properties/getPropert
   }
 });
 
-const productsSlice = createSlice({
+const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
-  reducers: {},
+  reducers: {
+
+    reducers: {
+      resetProperties: () => initialState, // Reset to initial state
+    // ... other reducers
+    },
+  },
   extraReducers: (builder) => {
     builder
       
@@ -70,5 +76,5 @@ const productsSlice = createSlice({
       
   }
 });
-
-export default productsSlice.reducer;
+export const { resetProperties } = propertiesSlice.actions
+export default propertiesSlice.reducer;
