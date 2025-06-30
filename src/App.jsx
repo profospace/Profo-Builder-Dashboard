@@ -227,12 +227,9 @@ const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const [projects, setProjects] = useState([]);
-  const [buildings, setBuildings] = useState([]);
-  const [builderId, setBuilderId] = useState('');
+  const { properties, propertyInteraction, isLoading, isError, message } = useSelector((state) => state.properties);
 
-  const [interactions, setInteractions] = useState([]);
-  const [allActivities, setAllActivities] = useState([]);
+  console.log("properties", properties);
 
   const navigate = useNavigate()
   // Authentication
@@ -252,13 +249,11 @@ const App = () => {
   const isPublicRoute = publicRoutes.includes(location.pathname);
 
 
-  const { properties, propertyInteraction, isLoading, isError, message } = useSelector((state) => state.properties);
 
-  console.log("properties", properties);
 
   useEffect(() => {
     if (user) {
-      dispatch(getAllProperties(user?.id));
+      dispatch(getAllProperties(user?.id)); // Builder All Property fetch
     }
   }, [user, dispatch]);
 
@@ -290,9 +285,6 @@ const App = () => {
           path="/properties"
           element={
             <PropertiesPage
-              builderId={builderId}
-              interactions={interactions}
-              isLoading={isLoading}
             />
           }
         />
@@ -300,7 +292,6 @@ const App = () => {
           path="/enquiries"
           element={
             <EnquiriesPage
-              propertyInteraction={propertyInteraction}
             />
           }
         />
