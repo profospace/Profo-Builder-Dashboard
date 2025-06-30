@@ -15,7 +15,7 @@ const getAllCallbacks = async (builderId, status = '', page = 1, limit = 10) => 
 };
 
 const updateCallbackStatus = async (callbackId, status) => {
-    const response = await axios.put(`${base_url}/api/callback/${callbackId}`, {
+    const response = await axios.patch(`${base_url}/api/callback/admin/callbacks/${callbackId}`, {
         status
     });
 
