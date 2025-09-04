@@ -1,10 +1,9 @@
 
 // import React, { useState, useMemo } from 'react';
-// import { Phone, Clock, Eye, Heart, Filter, Calendar, Search } from 'lucide-react';
+// import { Phone, Clock, Eye, Heart, Filter, Calendar, Search, ChevronDown, ChevronUp, MapPin, Hash, TrendingUp, Users } from 'lucide-react';
 // import { useSelector } from 'react-redux';
 
 // const PropertyResponses = () => {
-
 //     const { properties, propertyInteraction, isLoading } = useSelector((state) => state.properties);
 
 //     // Helper function to calculate time ago
@@ -22,7 +21,15 @@
 //         }
 //     };
 
-//     console.log("propertyInteraction -****", propertyInteraction)
+//     // Get last login time
+//     const getLastLoginTime = () => {
+//         if (!propertyInteraction || propertyInteraction.length === 0) return null;
+
+//         const allInteractions = propertyInteraction.flatMap(item => item.details);
+//         const sortedInteractions = allInteractions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+//         return sortedInteractions.length > 0 ? getTimeAgo(sortedInteractions[0].timestamp) : null;
+//     };
 
 //     // Transform API data to match component structure
 //     const propertiesData = useMemo(() => {
@@ -83,7 +90,12 @@
 //             property.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 //         });
 
-//         return groupedData;
+//         // Sort properties by total engagement (visits + contacts + saves)
+//         return groupedData.sort((a, b) => {
+//             const aTotal = a.stats.visits + a.stats.contacts + a.stats.saves;
+//             const bTotal = b.stats.visits + b.stats.contacts + b.stats.saves;
+//             return bTotal - aTotal;
+//         });
 //     }, [propertyInteraction]);
 
 //     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -92,6 +104,7 @@
 //     const [dateFilter, setDateFilter] = useState('');
 //     const [typeFilter, setTypeFilter] = useState('all');
 //     const [searchQuery, setSearchQuery] = useState('');
+//     const [expandedCards, setExpandedCards] = useState({});
 
 //     // Update selected property when data changes
 //     React.useEffect(() => {
@@ -169,6 +182,21 @@
 //         setSearchQuery('');
 //     };
 
+//     const toggleCardExpansion = (propertyId) => {
+//         setExpandedCards(prev => ({
+//             ...prev,
+//             [propertyId]: !prev[propertyId]
+//         }));
+//     };
+
+//     const handleCall = (phoneNumber) => {
+//         if (phoneNumber && phoneNumber !== 'N/A') {
+//             window.open(`tel:${phoneNumber}`, '_self');
+//         }
+//     };
+
+//     const lastLoginTime = getLastLoginTime();
+
 //     // Loading state
 //     if (isLoading) {
 //         return (
@@ -201,93 +229,182 @@
 //             {/* Responsive Container */}
 //             <div className="max-w-md mx-auto lg:max-w-4xl xl:max-w-6xl">
 
-//                 {/* Main Content */}
+//                 {/* Header with Last Login */}
 //                 <div className="px-4 lg:px-8 py-6">
-
-//                     {/* Property Tab Selector */}
-//                     <div className="mb-6">
-//                         <div className="flex items-center justify-between mb-4">
-//                             <h2 className="text-lg font-semibold text-gray-900">Select Property</h2>
-//                             <span className="text-sm text-gray-500">{propertiesData.length} properties</span>
+//                     {/* <div className="flex items-center justify-between mb-6">
+//                         <div>
+//                             <h1 className="text-2xl font-bold text-gray-900">Property Insights</h1>
+//                             {lastLoginTime && (
+//                                 <p className="text-sm text-gray-500 mt-1">
+//                                     Last activity: {lastLoginTime}
+//                                 </p>
+//                             )}
 //                         </div>
+//                         <div className="flex items-center gap-4">
+//                             <div className="text-right">
+//                                 <div className="text-2xl font-bold text-blue-600">{propertiesData.length}</div>
+//                                 <div className="text-xs text-gray-500">Properties</div>
+//                             </div>
+//                             <div className="text-right">
+//                                 <div className="text-2xl font-bold text-green-600">
+//                                     {propertiesData.reduce((sum, p) => sum + p.stats.contacts, 0)}
+//                                 </div>
+//                                 <div className="text-xs text-gray-500">Total Contacts</div>
+//                             </div>
+//                         </div>
+//                     </div> */}
 
-//                         {/* Property Tabs */}
-//                         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-//                             {propertiesData.map((property, index) => (
-//                                 <button
-//                                     key={property.id}
-//                                     onClick={() => {
-//                                         setCurrentPropertyIndex(index);
-//                                         setSelectedProperty(property);
-//                                     }}
-//                                     className={`flex-shrink-0 group relative ${selectedProperty && selectedProperty.id === property.id
-//                                         ? 'ring-2 ring-blue-500'
-//                                         : 'hover:ring-2 hover:ring-gray-300'
-//                                         } rounded-xl transition-all duration-200`}
-//                                 >
-//                                     <div className="bg-white rounded-xl border border-gray-100 overflow-hidden w-80 shadow-sm">
-//                                         <div className="flex">
-//                                             {/* Property Image */}
-//                                             <div className="relative flex-shrink-0">
-//                                                 <img
-//                                                     src={property.image}
-//                                                     alt={property.title}
-//                                                     className="w-24 h-20 object-cover"
-//                                                     onError={(e) => {
-//                                                         e.target.src = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop";
-//                                                     }}
-//                                                 />
-//                                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10"></div>
-//                                             </div>
+//                     {/* Modern Property Cards */}
+//                     <div className="mb-6">
+//                         {/* <div className="flex items-center justify-between mb-4">
+//                             <h2 className="text-lg font-semibold text-gray-900">Top Performing Properties</h2>
+//                             <span className="text-sm text-gray-500">{propertiesData.length} properties</span>
+//                         </div> */}
 
-//                                             {/* Property Info */}
-//                                             <div className="flex-1 p-3 min-w-0">
-//                                                 <div className="flex items-start justify-between mb-2">
-//                                                     <div className="min-w-0 flex-1">
-//                                                         <h3 className="font-semibold text-gray-900 text-sm truncate">
-//                                                             {property.title}
-//                                                         </h3>
-//                                                         <div className="flex items-center text-xs text-gray-500 mt-1">
-//                                                             <span className="truncate">{property.location}</span>
+//                         {/* Sleek Property Cards */}
+//                         <div className="flex gap-6 items-center">
+//                             {propertiesData.map((property, index) => {
+//                                 const isExpanded = expandedCards[property.id];
+//                                 const isSelected = selectedProperty && selectedProperty.id === property.id;
+//                                 const totalEngagement = property.stats.visits + property.stats.contacts + property.stats.saves;
+
+//                                 return (
+//                                     <div
+//                                         key={property.id}
+//                                         className={`bg-white rounded-2xl border transition-all duration-300 hover:shadow-lg ${isSelected
+//                                                 ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20'
+//                                                 : 'border-gray-200 hover:border-gray-300'
+//                                             }`}
+//                                     >
+//                                         {/* Collapsed View */}
+//                                         <div
+//                                             className="p-4 cursor-pointer"
+//                                             onClick={() => {
+//                                                 setCurrentPropertyIndex(index);
+//                                                 setSelectedProperty(property);
+//                                             }}
+//                                         >
+//                                             <div className="flex items-center gap-4">
+//                                                 {/* Property Image */}
+//                                                 <div className="relative flex-shrink-0">
+//                                                     <img
+//                                                         src={property.image}
+//                                                         alt={property.title}
+//                                                         className="w-16 h-16 object-cover rounded-xl"
+//                                                         onError={(e) => {
+//                                                             e.target.src = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop";
+//                                                         }}
+//                                                     />
+//                                                     {index < 3 && (
+//                                                         <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+//                                                             <TrendingUp className="w-3 h-3 text-white" />
 //                                                         </div>
-//                                                     </div>
-//                                                     <div className="ml-2 flex-shrink-0">
-//                                                         <span className="text-sm font-bold text-gray-900">
-//                                                             {property.price}
-//                                                         </span>
-//                                                         <div className="text-xs text-gray-400 text-right">
-//                                                             #{property.id.slice(-6)}
-//                                                         </div>
-//                                                     </div>
+//                                                     )}
 //                                                 </div>
 
-//                                                 {/* Quick Stats */}
-//                                                 <div className="flex items-center justify-between text-xs">
-//                                                     <div className="flex items-center space-x-3">
-//                                                         <span className="flex items-center text-blue-600">
-//                                                             <Eye className="w-3 h-3 mr-1" />
-//                                                             {property.stats.visits}
-//                                                         </span>
-//                                                         <span className="flex items-center text-green-600">
-//                                                             <Phone className="w-3 h-3 mr-1" />
-//                                                             {property.stats.contacts}
-//                                                         </span>
-//                                                         <span className="flex items-center text-red-500">
-//                                                             <Heart className="w-3 h-3 mr-1" />
-//                                                             {property.stats.saves}
-//                                                         </span>
+//                                                 {/* Property Info */}
+//                                                 <div className="flex-1 min-w-0">
+//                                                     <div className="flex items-start justify-between">
+//                                                         <div className="min-w-0 flex-1">
+//                                                             <h3 className="font-semibold text-gray-900 text-sm truncate">
+//                                                                 {property.title}
+//                                                             </h3>
+//                                                             <div className="flex items-center text-xs text-gray-500 mt-1">
+//                                                                 <MapPin className="w-3 h-3 mr-1" />
+//                                                                 <span className="truncate">{property.location}</span>
+//                                                             </div>
+//                                                         </div>
+//                                                         {/* <div className="ml-4 flex items-center gap-2">
+//                                                             <button
+//                                                                 onClick={(e) => {
+//                                                                     e.stopPropagation();
+//                                                                     toggleCardExpansion(property.id);
+//                                                                 }}
+//                                                                 className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+//                                                             >
+//                                                                 {isExpanded ? (
+//                                                                     <ChevronUp className="w-4 h-4 text-gray-400" />
+//                                                                 ) : (
+//                                                                     <ChevronDown className="w-4 h-4 text-gray-400" />
+//                                                                 )}
+//                                                             </button>
+//                                                         </div> */}
+//                                                     </div>
+
+//                                                     {/* Quick Stats */}
+//                                                     <div className="flex items-center justify-between mt-3">
+//                                                         <div className="flex items-center space-x-4">
+//                                                             <div className="flex items-center text-xs">
+//                                                                 <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+//                                                                 <span className="text-gray-600">{property.stats.visits} views</span>
+//                                                             </div>
+//                                                             <div className="flex items-center text-xs">
+//                                                                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+//                                                                 <span className="text-gray-600">{property.stats.contacts} contacts</span>
+//                                                             </div>
+//                                                         </div>
+//                                                         <div className="flex items-center text-xs text-gray-500">
+//                                                             <Hash className="w-3 h-3 mr-1" />
+//                                                             {property.id.slice(-6)}
+//                                                         </div>
 //                                                     </div>
 //                                                 </div>
 //                                             </div>
 //                                         </div>
-//                                     </div>
 
-//                                     {/* Active Indicator */}
-//                                     {selectedProperty && selectedProperty.id === property.id && (
-//                                         <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-blue-500 rounded-full"></div>
-//                                     )}
-//                                 </button>
-//                             ))}
+//                                         {/* Expanded View */}
+//                                         {isExpanded && (
+//                                             <div className="px-4 pb-4 border-t border-gray-100">
+//                                                 <div className="pt-4">
+//                                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+//                                                         <div className="text-center p-3 bg-blue-50 rounded-lg">
+//                                                             <div className="text-xl font-bold text-blue-600">{property.stats.visits}</div>
+//                                                             <div className="text-xs text-blue-600">Views</div>
+//                                                         </div>
+//                                                         <div className="text-center p-3 bg-green-50 rounded-lg">
+//                                                             <div className="text-xl font-bold text-green-600">{property.stats.contacts}</div>
+//                                                             <div className="text-xs text-green-600">Contacts</div>
+//                                                         </div>
+//                                                         <div className="text-center p-3 bg-red-50 rounded-lg">
+//                                                             <div className="text-xl font-bold text-red-500">{property.stats.saves}</div>
+//                                                             <div className="text-xs text-red-500">Saves</div>
+//                                                         </div>
+//                                                         <div className="text-center p-3 bg-purple-50 rounded-lg">
+//                                                             <div className="text-xl font-bold text-purple-600">{totalEngagement}</div>
+//                                                             <div className="text-xs text-purple-600">Total</div>
+//                                                         </div>
+//                                                     </div>
+
+//                                                     {/* Recent Interactions Preview */}
+//                                                     <div className="mb-4">
+//                                                         <h4 className="text-sm font-medium text-gray-700 mb-2">Recent Activity</h4>
+//                                                         <div className="space-y-2">
+//                                                             {property.interactions.slice(0, 2).map((interaction, idx) => (
+//                                                                 <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+//                                                                     <div className="flex items-center gap-2">
+//                                                                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${getInteractionColor(interaction.type)}`}>
+//                                                                             {getInteractionIcon(interaction.type)}
+//                                                                         </div>
+//                                                                         <span className="text-sm text-gray-700">{interaction.user}</span>
+//                                                                     </div>
+//                                                                     <span className="text-xs text-gray-500">{interaction.time}</span>
+//                                                                 </div>
+//                                                             ))}
+//                                                         </div>
+//                                                     </div>
+//                                                 </div>
+//                                             </div>
+//                                         )}
+
+//                                         {/* Selection Indicator */}
+//                                         {isSelected && (
+//                                             <div className="absolute right-4 top-4">
+//                                                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+//                                             </div>
+//                                         )}
+//                                     </div>
+//                                 );
+//                             })}
 //                         </div>
 //                     </div>
 
@@ -300,25 +417,36 @@
 //                                         Recent Activity
 //                                     </h3>
 //                                     <p className="text-sm text-gray-500">
-//                                         {filteredInteractions.length} interactions
+//                                         {filteredInteractions.length} interactions for {selectedProperty.title}
 //                                     </p>
 //                                 </div>
 
-//                                 {/* Advanced Options Toggle */}
-//                                 <button
-//                                     onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-//                                     className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${showAdvancedOptions ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-//                                         }`}
-//                                 >
-//                                     <Filter className="w-4 h-4" />
-//                                     <span className="hidden sm:inline">Filters</span>
-//                                 </button>
+//                                 {/* Advanced Options Toggle with Calendar */}
+//                                 <div className="flex items-center gap-2">
+//                                     <div className="relative">
+//                                         <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+//                                         <input
+//                                             type="date"
+//                                             value={dateFilter}
+//                                             onChange={(e) => setDateFilter(e.target.value)}
+//                                             className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+//                                         />
+//                                     </div>
+//                                     <button
+//                                         onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+//                                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showAdvancedOptions ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                                             }`}
+//                                     >
+//                                         <Filter className="w-4 h-4" />
+//                                         <span className="hidden sm:inline">Filters</span>
+//                                     </button>
+//                                 </div>
 //                             </div>
 
 //                             {/* Advanced Options Panel */}
 //                             {showAdvancedOptions && (
 //                                 <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
-//                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+//                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 //                                         {/* Search */}
 //                                         <div>
 //                                             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -331,22 +459,6 @@
 //                                                     placeholder="Name, phone..."
 //                                                     value={searchQuery}
 //                                                     onChange={(e) => setSearchQuery(e.target.value)}
-//                                                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-//                                                 />
-//                                             </div>
-//                                         </div>
-
-//                                         {/* Date Filter */}
-//                                         <div>
-//                                             <label className="block text-sm font-medium text-gray-700 mb-2">
-//                                                 Date
-//                                             </label>
-//                                             <div className="relative">
-//                                                 <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-//                                                 <input
-//                                                     type="date"
-//                                                     value={dateFilter}
-//                                                     onChange={(e) => setDateFilter(e.target.value)}
 //                                                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 //                                                 />
 //                                             </div>
@@ -399,15 +511,15 @@
 //                                             key={chip.id}
 //                                             onClick={() => setTypeFilter(chip.id)}
 //                                             className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all ${isActive
-//                                                 ? chip.color + ' shadow-sm'
-//                                                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+//                                                     ? chip.color + ' shadow-sm'
+//                                                     : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
 //                                                 }`}
 //                                         >
 //                                             <IconComponent className="w-4 h-4" />
 //                                             {chip.label}
 //                                             <span className={`text-xs px-1.5 py-0.5 rounded-full ${isActive
-//                                                 ? 'bg-white/80 text-gray-700'
-//                                                 : 'bg-gray-100 text-gray-500'
+//                                                     ? 'bg-white/80 text-gray-700'
+//                                                     : 'bg-gray-100 text-gray-500'
 //                                                 }`}>
 //                                                 {interactionCount}
 //                                             </span>
@@ -416,6 +528,7 @@
 //                                 })}
 //                             </div>
 
+//                             {/* Interaction Cards with Call Button */}
 //                             <div className="space-y-3">
 //                                 {filteredInteractions.map((interaction, index) => (
 //                                     <div key={index} className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
@@ -438,6 +551,10 @@
 //                                                                 {interaction.phone}
 //                                                             </div>
 //                                                         )}
+//                                                         <div className="flex items-center">
+//                                                             <Clock className="w-3 h-3 mr-1" />
+//                                                             {interaction.time}
+//                                                         </div>
 //                                                     </div>
 //                                                     {interaction.email && interaction.email !== 'N/A' && (
 //                                                         <div className="text-xs text-gray-500 mt-1">
@@ -454,10 +571,17 @@
 //                                                 </div>
 //                                             </div>
 
-//                                             {/* Time */}
-//                                             <div className="flex items-center text-xs text-gray-400 ml-4">
-//                                                 <Clock className="w-3 h-3 mr-1" />
-//                                                 {interaction.time}
+//                                             {/* Call Button */}
+//                                             <div className="flex items-center gap-2 ml-4">
+//                                                 {interaction.phone && interaction.phone !== 'N/A' && (
+//                                                     <button
+//                                                         onClick={() => handleCall(interaction.phone)}
+//                                                         className="flex items-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium"
+//                                                     >
+//                                                         <Phone className="w-4 h-4" />
+//                                                         <span className="hidden sm:inline">Call</span>
+//                                                     </button>
+//                                                 )}
 //                                             </div>
 //                                         </div>
 //                                     </div>
@@ -500,6 +624,7 @@
 // };
 
 // export default PropertyResponses;
+
 
 
 import React, { useState, useMemo } from 'react';
@@ -551,12 +676,25 @@ const PropertyResponses = () => {
                 existingProperty.stats.contacts += item.stats.contacts;
                 existingProperty.stats.callbacks += item.stats.callbacks;
 
-                // Combine interactions
-                existingProperty.interactions = [...existingProperty.interactions, ...item.details];
+                // Combine interactions - Filter out invalid/empty details
+                const validDetails = item.details?.filter(detail =>
+                    detail &&
+                    detail.timestamp &&
+                    (detail.userName || detail.type || detail.contactInfo)
+                ) || [];
+
+                existingProperty.interactions = [...existingProperty.interactions, ...validDetails];
             } else {
                 // Extract location from title (basic extraction)
                 const locationMatch = item.entityTitle.match(/in\s+(.+)$/);
                 const location = locationMatch ? locationMatch[1] : "Location not specified";
+
+                // Filter out invalid/empty details before processing
+                const validDetails = item.details?.filter(detail =>
+                    detail &&
+                    detail.timestamp &&
+                    (detail.userName || detail.type || detail.contactInfo)
+                ) || [];
 
                 acc.push({
                     id: item.entityId,
@@ -573,8 +711,8 @@ const PropertyResponses = () => {
                         saves: item.stats.saves,
                         callbacks: item.stats.callbacks
                     },
-                    interactions: item.details.map(detail => ({
-                        type: detail.type.toLowerCase(),
+                    interactions: validDetails.map(detail => ({
+                        type: detail.type?.toLowerCase() || 'visit',
                         user: detail.userName || 'Unknown User',
                         phone: detail.contactInfo?.phoneNumber || 'N/A',
                         email: detail.contactInfo?.email || 'N/A',
@@ -588,9 +726,20 @@ const PropertyResponses = () => {
             return acc;
         }, []);
 
-        // Sort interactions by timestamp (newest first)
+        // Sort interactions by timestamp (newest first) and remove duplicates
         groupedData.forEach(property => {
-            property.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            // Remove duplicate interactions based on timestamp and user
+            const uniqueInteractions = property.interactions.filter((interaction, index, self) => {
+                return index === self.findIndex(i =>
+                    i.timestamp === interaction.timestamp &&
+                    i.user === interaction.user &&
+                    i.type === interaction.type
+                );
+            });
+
+            property.interactions = uniqueInteractions.sort((a, b) =>
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
         });
 
         // Sort properties by total engagement (visits + contacts + saves)
@@ -625,13 +774,18 @@ const PropertyResponses = () => {
         { id: 'save', label: 'Saves', icon: Heart, color: 'bg-red-100 text-red-700 border-red-200' }
     ];
 
-    // Filter interactions
+    // Filter interactions - Add additional validation
     const filteredInteractions = useMemo(() => {
         if (!selectedProperty || !selectedProperty.interactions) {
             return [];
         }
 
-        let filtered = selectedProperty.interactions;
+        let filtered = selectedProperty.interactions.filter(interaction =>
+            interaction &&
+            interaction.timestamp &&
+            interaction.user &&
+            interaction.user !== ''
+        );
 
         if (dateFilter) {
             const filterDate = new Date(dateFilter).toDateString();
@@ -643,14 +797,14 @@ const PropertyResponses = () => {
 
         if (typeFilter !== 'all') {
             filtered = filtered.filter(interaction =>
-                interaction.type.toLowerCase() === typeFilter.toLowerCase()
+                interaction.type && interaction.type.toLowerCase() === typeFilter.toLowerCase()
             );
         }
 
         if (searchQuery) {
             filtered = filtered.filter(interaction =>
-                interaction?.user?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-                interaction?.phone?.includes(searchQuery)
+                (interaction?.user?.toLowerCase().includes(searchQuery?.toLowerCase())) ||
+                (interaction?.phone?.includes(searchQuery))
             );
         }
 
@@ -734,36 +888,8 @@ const PropertyResponses = () => {
 
                 {/* Header with Last Login */}
                 <div className="px-4 lg:px-8 py-6">
-                    {/* <div className="flex items-center justify-between mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Property Insights</h1>
-                            {lastLoginTime && (
-                                <p className="text-sm text-gray-500 mt-1">
-                                    Last activity: {lastLoginTime}
-                                </p>
-                            )}
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="text-right">
-                                <div className="text-2xl font-bold text-blue-600">{propertiesData.length}</div>
-                                <div className="text-xs text-gray-500">Properties</div>
-                            </div>
-                            <div className="text-right">
-                                <div className="text-2xl font-bold text-green-600">
-                                    {propertiesData.reduce((sum, p) => sum + p.stats.contacts, 0)}
-                                </div>
-                                <div className="text-xs text-gray-500">Total Contacts</div>
-                            </div>
-                        </div>
-                    </div> */}
-
                     {/* Modern Property Cards */}
                     <div className="mb-6">
-                        {/* <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-lg font-semibold text-gray-900">Top Performing Properties</h2>
-                            <span className="text-sm text-gray-500">{propertiesData.length} properties</span>
-                        </div> */}
-
                         {/* Sleek Property Cards */}
                         <div className="flex gap-6 items-center">
                             {propertiesData.map((property, index) => {
@@ -775,8 +901,8 @@ const PropertyResponses = () => {
                                     <div
                                         key={property.id}
                                         className={`bg-white rounded-2xl border transition-all duration-300 hover:shadow-lg ${isSelected
-                                                ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                            ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20'
+                                            : 'border-gray-200 hover:border-gray-300'
                                             }`}
                                     >
                                         {/* Collapsed View */}
@@ -817,21 +943,6 @@ const PropertyResponses = () => {
                                                                 <span className="truncate">{property.location}</span>
                                                             </div>
                                                         </div>
-                                                        {/* <div className="ml-4 flex items-center gap-2">
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    toggleCardExpansion(property.id);
-                                                                }}
-                                                                className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-                                                            >
-                                                                {isExpanded ? (
-                                                                    <ChevronUp className="w-4 h-4 text-gray-400" />
-                                                                ) : (
-                                                                    <ChevronDown className="w-4 h-4 text-gray-400" />
-                                                                )}
-                                                            </button>
-                                                        </div> */}
                                                     </div>
 
                                                     {/* Quick Stats */}
@@ -1014,15 +1125,15 @@ const PropertyResponses = () => {
                                             key={chip.id}
                                             onClick={() => setTypeFilter(chip.id)}
                                             className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all ${isActive
-                                                    ? chip.color + ' shadow-sm'
-                                                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                                                ? chip.color + ' shadow-sm'
+                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
                                                 }`}
                                         >
                                             <IconComponent className="w-4 h-4" />
                                             {chip.label}
                                             <span className={`text-xs px-1.5 py-0.5 rounded-full ${isActive
-                                                    ? 'bg-white/80 text-gray-700'
-                                                    : 'bg-gray-100 text-gray-500'
+                                                ? 'bg-white/80 text-gray-700'
+                                                : 'bg-gray-100 text-gray-500'
                                                 }`}>
                                                 {interactionCount}
                                             </span>
@@ -1034,7 +1145,7 @@ const PropertyResponses = () => {
                             {/* Interaction Cards with Call Button */}
                             <div className="space-y-3">
                                 {filteredInteractions.map((interaction, index) => (
-                                    <div key={index} className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+                                    <div key={`${interaction.timestamp}-${index}`} className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
                                         <div className="flex items-start justify-between">
                                             <div className="flex items-start space-x-3 flex-1">
                                                 {/* Icon */}

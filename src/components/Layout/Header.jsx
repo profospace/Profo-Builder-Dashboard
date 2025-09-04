@@ -107,7 +107,7 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-red-600 text-white px-4 py-3 flex items-center justify-between shadow-lg">
+        <header className="bg-[#000] text-white px-4 py-3 flex items-center justify-between shadow-lg">
             {/* Logo and Brand */}
             <div className="flex items-center space-x-2">
                 <div className="text-4xl font-bold tracking-tight">
@@ -152,14 +152,14 @@ const Header = () => {
                 </div>
 
                 {/* Post Property Button */}
-                <button className="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+                <button className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
                     Post Another Property
                 </button>
 
                 {/* Logout Button */}
                 <button
                     onClick={handleLogout}
-                    className="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                    className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
                 >
                     Logout
                 </button>

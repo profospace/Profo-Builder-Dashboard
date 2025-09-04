@@ -222,8 +222,9 @@ import Profile from './pages/Profile';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPropertyInteractions, getAllProperties } from './features/properties/propertiesSlice';
-import { getAllProjects } from './features/projects/projectsSlice';
+import { getAllProjects, getProjectAllInteractions } from './features/projects/projectsSlice';
 import ProjectsPage from './pages/ProjectsPage';
+import BuilderChatPage from './pages/BuilderChatPage';
 
 const App = () => {
   const location = useLocation();
@@ -231,7 +232,8 @@ const App = () => {
 
   const { properties, propertyInteraction, isLoading, isError, message } = useSelector((state) => state.properties);
 
-  // console.log("properties", properties);
+  const { projects } = useSelector((state) => state.projects)
+  console.log("projects", projects);
 
   const navigate = useNavigate()
   // Authentication
@@ -268,6 +270,39 @@ const App = () => {
       });
     }
   }, [properties, dispatch, user]);
+  
+
+  // Run after properties data is fetched
+  useEffect(() => {
+    if (projects.length > 0 && user) {
+      projects.forEach(project => {
+        dispatch(getProjectAllInteractions({ builderId: user?.id, projectId: project.projectId }));
+      });
+    }
+  }, [projects, dispatch, user]);
+
+
+  // useEffect(() => {
+  //   const fetchStats = async () => {
+  //     if (projects.length > 0 && user) {
+  //       for (const project of projects) {
+  //         console.log("HI")
+  //         try {
+  //           const response = await axios.get(
+  //             `${base_url}/properties-interaction/api/interactions/stats?projectId=${project?.projectId}&builderId=${user?.id}&interactionEntity=PROJECT`
+  //           );
+  //           console.log("response", response)
+  //           // Do something with response, e.g. dispatch an action
+  //         } catch (error) {
+  //           console.error("Error fetching stats for project:", project?.projectId, error);
+  //         }
+  //       }
+  //     }
+  //   };
+
+  //   fetchStats();
+  // }, [projects, dispatch, user]);
+  
 
   // Public Routes Component (without layout)
   const PublicRoutes = () => (
@@ -316,6 +351,10 @@ const App = () => {
         <Route
           path="/profile"
           element={<Profile />}
+        />
+        <Route
+          path="/chat-test"
+          element={<BuilderChatPage />}
         />
         <Route
           path="/settings"

@@ -10,19 +10,19 @@ const getAllProjects = async (builderId) => {
 };
 
 // single Property INteractions
-// const getProjectAllInteractions = async (data) => {
-//   const { propertyId, builderId } = data
-//   const response = await axios.get(`${base_url}/properties-interaction/api/interactions/stats?propertyId=${propertyId}&builderId=${builderId}&interactionEntity=PROPERTY`);
+const getProjectAllInteractions = async (data) => {
+  const { projectId, builderId } = data
+  const response = await axios.get(`${base_url}/properties-interaction/api/interactions/stats?projectId=${projectId}&builderId=${builderId}&interactionEntity=PROJECT`);
 
-//   console.log( "property slice" , response)
-//   return response.data;
-// };
+  console.log( "project interactions slice" , response)
+  return response.data;
+};
 
 
 
 const propertiesService = {
   getAllProjects,
-  // getProjectAllInteractions
+  getProjectAllInteractions
  
 };
 

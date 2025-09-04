@@ -1775,6 +1775,8 @@ ${property.usp?.slice(0, 3).map(usp => `🔸 ${usp}`).join('\n') || ''}
     navigate(`/edit-property/${property.post_id}`);
   };
 
+  console.log("propertyInteraction****", propertyInteraction)
+
 
   if (isLoading) {
     return (
