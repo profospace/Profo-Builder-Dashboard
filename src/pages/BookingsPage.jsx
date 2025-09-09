@@ -63,7 +63,7 @@ function BookingsPage() {
                                 }`}
                         >
                             {/* Property Image */}
-                            <div className="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600">
+                            <div className="relative h-40 ">
                                 {property.post_images?.[0] ? (
                                     <img
                                         src={property.post_images[0].url}
@@ -126,14 +126,14 @@ function BookingsPage() {
                 {/* Full Width Bookings Table */}
                 {selectedProperty && (
                     <div className="bg-white rounded-xl shadow-lg overflow-hidden animate-in fade-in duration-200">
-                        <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                        <div className="bg-gradient-to-r from-gray-800 to-gray-600 px-6 py-4">
                             <h3 className="text-xl font-semibold text-white flex items-center">
                                 <Calendar className="mr-3" size={24} />
                                 Bookings for "{selectedProperty.post_title}" ({selectedProperty.bookings?.length || 0})
                             </h3>
                         </div>
 
-                        <div className="p-6">
+                        <div className="">
                             {selectedProperty.bookings?.length > 0 ? (
                                 <div className="overflow-x-auto">
                                     <table className="w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
