@@ -221,6 +221,13 @@ const Sidebar = ({ activeRoute }) => {
             isNew: true
         },
         {
+            title: 'Bookings',
+            icon: BarChart3,
+            route: 'bookings',
+            hasArrow: true,
+            isNew: true
+        },
+        {
             title: 'Callbacks',
             icon: Phone,
             route: 'callbacks',

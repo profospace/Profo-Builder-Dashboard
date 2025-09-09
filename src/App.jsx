@@ -225,6 +225,7 @@ import { fetchPropertyInteractions, getAllProperties } from './features/properti
 import { getAllProjects, getProjectAllInteractions } from './features/projects/projectsSlice';
 import ProjectsPage from './pages/ProjectsPage';
 import BuilderChatPage from './pages/BuilderChatPage';
+import BookingsPage from './pages/BookingsPage';
 
 const App = () => {
   const location = useLocation();
@@ -337,6 +338,13 @@ const App = () => {
           path="/enquiries"
           element={
             <EnquiriesPage
+            />
+          }
+        />
+        <Route
+          path="/bookings"
+          element={
+            <BookingsPage
             />
           }
         />
