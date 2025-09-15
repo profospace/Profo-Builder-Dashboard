@@ -1836,8 +1836,8 @@ const RmPage = () => {
 
           <form onSubmit={handleAssign} className="p-6 space-y-6">
             <div className="bg-gray-50 p-4 rounded-xl">
-              <h3 className="font-semibold text-gray-900">{selectedBooking.property.title}</h3>
-              <p className="text-sm text-gray-600 mt-1">{selectedBooking.customer.name} • {selectedBooking.propertyType}</p>
+              <h3 className="font-semibold text-gray-900">{selectedBooking?.property?.title}</h3>
+              <p className="text-sm text-gray-600 mt-1">{selectedBooking?.customer?.name} • {selectedBooking?.propertyType}</p>
             </div>
 
             <div>
