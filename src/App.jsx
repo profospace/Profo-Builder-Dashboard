@@ -226,6 +226,7 @@ import { getAllProjects, getProjectAllInteractions } from './features/projects/p
 import ProjectsPage from './pages/ProjectsPage';
 import BuilderChatPage from './pages/BuilderChatPage';
 import BookingsPage from './pages/BookingsPage';
+import RmPage from './pages/RmPage';
 
 const App = () => {
   const location = useLocation();
@@ -363,6 +364,10 @@ const App = () => {
         <Route
           path="/chat-test"
           element={<BuilderChatPage />}
+        />
+        <Route
+          path="/rm-manager"
+          element={<RmPage />}
         />
         <Route
           path="/settings"
