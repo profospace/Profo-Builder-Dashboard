@@ -183,7 +183,8 @@ import {
     LogIn,
     Menu,
     X,
-    ChevronRight
+    ChevronRight,
+    User2
 } from 'lucide-react';
 
 
@@ -231,6 +232,13 @@ const Sidebar = ({ activeRoute }) => {
             title: 'Callbacks',
             icon: Phone,
             route: 'callbacks',
+            hasArrow: true,
+            isNew: true
+        },
+        {
+            title: 'RM',
+            icon: User2,
+            route: 'rm-manager',
             hasArrow: true,
             isNew: true
         },
