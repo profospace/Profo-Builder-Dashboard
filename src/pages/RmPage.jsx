@@ -1041,9 +1041,11 @@ const RmPage = () => {
   };
 
   const assignBookingToRM = async (bookingId, rmId, notes) => {
+    console.log("bookingId" , bookingId)
     try {
       setLoading(true);
-      const response = await api.post(`/rm/${rmId}/assign-booking`, {
+      const response = await api.post(`/bookings/assign-booking`, {
+        rmId,
         bookingId,
         notes
       });
@@ -1809,7 +1811,7 @@ const RmPage = () => {
         setError('Please select an RM');
         return;
       }
-      await assignBookingToRM(selectedBooking?.id, selectedRMId, notes);
+      await assignBookingToRM(selectedBooking?._id, selectedRMId, notes);
     };
 
     if (!showAssignModal || !selectedBooking) return null;
