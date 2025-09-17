@@ -2011,6 +2011,7 @@ import {
   Check
 } from 'lucide-react';
 import { base_url } from '../utils/baseurl';
+import { useNavigate } from 'react-router-dom';
 
 const RmPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -2024,6 +2025,8 @@ const RmPage = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [dateFilter, setDateFilter] = useState({ from: '', to: '' });
    const [copied, setCopied] = useState(false);
+
+   const navigate = useNavigate()
 
  
   const [loading, setLoading] = useState(false);
@@ -2307,6 +2310,7 @@ const RmPage = () => {
   // Unassigned Bookings Component
   const UnassignedBookings = () => {
     const filteredBookings = filterBookingsByDate(unassignedBookings, 'createdAt');
+  console.log("filteredBookings" , filteredBookings)
 
     return (
       <div className="space-y-4">
@@ -2364,7 +2368,8 @@ const RmPage = () => {
                   </div>
                 </div>
               </div>
-              <button
+             <div className='flex flex-col gap-1'>
+               <button
                 onClick={() => {
                   setSelectedBooking(booking);
                   setShowAssignModal(true);
@@ -2373,6 +2378,23 @@ const RmPage = () => {
               >
                 Assign RM
               </button>
+              <button
+                onClick={() => {
+                  navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+                }}
+                className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+              >
+                User Bookings
+              </button>
+              <button
+                onClick={() => {
+                  navigate(`/user/search-history/${booking?.tokenPaidBy?._id}`);
+                }}
+                className="px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+              >
+                User Searches
+              </button>
+              </div>
             </div>
           </div>
         ))}

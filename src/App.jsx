@@ -227,6 +227,8 @@ import ProjectsPage from './pages/ProjectsPage';
 import BuilderChatPage from './pages/BuilderChatPage';
 import BookingsPage from './pages/BookingsPage';
 import RmPage from './pages/RmPage';
+import UserBookings from './pages/UserBookings';
+import UserSearchHistory from './pages/UserSearchHistory';
 
 const App = () => {
   const location = useLocation();
@@ -369,6 +371,11 @@ const App = () => {
           path="/rm-manager"
           element={<RmPage />}
         />
+        <Route
+          path="/user/bookings/:id"
+          element={<UserBookings />}
+        />
+        <Route path="/user/search-history/:id" element={<UserSearchHistory />} />
         <Route
           path="/settings"
           element={<Settings />}
