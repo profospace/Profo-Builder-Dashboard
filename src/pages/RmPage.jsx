@@ -2005,7 +2005,10 @@ import {
   Plus, Users, Calendar, BarChart3, Eye, Edit, Trash2, UserPlus,
   Filter, Search, Phone, Mail, MapPin, Clock, Star, TrendingUp,
   AlertCircle, CheckCircle, XCircle, User, Loader, ChevronRight,
-  Activity, CalendarDays, FileText
+  Activity, CalendarDays, FileText,
+  SectionIcon,
+  Copy,
+  Check
 } from 'lucide-react';
 import { base_url } from '../utils/baseurl';
 
@@ -2020,9 +2023,11 @@ const RmPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [dateFilter, setDateFilter] = useState({ from: '', to: '' });
+   const [copied, setCopied] = useState(false);
+
+ 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
   // State for real data
   const [builderStats, setBuilderStats] = useState({
     totalRMs: 0,
@@ -2123,6 +2128,7 @@ const RmPage = () => {
           id: rm._id,
           name: rm.name,
           email: rm.email,
+          password: rm.password,
           phone: rm.phone,
           role: rm.role,
           status: rm.status,
@@ -2252,6 +2258,15 @@ const RmPage = () => {
     fetchAssignedBookings();
     fetchLeaderboard();
   }, []);
+
+   const handleCopy = (password) => {
+    // if (!rm.password) return;
+
+    navigator.clipboard.writeText(password).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // reset after 2 sec
+    });
+  };
 
   // Date Filter Component
   const DateFilterComponent = () => (
@@ -2843,6 +2858,26 @@ const RmPage = () => {
                       <Mail className="h-4 w-4 text-gray-400" />
                       <span className="text-gray-600 truncate">{rm.email}</span>
                     </div>
+                    {/* <div className="flex items-center gap-2">
+                      <SectionIcon className="h-4 w-4 text-gray-400" />
+                      <span className="text-gray-600">{rm.password}</span>
+                    </div> */}
+                    <div className="flex items-center gap-2">
+      <SectionIcon className="h-4 w-4 text-gray-400" />
+      <span className="text-gray-600">{rm.password}</span>
+
+      <button
+        onClick={()=>handleCopy(rm.password)}
+        className="ml-2 p-1 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+        title={copied ? "Copied!" : "Copy password"}
+      >
+        {copied ? (
+          <Check className="h-4 w-4 text-green-600" />
+        ) : (
+          <Copy className="h-4 w-4 text-gray-500" />
+        )}
+      </button>
+    </div>
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-gray-400" />
                       <span className="text-gray-600">{rm.phone}</span>
