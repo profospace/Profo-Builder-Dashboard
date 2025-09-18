@@ -229,6 +229,7 @@ import BookingsPage from './pages/BookingsPage';
 import RmPage from './pages/RmPage';
 import UserBookings from './pages/UserBookings';
 import UserSearchHistory from './pages/UserSearchHistory';
+import FilterChipsUI from './pages/FilterChipsUI';
 
 const App = () => {
   const location = useLocation();
@@ -374,6 +375,10 @@ const App = () => {
         <Route
           path="/user/bookings/:id"
           element={<UserBookings />}
+        />
+        <Route
+          path="/testing"
+          element={<FilterChipsUI />}
         />
         <Route path="/user/search-history/:id" element={<UserSearchHistory />} />
         <Route
