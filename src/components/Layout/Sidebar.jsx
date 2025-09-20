@@ -194,6 +194,102 @@
 
 
 
+// import React from 'react';
+// import {
+//     LayoutDashboard,
+//     BookOpen,
+//     GraduationCap,
+//     MessageCircle,
+//     Bell,
+//     Calendar,
+//     Users2,
+//     Settings,
+//     ArrowUpRight
+// } from 'lucide-react';
+// import { useLocation, useNavigate } from 'react-router-dom';
+
+// const Sidebar = () => {
+//     const navigate = useNavigate()
+//     const location = useLocation();
+//     const menuItems = [
+//         { name: 'My Properties', icon: LayoutDashboard, route: '/properties', active: true },
+//         { name: 'My Enquiries', icon: BookOpen, route: '/enquiries', active: false },
+//         { name: 'Property Performance', icon: GraduationCap, route: '/performance', active: false },
+//         { name: 'Bookings', icon: MessageCircle, route: '/bookings', active: false },
+//         { name: 'Callbacks', icon: Bell, route: '/callbacks', active: false, badge: '2' },
+//         { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', active: false },
+//         { name: 'Profile', icon: Users2, route: '/profile', active: false },
+//         { name: 'Settings', icon: Settings, route: '/settings', active: false },
+//     ];
+
+//     return (
+//         // <div className='flex justify-center'>
+//         <div className="w-56 h-[96vh] bg-[#1E1E30] flex flex-col rounded-2xl">
+//             {/* Logo Section */}
+//             {/* <div className="p-6 flex items-center gap-">
+//                     <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png' className='w-11 h-auto'/>
+//                     <span className="text-[#D8F375] text-4xl font-bold">PROFO</span>
+//                 </div> */}
+
+//             <div className="p-6 flex items-center">
+//                 <img
+//                     src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
+//                     className="w-11 h-auto"
+//                 />
+//                 <span className="relative text-[#D8F375] text-3xl font-bold">
+//                     PROFO
+//                     <span className="absolute -top-0 -right-7 bg-[#D8F375] text-black text-[8px] font-semibold rounded-full px-2 py-0.5">
+//                         IQ
+//                     </span>
+//                 </span>
+//             </div>
+
+
+//             {/* Navigation Menu */}
+//             <nav className="flex-1 px-4">
+//                 <ul className="space-y-0.5">
+//                     {menuItems.map((item, index) => {
+//                         const isActive = location.pathname === item.route;
+//                         return (
+//                             <li key={index}>
+//                                 <a
+//                                     href="#"
+//                                     onClick={() => navigate(`${item.route}`)}
+//                                     className={`
+//                   flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
+//                   ${isActive
+//                                             ? 'bg-[#D8F375] text-[#2D3748]'
+//                                             : 'text-white hover:bg-white/5'
+//                                         }
+//                 `}
+//                                 >
+//                                     <item.icon size={18} />
+//                                     <span className="flex-1">{item.name}</span>
+//                                     {item.badge && (
+//                                         <div className="w-5 h-5 bg-[#F8CDB7] text-black text-xs font-medium rounded-full flex items-center justify-center">
+//                                             {item.badge}
+//                                         </div>
+//                                     )}
+//                                 </a>
+//                             </li>
+//                         )
+//                     })}
+//                 </ul>
+//             </nav>
+
+//             {/* Bottom Promotional Card */}
+//             <div className="p-4 mx-auto">
+//                 <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png' className='h-36' />
+//             </div>
+//         </div>
+//         // </div>
+//     );
+// };
+
+// export default Sidebar;
+
+
+
 import React from 'react';
 import {
     LayoutDashboard,
@@ -224,28 +320,72 @@ const Sidebar = () => {
 
     return (
         // <div className='flex justify-center'>
-        <div className="w-56 h-[96vh] bg-[#1E1E30] flex flex-col rounded-2xl">
-            {/* Logo Section */}
-            {/* <div className="p-6 flex items-center gap-">
-                    <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png' className='w-11 h-auto'/>
-                    <span className="text-[#D8F375] text-4xl font-bold">PROFO</span>
-                </div> */}
+        // <div className="w-56 h-[96vh] bg-[#1E1E30] flex flex-col rounded-2xl">
+        //     {/* Logo Section */}
 
+        //     <div className="p-6 flex items-center">
+        //         <img
+        //             src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
+        //             className="w-11 h-auto"
+        //         />
+        //         <span className="relative text-[#D8F375] text-3xl font-bold">
+        //             PROFO
+        //             <span className="absolute -top-0 -right-7 bg-[#D8F375] text-black text-[8px] font-semibold rounded-full px-2 py-0.5">
+        //                 IQ
+        //             </span>
+        //         </span>
+        //     </div>
+
+
+        //     {/* Navigation Menu */}
+        //     <nav className="flex-1 px-4">
+        //         <ul className="space-y-0.5">
+        //             {menuItems.map((item, index) => {
+        //                 const isActive = location.pathname === item.route;
+        //                 return (
+        //                     <li key={index}>
+        //                         <a
+        //                             href="#"
+        //                             onClick={() => navigate(`${item.route}`)}
+        //                             className={`
+        //           flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
+        //           ${isActive
+        //                                     ? 'bg-[#D8F375] text-[#2D3748]'
+        //                                     : 'text-white hover:bg-white/5'
+        //                                 }
+        //         `}
+        //                         >
+        //                             <item.icon size={18} />
+        //                             <span className="flex-1">{item.name}</span>
+        //                             {item.badge && (
+        //                                 <div className="w-5 h-5 bg-[#F8CDB7] text-black text-xs font-medium rounded-full flex items-center justify-center">
+        //                                     {item.badge}
+        //                                 </div>
+        //                             )}
+        //                         </a>
+        //                     </li>
+        //                 )
+        //             })}
+        //         </ul>
+        //     </nav>
+
+        //     {/* Bottom Promotional Card */}
+        //     <div className="p-4 mx-auto">
+        //         <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png' className='h-36' />
+        //     </div>
+        // </div>
+        <div className="w-56 h-[96vh] bg-white flex flex-col rounded-2xl shadow">
+            {/* Logo */}
             <div className="p-6 flex items-center">
-                <img
-                    src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
-                    className="w-11 h-auto"
-                />
-                <span className="relative text-[#D8F375] text-3xl font-bold">
+                <img src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png" className="w-11 h-auto" />
+                <span className="relative text-gray-900 text-3xl font-bold">
                     PROFO
-                    <span className="absolute -top-0 -right-7 bg-[#D8F375] text-black text-[8px] font-semibold rounded-full px-2 py-0.5">
+                    <span className="absolute -top-0 -right-7 bg-blue-600 text-white text-[8px] font-semibold rounded-full px-2 py-0.5">
                         IQ
                     </span>
                 </span>
             </div>
 
-
-            {/* Navigation Menu */}
             <nav className="flex-1 px-4">
                 <ul className="space-y-0.5">
                     {menuItems.map((item, index) => {
@@ -256,17 +396,17 @@ const Sidebar = () => {
                                     href="#"
                                     onClick={() => navigate(`${item.route}`)}
                                     className={`
-                  flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
-                  ${isActive
-                                            ? 'bg-[#D8F375] text-[#2D3748]'
-                                            : 'text-white hover:bg-white/5'
+                                flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
+                                ${isActive
+                                            ? 'bg-blue-100 text-blue-600'
+                                            : 'text-gray-700 hover:bg-gray-100'
                                         }
-                `}
+                            `}
                                 >
                                     <item.icon size={18} />
                                     <span className="flex-1">{item.name}</span>
                                     {item.badge && (
-                                        <div className="w-5 h-5 bg-[#F8CDB7] text-black text-xs font-medium rounded-full flex items-center justify-center">
+                                        <div className="w-5 h-5 bg-yellow-400 text-black text-xs font-medium rounded-full flex items-center justify-center">
                                             {item.badge}
                                         </div>
                                     )}
@@ -277,13 +417,14 @@ const Sidebar = () => {
                 </ul>
             </nav>
 
-            {/* Bottom Promotional Card */}
             <div className="p-4 mx-auto">
-                <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png' className='h-36' />
+                <img src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png" className="h-36" />
             </div>
         </div>
+
         // </div>
     );
 };
 
 export default Sidebar;
+
