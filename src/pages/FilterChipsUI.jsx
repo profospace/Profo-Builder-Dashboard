@@ -899,96 +899,285 @@
 // };
 
 // export default FilterChipsUI;
-import React from 'react';
-import {
-    LayoutDashboard,
-    BookOpen,
-    GraduationCap,
-    MessageCircle,
-    Bell,
-    Calendar,
-    Users2,
-    Settings,
-    ArrowUpRight
-} from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import React from 'react';
+// import {
+//     LayoutDashboard,
+//     BookOpen,
+//     GraduationCap,
+//     MessageCircle,
+//     Bell,
+//     Calendar,
+//     Users2,
+//     Settings,
+//     ArrowUpRight
+// } from 'lucide-react';
+// import { useLocation, useNavigate } from 'react-router-dom';
 
-const FilterChipsUI = () => {
-    const navigate = useNavigate()
-    const location = useLocation();
-    const menuItems = [
-        { name: 'My Properties', icon: LayoutDashboard, route: '/properties', active: true },
-        { name: 'My Enquiries', icon: BookOpen, route: '/enquiries', active: false },
-        { name: 'Property Performance', icon: GraduationCap, route: '/performance', active: false },
-        { name: 'Bookings', icon: MessageCircle, route: '/bookings', active: false },
-        { name: 'Callbacks', icon: Bell, route: '/callbacks', active: false, badge: '2' },
-        { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', active: false },
-        { name: 'Profile', icon: Users2, route: '/profile', active: false },
-        { name: 'Settings', icon: Settings, route: '/settings', active: false },
+// const FilterChipsUI = () => {
+//     const navigate = useNavigate()
+//     const location = useLocation();
+//     const menuItems = [
+//         { name: 'My Properties', icon: LayoutDashboard, route: '/properties', active: true },
+//         { name: 'My Enquiries', icon: BookOpen, route: '/enquiries', active: false },
+//         { name: 'Property Performance', icon: GraduationCap, route: '/performance', active: false },
+//         { name: 'Bookings', icon: MessageCircle, route: '/bookings', active: false },
+//         { name: 'Callbacks', icon: Bell, route: '/callbacks', active: false, badge: '2' },
+//         { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', active: false },
+//         { name: 'Profile', icon: Users2, route: '/profile', active: false },
+//         { name: 'Settings', icon: Settings, route: '/settings', active: false },
+//     ];
+
+//     return (
+//         // <div className='flex justify-center'>
+//         <div className="w-56 h-[96vh] bg-[#1E1E30] flex flex-col rounded-2xl">
+//             {/* Logo Section */}
+//             {/* <div className="p-6 flex items-center gap-">
+//                     <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png' className='w-11 h-auto'/>
+//                     <span className="text-[#D8F375] text-4xl font-bold">PROFO</span>
+//                 </div> */}
+
+//             <div className="p-6 flex items-center">
+//                 <img
+//                     src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
+//                     className="w-11 h-auto"
+//                 />
+//                 <span className="relative text-[#D8F375] text-3xl font-bold">
+//                     PROFO
+//                     <span className="absolute -top-0 -right-7 bg-[#D8F375] text-black text-[8px] font-semibold rounded-full px-2 py-0.5">
+//                         IQ
+//                     </span>
+//                 </span>
+//             </div>
+
+
+//             {/* Navigation Menu */}
+//             <nav className="flex-1 px-4">
+//                 <ul className="space-y-0.5">
+//                     {menuItems.map((item, index) => {
+//                         const isActive = location.pathname === item.route;
+//                         return (
+//                             <li key={index}>
+//                                 <a
+//                                     href="#"
+//                                     onClick={() => navigate(`${item.route}`)}
+//                                     className={`
+//                   flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
+//                   ${isActive
+//                                             ? 'bg-[#D8F375] text-[#2D3748]'
+//                                             : 'text-white hover:bg-white/5'
+//                                         }
+//                 `}
+//                                 >
+//                                     <item.icon size={18} />
+//                                     <span className="flex-1">{item.name}</span>
+//                                     {item.badge && (
+//                                         <div className="w-5 h-5 bg-[#F8CDB7] text-black text-xs font-medium rounded-full flex items-center justify-center">
+//                                             {item.badge}
+//                                         </div>
+//                                     )}
+//                                 </a>
+//                             </li>
+//                         )
+//                     })}
+//                 </ul>
+//             </nav>
+
+//             {/* Bottom Promotional Card */}
+//             <div className="p-4 mx-auto">
+//                 <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png' className='h-36' />
+//             </div>
+//         </div>
+//         // </div>
+//     );
+// };
+
+// export default FilterChipsUI;
+
+
+import React from "react";
+
+// Builder Dashboard Preview
+// Single-file React component using Tailwind CSS for quick preview.
+// - Left navigation grouped
+// - Top header with search/profile
+// - KPI cards row
+// - Persistent Action Zone
+// - Recent Activity and Insights
+
+export default function FilterChipsUI() {
+    const kpis = [
+        { id: 1, label: "Pending Assignments", value: 10, tone: "danger", note: "5% from yesterday" },
+        { id: 2, label: "Active Bookings", value: 2, tone: "accent", note: "8% from last week" },
+        { id: 3, label: "Completed Visits", value: 1, tone: "success", note: "15% from last month" },
+        { id: 4, label: "Total RMs", value: 7, tone: "muted", note: "12% from last month" },
+    ];
+
+    const actions = [
+        { id: "add-rm", label: "Add RM", style: "secondary" },
+        { id: "assign", label: "Assign Bookings", style: "primary" },
+        { id: "performance", label: "View Performance", style: "ghost" },
+        { id: "manage-rm", label: "Manage RMs", style: "ghost" },
+    ];
+
+    const recent = [
+        { id: 1, text: "New RM added to team", time: "2 hours ago", dot: "purple" },
+        { id: 2, text: "Booking assigned successfully", time: "4 hours ago", dot: "blue" },
+        { id: 3, text: "Callback pending for Property A", time: "1 day ago", dot: "yellow" },
     ];
 
     return (
-        // <div className='flex justify-center'>
-        <div className="w-56 h-[96vh] bg-[#1E1E30] flex flex-col rounded-2xl">
-            {/* Logo Section */}
-            {/* <div className="p-6 flex items-center gap-">
-                    <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png' className='w-11 h-auto'/>
-                    <span className="text-[#D8F375] text-4xl font-bold">PROFO</span>
-                </div> */}
+        <div className="min-h-screen bg-gray-50 flex">
+            {/* Sidebar */}
+            <aside className="w-72 bg-white border-r border-gray-200 min-h-screen sticky top-0">
+                <div className="px-6 py-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded bg-red-600 flex items-center justify-center text-white font-bold">P</div>
+                        <div>
+                            <div className="font-extrabold text-lg">PROFO</div>
+                            <div className="text-xs text-gray-400">Builder Dashboard</div>
+                        </div>
+                    </div>
+                </div>
 
-            <div className="p-6 flex items-center">
-                <img
-                    src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
-                    className="w-11 h-auto"
-                />
-                <span className="relative text-[#D8F375] text-3xl font-bold">
-                    PROFO
-                    <span className="absolute -top-0 -right-7 bg-[#D8F375] text-black text-[8px] font-semibold rounded-full px-2 py-0.5">
-                        IQ
-                    </span>
-                </span>
-            </div>
+                <nav className="px-4 py-2 text-sm text-gray-700">
+                    <div className="mb-4">
+                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Properties</div>
+                        <ul className="space-y-1">
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">My Properties</li>
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">Property Performance</li>
+                        </ul>
+                    </div>
 
+                    <div className="mb-4">
+                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Bookings</div>
+                        <ul className="space-y-1">
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">All Bookings</li>
+                            <li className="px-3 py-2 rounded bg-blue-50 font-medium">RM Assignments</li>
+                        </ul>
+                    </div>
 
-            {/* Navigation Menu */}
-            <nav className="flex-1 px-4">
-                <ul className="space-y-0.5">
-                    {menuItems.map((item, index) => {
-                        const isActive = location.pathname === item.route;
-                        return (
-                            <li key={index}>
-                                <a
-                                    href="#"
-                                    onClick={() => navigate(`${item.route}`)}
-                                    className={`
-                  flex items-center gap-3 px-4 py-3 rounded-3xl text-xs font-medium transition-all duration-200 relative
-                  ${isActive
-                                            ? 'bg-[#D8F375] text-[#2D3748]'
-                                            : 'text-white hover:bg-white/5'
-                                        }
-                `}
-                                >
-                                    <item.icon size={18} />
-                                    <span className="flex-1">{item.name}</span>
-                                    {item.badge && (
-                                        <div className="w-5 h-5 bg-[#F8CDB7] text-black text-xs font-medium rounded-full flex items-center justify-center">
-                                            {item.badge}
+                    <div className="mb-4">
+                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Communication</div>
+                        <ul className="space-y-1">
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">Enquiries</li>
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">Callbacks <span className="ml-2 inline-block text-xs bg-yellow-100 px-2 rounded">2</span></li>
+                        </ul>
+                    </div>
+
+                    <div className="mb-4">
+                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Team</div>
+                        <ul className="space-y-1">
+                            <li className="px-3 py-2 rounded hover:bg-gray-50">Relationship Managers</li>
+                        </ul>
+                    </div>
+
+                    <div className="mt-6 border-t pt-4 text-xs text-gray-400">
+                        <div className="px-3 py-2">Profile</div>
+                        <div className="px-3 py-2">Settings</div>
+                    </div>
+                </nav>
+            </aside>
+
+            {/* Main area */}
+            <main className="flex-1 p-8">
+                {/* Header */}
+                <header className="flex items-center justify-between mb-6">
+                    <div>
+                        <h1 className="text-2xl font-extrabold">Welcome back <span className="text-blue-600">Anurag</span> 👋</h1>
+                        <p className="text-sm text-gray-500 mt-1">Overview of your properties & RM assignments</p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <div className="relative">
+                            <input className="w-80 rounded-full border border-gray-200 px-4 py-2 text-sm bg-white" placeholder="Search" />
+                        </div>
+                        <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center">A</div>
+                    </div>
+                </header>
+
+                {/* KPI Row */}
+                <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    {kpis.map(k => (
+                        <div key={k.id} className="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <div className="flex items-start justify-between">
+                                <div>
+                                    <div className="text-xs text-gray-400">{k.label}</div>
+                                    <div className="mt-2 text-2xl font-bold">{k.value}</div>
+                                    <div className="text-xs text-gray-400 mt-1">{k.note}</div>
+                                </div>
+                                <div className="ml-4">
+                                    {k.tone === 'danger' && <div className="w-10 h-10 rounded bg-red-50 flex items-center justify-center text-red-600">!</div>}
+                                    {k.tone === 'success' && <div className="w-10 h-10 rounded bg-green-50 flex items-center justify-center text-green-600">✓</div>}
+                                    {k.tone === 'accent' && <div className="w-10 h-10 rounded bg-orange-50 flex items-center justify-center text-orange-600">📅</div>}
+                                    {k.tone === 'muted' && <div className="w-10 h-10 rounded bg-blue-50 flex items-center justify-center text-blue-600">👥</div>}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </section>
+
+                {/* Action Zone */}
+                <section className="sticky top-6 bg-transparent mb-6">
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-100 flex gap-4 items-center">
+                        <div className="flex-1 text-sm text-gray-600">Quick actions — make the most common tasks reachable from anywhere.</div>
+                        <div className="flex gap-3">
+                            {actions.map(a => (
+                                <button key={a.id}
+                                    className={
+                                        `px-4 py-2 rounded-md font-medium text-sm shadow-sm ${a.style === 'primary' ? 'bg-orange-500 text-white' : ''} ${a.style === 'secondary' ? 'bg-blue-50 text-blue-700 border border-blue-100' : ''} ${a.style === 'ghost' ? 'bg-white text-purple-600 border border-gray-100' : ''}`
+                                    }>
+                                    {a.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Recent Activity */}
+                    <div className="lg:col-span-2">
+                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-lg font-semibold">Recent Activity</h3>
+                                <div className="text-sm text-gray-400">All activity</div>
+                            </div>
+
+                            <ul className="space-y-4">
+                                {recent.map(r => (
+                                    <li key={r.id} className="flex items-start gap-4">
+                                        <div className={`w-3 h-3 rounded-full mt-2 ${r.dot === 'purple' ? 'bg-purple-500' : r.dot === 'blue' ? 'bg-blue-500' : 'bg-yellow-400'}`}></div>
+                                        <div>
+                                            <div className="text-sm font-medium">{r.text}</div>
+                                            <div className="text-xs text-gray-400 mt-1">{r.time}</div>
                                         </div>
-                                    )}
-                                </a>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </nav>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-            {/* Bottom Promotional Card */}
-            <div className="p-4 mx-auto">
-                <img src='https://wityysaver.s3.ap-south-1.amazonaws.com/1758193627053-Screenshot%202025-09-18%20163610.png' className='h-36' />
-            </div>
+                        <div className="mt-6 bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+                            <h3 className="text-lg font-semibold mb-3">Performance Insights</h3>
+                            <div className="text-sm text-gray-500">A compact insight panel — show charts, trends, and suggestions here. (Placeholder)</div>
+                        </div>
+                    </div>
+
+                    {/* Right rail */}
+                    <aside>
+                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 mb-4">
+                            <h4 className="text-sm font-semibold mb-2">Today</h4>
+                            <div className="text-sm text-gray-500">2 tasks due — <button className="text-xs underline">View</button></div>
+                        </div>
+
+                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+                            <h4 className="text-sm font-semibold mb-2">Shortcuts</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li className="px-2 py-2 rounded hover:bg-gray-50">Assign next booking</li>
+                                <li className="px-2 py-2 rounded hover:bg-gray-50">Invite RM</li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </main>
         </div>
-        // </div>
     );
-};
-
-export default FilterChipsUI;
+}
