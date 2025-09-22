@@ -3684,7 +3684,7 @@ const RmPage = () => {
         )}
 
         {/* Navigation Tabs */}
-        <div className="flex gap-1  bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+        <div className="flex gap-1  bg-white p-2 rounded-xl border border-gray-200 shadow-sm mb-2">
           {/* {[
             { key: 'overview', label: 'Overview', icon: BarChart3 },
             { key: 'rms', label: 'Manage RMs', icon: Users },
