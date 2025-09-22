@@ -317,7 +317,7 @@
 //                   </button>
 //                 </div>
 //               </div>
-              
+
 //               <div className="flex justify-between items-center pt-4 border-t border-gray-100">
 //                 <div className="flex gap-6 text-sm">
 //                   <span className="text-gray-600">Completed: <span className="font-semibold text-gray-900">{rm.completedVisits}</span></span>
@@ -352,7 +352,7 @@
 //             </button>
 //           </div>
 //         </div>
-        
+
 //         <div className="space-y-4">
 //           {unassignedBookings.map(booking => (
 //             <div key={booking.id} className="border border-gray-200 rounded-xl p-5 hover:bg-gray-50 transition-colors">
@@ -474,7 +474,7 @@
 //             const visits = Math.floor(Math.random() * 20) + 5;
 //             const maxVisits = 25;
 //             const height = (visits / maxVisits) * 100;
-            
+
 //             return (
 //               <div key={day} className="flex flex-col items-center flex-1">
 //                 <div 
@@ -509,7 +509,7 @@
 //               </button>
 //             </div>
 //           </div>
-          
+
 //           <div className="p-6 space-y-6">
 //             <div className="space-y-4">
 //               <div>
@@ -562,7 +562,7 @@
 //                 </div>
 //               </div>
 //             </div>
-            
+
 //             <div className="flex gap-3 pt-4 border-t border-gray-100">
 //               <button 
 //                 onClick={() => setShowAddRMModal(false)}
@@ -789,13 +789,13 @@
 //               </button>
 //             </div>
 //           </div>
-          
+
 //           <div className="p-6 space-y-6">
 //             <div className="bg-gray-50 p-4 rounded-xl">
 //               <h3 className="font-semibold text-gray-900">{selectedBooking.property.title}</h3>
 //               <p className="text-sm text-gray-600 mt-1">{selectedBooking.customer.name} • {selectedBooking.propertyType}</p>
 //             </div>
-            
+
 //             <div>
 //               <label className="block text-sm font-medium text-gray-700 mb-3">Select RM</label>
 //               <div className="space-y-3 max-h-48 overflow-y-auto">
@@ -818,7 +818,7 @@
 //                 ))}
 //               </div>
 //             </div>
-            
+
 //             <div>
 //               <label className="block text-sm font-medium text-gray-700 mb-2">Assignment Notes</label>
 //               <textarea
@@ -827,7 +827,7 @@
 //                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
 //               />
 //             </div>
-            
+
 //             <div className="flex gap-3 pt-4 border-t border-gray-100">
 //               <button
 //                 onClick={() => setShowAssignModal(false)}
@@ -2024,11 +2024,11 @@ const RmPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [dateFilter, setDateFilter] = useState({ from: '', to: '' });
-   const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-   const navigate = useNavigate()
+  const navigate = useNavigate()
 
- 
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   // State for real data
@@ -2098,25 +2098,25 @@ const RmPage = () => {
   // Filter bookings by date range
   const filterBookingsByDate = (bookings, dateField = 'createdAt') => {
     if (!dateFilter.from && !dateFilter.to) return bookings;
-    
+
     return bookings.filter(booking => {
       const bookingDate = new Date(booking[dateField]);
       if (isNaN(bookingDate.getTime())) return false;
-      
+
       let matchesFrom = true;
       let matchesTo = true;
-      
+
       if (dateFilter.from) {
         const fromDate = new Date(dateFilter.from);
         matchesFrom = bookingDate >= fromDate;
       }
-      
+
       if (dateFilter.to) {
         const toDate = new Date(dateFilter.to);
         toDate.setHours(23, 59, 59, 999); // End of day
         matchesTo = bookingDate <= toDate;
       }
-      
+
       return matchesFrom && matchesTo;
     });
   };
@@ -2262,7 +2262,7 @@ const RmPage = () => {
     fetchLeaderboard();
   }, []);
 
-   const handleCopy = (password) => {
+  const handleCopy = (password) => {
     // if (!rm.password) return;
 
     navigator.clipboard.writeText(password).then(() => {
@@ -2310,7 +2310,7 @@ const RmPage = () => {
   // Unassigned Bookings Component
   const UnassignedBookings = () => {
     const filteredBookings = filterBookingsByDate(unassignedBookings, 'createdAt');
-  console.log("filteredBookings" , filteredBookings)
+    console.log("filteredBookings", filteredBookings)
 
     return (
       <div className="space-y-4">
@@ -2322,11 +2322,10 @@ const RmPage = () => {
                   <h4 className="font-semibold text-gray-900 text-lg">
                     {booking.property?.post_title || booking.property?.title}
                   </h4>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${
-                    booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
-                    booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-green-100 text-green-700'
-                  }`}>
+                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
+                      booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-green-100 text-green-700'
+                    }`}>
                     {booking.priority} PRIORITY
                   </span>
                 </div>
@@ -2368,37 +2367,37 @@ const RmPage = () => {
                   </div>
                 </div>
               </div>
-             <div className='flex flex-col gap-1'>
-               <button
-                onClick={() => {
-                  setSelectedBooking(booking);
-                  setShowAssignModal(true);
-                }}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm font-medium transition-colors"
-              >
-                Assign RM
-              </button>
-              <button
-                onClick={() => {
-                  navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
-                }}
-                className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
-              >
-                User Bookings
-              </button>
-              <button
-                onClick={() => {
-                  navigate(`/user/search-history/${booking?.tokenPaidBy?._id}`);
-                }}
-                className="px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
-              >
-                User Searches
-              </button>
+              <div className='flex flex-col gap-1'>
+                <button
+                  onClick={() => {
+                    setSelectedBooking(booking);
+                    setShowAssignModal(true);
+                  }}
+                  className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm font-medium transition-colors"
+                >
+                  Assign RM
+                </button>
+                <button
+                  onClick={() => {
+                    navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+                  }}
+                  className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+                >
+                  User Summary
+                </button>
+                {/* <button
+                  onClick={() => {
+                    navigate(`/user/search-history/${booking?.tokenPaidBy?._id}`);
+                  }}
+                  className="px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+                >
+                  User Searches
+                </button> */}
               </div>
             </div>
           </div>
         ))}
-        
+
         {filteredBookings.length === 0 && (
           <div className="text-center py-12">
             <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
@@ -2442,15 +2441,23 @@ const RmPage = () => {
                   <span className={`px-3 py-1 text-xs rounded-full font-medium ${getStatusColor(booking.visitStatus)}`}>
                     {booking.visitStatus}
                   </span>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${
-                    booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
-                    booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-green-100 text-green-700'
-                  }`}>
+                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
+                      booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-green-100 text-green-700'
+                    }`}>
                     {booking.priority}
                   </span>
+                  <button
+                    onClick={() => {
+                      navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+                    }}
+                    className="px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+                  >
+                    User Summary
+                  </button>
                 </div>
                 
+
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
                   <div className="space-y-1">
                     <p className="text-gray-600">
@@ -2484,6 +2491,7 @@ const RmPage = () => {
                       <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
                     </p>
                   </div>
+                  
                 </div>
 
                 {booking.visitDetails && (
@@ -2507,8 +2515,8 @@ const RmPage = () => {
                       <div>
                         <span className="font-medium text-gray-700">Follow-up:</span>
                         <p className="text-gray-600">
-                          {booking.visitDetails.followUpRequired ? 
-                            `Required - ${formatDate(booking.visitDetails.followUpDate)}` : 
+                          {booking.visitDetails.followUpRequired ?
+                            `Required - ${formatDate(booking.visitDetails.followUpDate)}` :
                             'Not Required'
                           }
                         </p>
@@ -2522,6 +2530,7 @@ const RmPage = () => {
                     )}
                   </div>
                 )}
+                
               </div>
             </div>
           </div>
@@ -2542,7 +2551,7 @@ const RmPage = () => {
   const RMActivity = () => {
     const getAllActivities = () => {
       const activities = [];
-      
+
       assignedBookings.forEach(booking => {
         // Add assignment activity
         activities.push({
@@ -2630,7 +2639,7 @@ const RmPage = () => {
                     <p className="text-gray-600">{activity.rmName}</p>
                   </div>
                 </div>
-                
+
                 {activity.metadata && (
                   <div className="mt-3 p-3 bg-white rounded-lg border">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -2680,121 +2689,287 @@ const RmPage = () => {
     );
   };
 
-  // Dashboard Overview Component
-  const DashboardOverview = () => (
-    <div className="space-y-6">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Total RMs</p>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{builderStats.totalRMs}</p>
-              <p className="text-xs text-green-600 mt-1">↑ 12% from last month</p>
-            </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-              <Users className="h-6 w-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Active Bookings</p>
-              <p className="text-3xl font-bold text-orange-600 mt-2">{builderStats.activeBookings}</p>
-              <p className="text-xs text-green-600 mt-1">↑ 8% from last week</p>
-            </div>
-            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-              <Calendar className="h-6 w-6 text-orange-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Completed Visits</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">{builderStats.completedVisits}</p>
-              <p className="text-xs text-green-600 mt-1">↑ 15% from last month</p>
-            </div>
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-              <CheckCircle className="h-6 w-6 text-green-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Pending Assignments</p>
-              <p className="text-3xl font-bold text-red-600 mt-2">{builderStats.pendingAssignments}</p>
-              <p className="text-xs text-red-600 mt-1">↓ 5% from yesterday</p>
-            </div>
-            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-              <AlertCircle className="h-6 w-6 text-red-600" />
-            </div>
-          </div>
-        </div>
-      </div>
+  // // Dashboard Overview Component
+  // const DashboardOverview = () => (
+  //   <div className="space-y-6">
+  //     {/* Stats Cards */}
+  //     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+  //       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+  //         <div className="flex items-center justify-between">
+  //           <div>
+  //             <p className="text-sm text-gray-600 font-medium">Total RMs</p>
+  //             <p className="text-3xl font-bold text-blue-600 mt-2">{builderStats.totalRMs}</p>
+  //             <p className="text-xs text-green-600 mt-1">↑ 12% from last month</p>
+  //           </div>
+  //           <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+  //             <Users className="h-6 w-6 text-blue-600" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+  //         <div className="flex items-center justify-between">
+  //           <div>
+  //             <p className="text-sm text-gray-600 font-medium">Active Bookings</p>
+  //             <p className="text-3xl font-bold text-orange-600 mt-2">{builderStats.activeBookings}</p>
+  //             <p className="text-xs text-green-600 mt-1">↑ 8% from last week</p>
+  //           </div>
+  //           <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+  //             <Calendar className="h-6 w-6 text-orange-600" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+  //         <div className="flex items-center justify-between">
+  //           <div>
+  //             <p className="text-sm text-gray-600 font-medium">Completed Visits</p>
+  //             <p className="text-3xl font-bold text-green-600 mt-2">{builderStats.completedVisits}</p>
+  //             <p className="text-xs text-green-600 mt-1">↑ 15% from last month</p>
+  //           </div>
+  //           <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+  //             <CheckCircle className="h-6 w-6 text-green-600" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+  //         <div className="flex items-center justify-between">
+  //           <div>
+  //             <p className="text-sm text-gray-600 font-medium">Pending Assignments</p>
+  //             <p className="text-3xl font-bold text-red-600 mt-2">{builderStats.pendingAssignments}</p>
+  //             <p className="text-xs text-red-600 mt-1">↓ 5% from yesterday</p>
+  //           </div>
+  //           <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+  //             <AlertCircle className="h-6 w-6 text-red-600" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 className="font-semibold text-lg text-gray-900 mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button
-            onClick={() => setShowAddRMModal(true)}
-            className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 rounded-xl border border-blue-200 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 group"
-          >
-            <UserPlus className="h-5 w-5 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">Add RM</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('bookings')}
-            className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 rounded-xl border border-orange-200 hover:from-orange-100 hover:to-orange-200 transition-all duration-200 group"
-          >
-            <Calendar className="h-5 w-5 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">Assign Bookings</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('performance')}
-            className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-green-50 to-green-100 text-green-700 rounded-xl border border-green-200 hover:from-green-100 hover:to-green-200 transition-all duration-200 group"
-          >
-            <BarChart3 className="h-5 w-5 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">View Performance</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('rms')}
-            className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-purple-100 text-purple-700 rounded-xl border border-purple-200 hover:from-purple-100 hover:to-purple-200 transition-all duration-200 group"
-          >
-            <Users className="h-5 w-5 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">Manage RMs</span>
-          </button>
-        </div>
-      </div>
+  //     {/* Quick Actions */}
+  //     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+  //       <h3 className="font-semibold text-lg text-gray-900 mb-4">Quick Actions</h3>
+  //       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+  //         <button
+  //           onClick={() => setShowAddRMModal(true)}
+  //           className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 rounded-xl border border-blue-200 hover:from-blue-100 hover:to-blue-200 transition-all duration-200 group"
+  //         >
+  //           <UserPlus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+  //           <span className="font-medium">Add RM</span>
+  //         </button>
+  //         <button
+  //           onClick={() => setActiveTab('bookings')}
+  //           className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 rounded-xl border border-orange-200 hover:from-orange-100 hover:to-orange-200 transition-all duration-200 group"
+  //         >
+  //           <Calendar className="h-5 w-5 group-hover:scale-110 transition-transform" />
+  //           <span className="font-medium">Assign Bookings</span>
+  //         </button>
+  //         <button
+  //           onClick={() => setActiveTab('performance')}
+  //           className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-green-50 to-green-100 text-green-700 rounded-xl border border-green-200 hover:from-green-100 hover:to-green-200 transition-all duration-200 group"
+  //         >
+  //           <BarChart3 className="h-5 w-5 group-hover:scale-110 transition-transform" />
+  //           <span className="font-medium">View Performance</span>
+  //         </button>
+  //         <button
+  //           onClick={() => setActiveTab('rms')}
+  //           className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-purple-100 text-purple-700 rounded-xl border border-purple-200 hover:from-purple-100 hover:to-purple-200 transition-all duration-200 group"
+  //         >
+  //           <Users className="h-5 w-5 group-hover:scale-110 transition-transform" />
+  //           <span className="font-medium">Manage RMs</span>
+  //         </button>
+  //       </div>
+  //     </div>
 
-      {/* Recent Activity */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 className="font-semibold text-lg text-gray-900 mb-4">Recent Activity</h3>
-        <div className="space-y-4">
-          {[
-            { action: 'New RM added to team', time: '2 hours ago', type: 'addition' },
-            { action: 'Booking assigned successfully', time: '4 hours ago', type: 'assignment' },
-            { action: 'Site visit completed', time: '6 hours ago', type: 'completion' },
-            { action: 'Appointment rescheduled', time: '1 day ago', type: 'reschedule' }
-          ].map((activity, index) => (
-            <div key={index} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
-              <div className={`w-3 h-3 rounded-full flex-shrink-0 ${activity.type === 'completion' ? 'bg-green-500' :
-                  activity.type === 'assignment' ? 'bg-blue-500' :
-                    activity.type === 'reschedule' ? 'bg-yellow-500' : 'bg-purple-500'
-                }`}></div>
+  //     {/* Recent Activity */}
+  //     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+  //       <h3 className="font-semibold text-lg text-gray-900 mb-4">Recent Activity</h3>
+  //       <div className="space-y-4">
+  //         {[
+  //           { action: 'New RM added to team', time: '2 hours ago', type: 'addition' },
+  //           { action: 'Booking assigned successfully', time: '4 hours ago', type: 'assignment' },
+  //           { action: 'Site visit completed', time: '6 hours ago', type: 'completion' },
+  //           { action: 'Appointment rescheduled', time: '1 day ago', type: 'reschedule' }
+  //         ].map((activity, index) => (
+  //           <div key={index} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+  //             <div className={`w-3 h-3 rounded-full flex-shrink-0 ${activity.type === 'completion' ? 'bg-green-500' :
+  //                 activity.type === 'assignment' ? 'bg-blue-500' :
+  //                   activity.type === 'reschedule' ? 'bg-yellow-500' : 'bg-purple-500'
+  //               }`}></div>
+  //             <div className="flex-1">
+  //               <p className="text-sm text-gray-900 font-medium">{activity.action}</p>
+  //               <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+  //             </div>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
+
+  const DashboardOverview = () => {
+    return (
+      <div className="py-2 space-y-8 min-h-screen">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          {/* Pending Assignments */}
+          <div className="bg-white rounded-lg shadow-sm border p-5 hover:shadow-md transition-shadow">
+            <div className="flex items-start justify-between">
               <div className="flex-1">
-                <p className="text-sm text-gray-900 font-medium">{activity.action}</p>
-                <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                <p className="text-xs font-medium text-gray-500 mb-1">Pending Assignments</p>
+                <p className="text-3xl font-bold text-gray-900 mb-2">{builderStats.pendingAssignments}</p>
+                <div className="flex items-center text-xs text-red-600">
+                  <span>↓ 5% from yesterday</span>
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
+                <AlertCircle className="h-5 w-5 text-red-500" />
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Active Bookings */}
+          <div className="bg-white rounded-lg shadow-sm border p-5 hover:shadow-md transition-shadow">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="text-xs font-medium text-gray-500 mb-1">Active Bookings</p>
+                <p className="text-3xl font-bold text-gray-900 mb-2">{builderStats.activeBookings}</p>
+                <div className="flex items-center text-xs text-green-600">
+                  <span>↑ 8% from last week</span>
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center">
+                <Calendar className="h-5 w-5 text-orange-500" />
+              </div>
+            </div>
+          </div>
+
+          {/* Completed Visits */}
+          <div className="bg-white rounded-lg shadow-sm border p-5 hover:shadow-md transition-shadow">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="text-xs font-medium text-gray-500 mb-1">Completed Visits</p>
+                <p className="text-3xl font-bold text-gray-900 mb-2">{builderStats.completedVisits}</p>
+                <div className="flex items-center text-xs text-green-600">
+                  <span>↑ 15% from last month</span>
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+              </div>
+            </div>
+          </div>
+
+          {/* Total RMs */}
+          <div className="bg-white rounded-lg shadow-sm border p-5 hover:shadow-md transition-shadow">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="text-xs font-medium text-gray-500 mb-1">Total RMs</p>
+                <p className="text-3xl font-bold text-gray-900 mb-2">{builderStats.totalRMs}</p>
+                <div className="flex items-center text-xs text-blue-600">
+                  <span>↑ 12% from last month</span>
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                <Users className="h-5 w-5 text-blue-500" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions Section */}
+        {/* <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">Quick actions — make the most common tasks reachable from anywhere.</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => setShowAddRMModal(true)}
+              className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg border border-blue-200 transition-colors duration-200"
+            >
+              Add RM
+            </button>
+            <button
+              onClick={() => setActiveTab('bookings')}
+              className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              Assign Bookings
+            </button>
+            <button
+              onClick={() => setActiveTab('performance')}
+              className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              View Performance
+            </button>
+            <button
+              onClick={() => setActiveTab('rms')}
+              className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              Manage RMs
+            </button>
+          </div>
+        </div> */}
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Recent Activity */}
+          <div className="lg:col-span-2 bg-white rounded-lg shadow-sm border">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
+                <button className="text-sm text-gray-500 hover:text-gray-700">All activity</button>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {[
+                  { action: 'New RM added to team', time: '2 hours ago', type: 'addition', color: 'bg-purple-500' },
+                  { action: 'Booking assigned successfully', time: '4 hours ago', type: 'assignment', color: 'bg-blue-500' },
+                  { action: 'Site visit completed', time: '6 hours ago', type: 'completion', color: 'bg-green-500' },
+                  { action: 'Appointment rescheduled', time: '1 day ago', type: 'reschedule', color: 'bg-yellow-500' }
+                ].map((activity, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className={`w-2 h-2 rounded-full mt-2 ${activity.color}`}></div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 mb-1">{activity.action}</p>
+                      <p className="text-xs text-gray-500">{activity.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Sidebar */}
+          <div className="space-y-6">
+            {/* Today Section */}
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Today</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">10 tasks due</span>
+                  <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">View</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Shortcuts Section */}
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Shortcuts</h3>
+              <div className="space-y-3">
+                <button className="w-full text-left text-sm text-gray-700 hover:text-gray-900 py-2 hover:bg-gray-50 rounded transition-colors">
+                  Assign next booking
+                </button>
+                <button className="w-full text-left text-sm text-gray-700 hover:text-gray-900 py-2 hover:bg-gray-50 rounded transition-colors">
+                  Invite RM
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
 
   // RM Management Component
   const RMManagement = () => {
@@ -2864,8 +3039,8 @@ const RmPage = () => {
                       <h3 className="font-semibold text-gray-900 text-lg">{rm.name}</h3>
                       <div className="flex items-center gap-2">
                         <span className={`px-2 py-1 text-xs rounded-full font-medium ${rm.status === 'ACTIVE' ? 'bg-green-100 text-green-700' :
-                            rm.status === 'INACTIVE' ? 'bg-red-100 text-red-700' :
-                              'bg-yellow-100 text-yellow-700'
+                          rm.status === 'INACTIVE' ? 'bg-red-100 text-red-700' :
+                            'bg-yellow-100 text-yellow-700'
                           }`}>
                           {rm.role}
                         </span>
@@ -2885,21 +3060,21 @@ const RmPage = () => {
                       <span className="text-gray-600">{rm.password}</span>
                     </div> */}
                     <div className="flex items-center gap-2">
-      <SectionIcon className="h-4 w-4 text-gray-400" />
-      <span className="text-gray-600">{rm.password}</span>
+                      <SectionIcon className="h-4 w-4 text-gray-400" />
+                      <span className="text-gray-600">{rm.password}</span>
 
-      <button
-        onClick={()=>handleCopy(rm.password)}
-        className="ml-2 p-1 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
-        title={copied ? "Copied!" : "Copy password"}
-      >
-        {copied ? (
-          <Check className="h-4 w-4 text-green-600" />
-        ) : (
-          <Copy className="h-4 w-4 text-gray-500" />
-        )}
-      </button>
-    </div>
+                      <button
+                        onClick={() => handleCopy(rm.password)}
+                        className="ml-2 p-1 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+                        title={copied ? "Copied!" : "Copy password"}
+                      >
+                        {copied ? (
+                          <Check className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <Copy className="h-4 w-4 text-gray-500" />
+                        )}
+                      </button>
+                    </div>
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-gray-400" />
                       <span className="text-gray-600">{rm.phone}</span>
@@ -2959,39 +3134,36 @@ const RmPage = () => {
     <div className="space-y-6">
       {/* Date Filter */}
       <DateFilterComponent />
-      
+
       {/* Sub-tabs */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setBookingSubTab('unassigned')}
-            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${
-              bookingSubTab === 'unassigned'
+            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${bookingSubTab === 'unassigned'
                 ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
+              }`}
           >
             <AlertCircle className="h-4 w-4" />
             Unassigned Bookings ({unassignedBookings.length})
           </button>
           <button
             onClick={() => setBookingSubTab('assigned')}
-            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${
-              bookingSubTab === 'assigned'
+            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${bookingSubTab === 'assigned'
                 ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
+              }`}
           >
             <CheckCircle className="h-4 w-4" />
             Assigned Bookings ({assignedBookings.length})
           </button>
           <button
             onClick={() => setBookingSubTab('activity')}
-            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${
-              bookingSubTab === 'activity'
+            className={`px-6 py-4 text-sm font-medium transition-colors flex items-center gap-2 ${bookingSubTab === 'activity'
                 ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
+              }`}
           >
             <Activity className="h-4 w-4" />
             RM Activity
@@ -3020,8 +3192,8 @@ const RmPage = () => {
               .map((rm, index) => (
                 <div key={rm._id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                      index === 1 ? 'bg-gray-100 text-gray-700' :
-                        'bg-orange-100 text-orange-700'
+                    index === 1 ? 'bg-gray-100 text-gray-700' :
+                      'bg-orange-100 text-orange-700'
                     }`}>
                     {index + 1}
                   </div>
@@ -3038,8 +3210,8 @@ const RmPage = () => {
                 .map((rm, index) => (
                   <div key={rm.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                        index === 1 ? 'bg-gray-100 text-gray-700' :
-                          'bg-orange-100 text-orange-700'
+                      index === 1 ? 'bg-gray-100 text-gray-700' :
+                        'bg-orange-100 text-orange-700'
                       }`}>
                       {index + 1}
                     </div>
@@ -3504,7 +3676,7 @@ const RmPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         {error && (
           <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl">
             {error}
@@ -3512,8 +3684,8 @@ const RmPage = () => {
         )}
 
         {/* Navigation Tabs */}
-        <div className="flex gap-1 mb-8 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
-          {[
+        <div className="flex gap-1  bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+          {/* {[
             { key: 'overview', label: 'Overview', icon: BarChart3 },
             { key: 'rms', label: 'Manage RMs', icon: Users },
             { key: 'bookings', label: 'Bookings', icon: Calendar },
@@ -3525,15 +3697,48 @@ const RmPage = () => {
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${activeTab === tab.key
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
               >
                 <Icon className="h-4 w-4" />
                 {tab.label}
               </button>
             );
-          })}
+          })} */}
+
+          {/* Quick Actions Section */}
+          <div className="space-y-4">
+            {/* <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-600">Quick actions — make the most common tasks reachable from anywhere.</p>
+            </div> */}
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => setShowAddRMModal(true)}
+                className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg border border-blue-200 transition-colors duration-200"
+              >
+                Add RM
+              </button>
+              <button
+                onClick={() => setActiveTab('bookings')}
+                className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              >
+                Assign Bookings
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              >
+                View Performance
+              </button>
+              <button
+                onClick={() => setActiveTab('rms')}
+                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              >
+                Manage RMs
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Tab Content */}

@@ -994,7 +994,6 @@
 // export default FilterChipsUI;
 
 
-import React from "react";
 
 // Builder Dashboard Preview
 // Single-file React component using Tailwind CSS for quick preview.
@@ -1003,181 +1002,346 @@ import React from "react";
 // - KPI cards row
 // - Persistent Action Zone
 // - Recent Activity and Insights
+// import React from "react";
+
+// export default function FilterChipsUI() {
+//     const kpis = [
+//         { id: 1, label: "Pending Assignments", value: 10, tone: "danger", note: "5% from yesterday" },
+//         { id: 2, label: "Active Bookings", value: 2, tone: "accent", note: "8% from last week" },
+//         { id: 3, label: "Completed Visits", value: 1, tone: "success", note: "15% from last month" },
+//         { id: 4, label: "Total RMs", value: 7, tone: "muted", note: "12% from last month" },
+//     ];
+
+//     const actions = [
+//         { id: "add-rm", label: "Add RM", style: "secondary" },
+//         { id: "assign", label: "Assign Bookings", style: "primary" },
+//         { id: "performance", label: "View Performance", style: "ghost" },
+//         { id: "manage-rm", label: "Manage RMs", style: "ghost" },
+//     ];
+
+//     const recent = [
+//         { id: 1, text: "New RM added to team", time: "2 hours ago", dot: "purple" },
+//         { id: 2, text: "Booking assigned successfully", time: "4 hours ago", dot: "blue" },
+//         { id: 3, text: "Callback pending for Property A", time: "1 day ago", dot: "yellow" },
+//     ];
+
+//     return (
+//         <div className="min-h-screen bg-gray-50 flex">
+//             {/* Sidebar */}
+//             <aside className="w-72 bg-white border-r border-gray-200 min-h-screen sticky top-0">
+//                 <div className="px-6 py-6">
+//                     <div className="flex items-center gap-3">
+//                         <div className="w-9 h-9 rounded bg-red-600 flex items-center justify-center text-white font-bold">P</div>
+//                         <div>
+//                             <div className="font-extrabold text-lg">PROFO</div>
+//                             <div className="text-xs text-gray-400">Builder Dashboard</div>
+//                         </div>
+//                     </div>
+//                 </div>
+
+//                 <nav className="px-4 py-2 text-sm text-gray-700">
+//                     <div className="mb-4">
+//                         <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Properties</div>
+//                         <ul className="space-y-1">
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">My Properties</li>
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">Property Performance</li>
+//                         </ul>
+//                     </div>
+
+//                     <div className="mb-4">
+//                         <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Bookings</div>
+//                         <ul className="space-y-1">
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">All Bookings</li>
+//                             <li className="px-3 py-2 rounded bg-blue-50 font-medium">RM Assignments</li>
+//                         </ul>
+//                     </div>
+
+//                     <div className="mb-4">
+//                         <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Communication</div>
+//                         <ul className="space-y-1">
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">Enquiries</li>
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">Callbacks <span className="ml-2 inline-block text-xs bg-yellow-100 px-2 rounded">2</span></li>
+//                         </ul>
+//                     </div>
+
+//                     <div className="mb-4">
+//                         <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Team</div>
+//                         <ul className="space-y-1">
+//                             <li className="px-3 py-2 rounded hover:bg-gray-50">Relationship Managers</li>
+//                         </ul>
+//                     </div>
+
+//                     <div className="mt-6 border-t pt-4 text-xs text-gray-400">
+//                         <div className="px-3 py-2">Profile</div>
+//                         <div className="px-3 py-2">Settings</div>
+//                     </div>
+//                 </nav>
+//             </aside>
+
+//             {/* Main area */}
+//             <main className="flex-1 p-8">
+//                 {/* Header */}
+//                 <header className="flex items-center justify-between mb-6">
+//                     <div>
+//                         <h1 className="text-2xl font-extrabold">Welcome back <span className="text-blue-600">Anurag</span> 👋</h1>
+//                         <p className="text-sm text-gray-500 mt-1">Overview of your properties & RM assignments</p>
+//                     </div>
+
+//                     <div className="flex items-center gap-4">
+//                         <div className="relative">
+//                             <input className="w-80 rounded-full border border-gray-200 px-4 py-2 text-sm bg-white" placeholder="Search" />
+//                         </div>
+//                         <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center">A</div>
+//                     </div>
+//                 </header>
+
+//                 {/* KPI Row */}
+//                 <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+//                     {kpis.map(k => (
+//                         <div key={k.id} className="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+//                             <div className="flex items-start justify-between">
+//                                 <div>
+//                                     <div className="text-xs text-gray-400">{k.label}</div>
+//                                     <div className="mt-2 text-2xl font-bold">{k.value}</div>
+//                                     <div className="text-xs text-gray-400 mt-1">{k.note}</div>
+//                                 </div>
+//                                 <div className="ml-4">
+//                                     {k.tone === 'danger' && <div className="w-10 h-10 rounded bg-red-50 flex items-center justify-center text-red-600">!</div>}
+//                                     {k.tone === 'success' && <div className="w-10 h-10 rounded bg-green-50 flex items-center justify-center text-green-600">✓</div>}
+//                                     {k.tone === 'accent' && <div className="w-10 h-10 rounded bg-orange-50 flex items-center justify-center text-orange-600">📅</div>}
+//                                     {k.tone === 'muted' && <div className="w-10 h-10 rounded bg-blue-50 flex items-center justify-center text-blue-600">👥</div>}
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     ))}
+//                 </section>
+
+//                 {/* Action Zone */}
+//                 <section className="sticky top-6 bg-transparent mb-6">
+//                     <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-100 flex gap-4 items-center">
+//                         <div className="flex-1 text-sm text-gray-600">Quick actions — make the most common tasks reachable from anywhere.</div>
+//                         <div className="flex gap-3">
+//                             {actions.map(a => (
+//                                 <button key={a.id}
+//                                     className={
+//                                         `px-4 py-2 rounded-md font-medium text-sm shadow-sm ${a.style === 'primary' ? 'bg-orange-500 text-white' : ''} ${a.style === 'secondary' ? 'bg-blue-50 text-blue-700 border border-blue-100' : ''} ${a.style === 'ghost' ? 'bg-white text-purple-600 border border-gray-100' : ''}`
+//                                     }>
+//                                     {a.label}
+//                                 </button>
+//                             ))}
+//                         </div>
+//                     </div>
+//                 </section>
+
+//                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+//                     {/* Recent Activity */}
+//                     <div className="lg:col-span-2">
+//                         <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+//                             <div className="flex items-center justify-between mb-4">
+//                                 <h3 className="text-lg font-semibold">Recent Activity</h3>
+//                                 <div className="text-sm text-gray-400">All activity</div>
+//                             </div>
+
+//                             <ul className="space-y-4">
+//                                 {recent.map(r => (
+//                                     <li key={r.id} className="flex items-start gap-4">
+//                                         <div className={`w-3 h-3 rounded-full mt-2 ${r.dot === 'purple' ? 'bg-purple-500' : r.dot === 'blue' ? 'bg-blue-500' : 'bg-yellow-400'}`}></div>
+//                                         <div>
+//                                             <div className="text-sm font-medium">{r.text}</div>
+//                                             <div className="text-xs text-gray-400 mt-1">{r.time}</div>
+//                                         </div>
+//                                     </li>
+//                                 ))}
+//                             </ul>
+//                         </div>
+
+//                         <div className="mt-6 bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+//                             <h3 className="text-lg font-semibold mb-3">Performance Insights</h3>
+//                             <div className="text-sm text-gray-500">A compact insight panel — show charts, trends, and suggestions here. (Placeholder)</div>
+//                         </div>
+//                     </div>
+
+//                     {/* Right rail */}
+//                     <aside>
+//                         <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 mb-4">
+//                             <h4 className="text-sm font-semibold mb-2">Today</h4>
+//                             <div className="text-sm text-gray-500">2 tasks due — <button className="text-xs underline">View</button></div>
+//                         </div>
+
+//                         <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
+//                             <h4 className="text-sm font-semibold mb-2">Shortcuts</h4>
+//                             <ul className="space-y-2 text-sm">
+//                                 <li className="px-2 py-2 rounded hover:bg-gray-50">Assign next booking</li>
+//                                 <li className="px-2 py-2 rounded hover:bg-gray-50">Invite RM</li>
+//                             </ul>
+//                         </div>
+//                     </aside>
+//                 </div>
+//             </main>
+//         </div>
+//     );
+// }
+
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Table, TableHeader, TableRow, TableHead, TableCell, TableBody } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function FilterChipsUI() {
-    const kpis = [
-        { id: 1, label: "Pending Assignments", value: 10, tone: "danger", note: "5% from yesterday" },
-        { id: 2, label: "Active Bookings", value: 2, tone: "accent", note: "8% from last week" },
-        { id: 3, label: "Completed Visits", value: 1, tone: "success", note: "15% from last month" },
-        { id: 4, label: "Total RMs", value: 7, tone: "muted", note: "12% from last month" },
-    ];
+    const [properties] = useState([
+        { id: 1, title: "3BHK Shops for rent in Gujaini", location: "123 Green Apartments, Main Road, Kanpur", price: "₹85 Lakh", views: 999, bookings: 1, status: "Selected" },
+        { id: 2, title: "Premium 1BHK in Kanpur", location: "Address 8, Kanpur, Uttar Pradesh", price: "₹32,70,000", views: 54, bookings: 0, status: "Available" },
+        { id: 3, title: "New Onboard Check", location: "Block No.44, Kanpur", price: "₹40 Lakh", views: 308, bookings: 0, status: "Available" },
+    ]);
 
-    const actions = [
-        { id: "add-rm", label: "Add RM", style: "secondary" },
-        { id: "assign", label: "Assign Bookings", style: "primary" },
-        { id: "performance", label: "View Performance", style: "ghost" },
-        { id: "manage-rm", label: "Manage RMs", style: "ghost" },
-    ];
+    const [bookings] = useState([
+        { id: 1, property: "3BHK Shops for rent in Gujaini", customer: "Anurag Sonkar", email: "anuragsonkar053@gmail.com", phone: "8318706210", token: "₹100", date: "9 Sept 2025", lock: "Locked", tokenStatus: "PAID", finalStatus: "PENDING", confirmation: "Pending" },
+        { id: 2, property: "Premium 1BHK in Kanpur", customer: "Ravi Kumar", email: "ravi.k@example.com", phone: "9876543210", token: "₹50,000", date: "15 Sept 2025", lock: "Unlocked", tokenStatus: "UNPAID", finalStatus: "CANCELLED", confirmation: "Rejected" },
+    ]);
 
-    const recent = [
-        { id: 1, text: "New RM added to team", time: "2 hours ago", dot: "purple" },
-        { id: 2, text: "Booking assigned successfully", time: "4 hours ago", dot: "blue" },
-        { id: 3, text: "Callback pending for Property A", time: "1 day ago", dot: "yellow" },
+    const weeklyBookings = [
+        { day: "Friday", confirmed: 3, pending: 2 },
+        { day: "Saturday", confirmed: 5, pending: 1 },
+        { day: "Sunday", confirmed: 4, pending: 3 },
+        { day: "Monday", confirmed: 6, pending: 2 },
+        { day: "Tuesday", confirmed: 2, pending: 4 },
+        { day: "Wednesday", confirmed: 5, pending: 2 },
+        { day: "Thursday", confirmed: 3, pending: 1 },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
-            {/* Sidebar */}
-            <aside className="w-72 bg-white border-r border-gray-200 min-h-screen sticky top-0">
-                <div className="px-6 py-6">
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded bg-red-600 flex items-center justify-center text-white font-bold">P</div>
-                        <div>
-                            <div className="font-extrabold text-lg">PROFO</div>
-                            <div className="text-xs text-gray-400">Builder Dashboard</div>
-                        </div>
-                    </div>
-                </div>
+        <div className="p-3">
+            <Tabs defaultValue="properties">
+                <TabsList className="mb-3 flex justify-center space-x-2 rounded-lg bg-gray-100 p-1">
+                    <TabsTrigger value="properties" className="rounded-md px-3 py-1 text-sm">Properties</TabsTrigger>
+                    <TabsTrigger value="bookings" className="rounded-md px-3 py-1 text-sm">Bookings</TabsTrigger>
+                    <TabsTrigger value="analytics" className="rounded-md px-3 py-1 text-sm">Analytics</TabsTrigger>
+                </TabsList>
 
-                <nav className="px-4 py-2 text-sm text-gray-700">
-                    <div className="mb-4">
-                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Properties</div>
-                        <ul className="space-y-1">
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">My Properties</li>
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">Property Performance</li>
-                        </ul>
+                {/* Properties Tab */}
+                <TabsContent value="properties">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {properties.map((p) => (
+                            <Card key={p.id} className="rounded-lg shadow-sm hover:shadow-md transition border p-2">
+                                <CardHeader className="p-2">
+                                    <CardTitle className="text-base font-semibold">{p.title}</CardTitle>
+                                    <p className="text-xs text-gray-500">{p.location}</p>
+                                </CardHeader>
+                                <CardContent className="p-2">
+                                    <p className="font-semibold text-sm">{p.price}</p>
+                                    <div className="flex justify-between text-xs mt-1">
+                                        <span>👁 {p.views}</span>
+                                        <span>📑 {p.bookings}</span>
+                                    </div>
+                                    <Badge className="mt-1 text-xs px-2 py-0.5 rounded-md">{p.status}</Badge>
+                                </CardContent>
+                            </Card>
+                        ))}
                     </div>
+                </TabsContent>
 
-                    <div className="mb-4">
-                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Bookings</div>
-                        <ul className="space-y-1">
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">All Bookings</li>
-                            <li className="px-3 py-2 rounded bg-blue-50 font-medium">RM Assignments</li>
-                        </ul>
-                    </div>
-
-                    <div className="mb-4">
-                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Communication</div>
-                        <ul className="space-y-1">
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">Enquiries</li>
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">Callbacks <span className="ml-2 inline-block text-xs bg-yellow-100 px-2 rounded">2</span></li>
-                        </ul>
-                    </div>
-
-                    <div className="mb-4">
-                        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">Team</div>
-                        <ul className="space-y-1">
-                            <li className="px-3 py-2 rounded hover:bg-gray-50">Relationship Managers</li>
-                        </ul>
-                    </div>
-
-                    <div className="mt-6 border-t pt-4 text-xs text-gray-400">
-                        <div className="px-3 py-2">Profile</div>
-                        <div className="px-3 py-2">Settings</div>
-                    </div>
-                </nav>
-            </aside>
-
-            {/* Main area */}
-            <main className="flex-1 p-8">
-                {/* Header */}
-                <header className="flex items-center justify-between mb-6">
-                    <div>
-                        <h1 className="text-2xl font-extrabold">Welcome back <span className="text-blue-600">Anurag</span> 👋</h1>
-                        <p className="text-sm text-gray-500 mt-1">Overview of your properties & RM assignments</p>
+                {/* Bookings Tab */}
+                <TabsContent value="bookings">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                        <Card className="rounded-lg text-center p-2">
+                            <CardContent className="text-lg font-bold">{bookings.length} Total</CardContent>
+                        </Card>
+                        <Card className="rounded-lg text-center p-2">
+                            <CardContent className="text-lg font-bold text-green-600">
+                                {bookings.filter((b) => b.finalStatus === "CONFIRMED").length} Confirmed
+                            </CardContent>
+                        </Card>
+                        <Card className="rounded-lg text-center p-2">
+                            <CardContent className="text-lg font-bold text-yellow-600">
+                                {bookings.filter((b) => b.finalStatus === "PENDING").length} Pending
+                            </CardContent>
+                        </Card>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <input className="w-80 rounded-full border border-gray-200 px-4 py-2 text-sm bg-white" placeholder="Search" />
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center">A</div>
-                    </div>
-                </header>
+                    <Card className="mt-3 rounded-lg p-2">
+                        <CardTitle className="text-sm font-semibold mb-2">Weekly Bookings Trend</CardTitle>
+                        <ResponsiveContainer width="100%" height={180}>
+                            <BarChart data={weeklyBookings}>
+                                <XAxis dataKey="day" tick={{ fontSize: 10 }} />
+                                <YAxis tick={{ fontSize: 10 }} />
+                                <Tooltip />
+                                <Bar dataKey="confirmed" fill="#22c55e" radius={[4, 4, 0, 0]} name="Confirmed" />
+                                <Bar dataKey="pending" fill="#facc15" radius={[4, 4, 0, 0]} name="Pending" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Card>
 
-                {/* KPI Row */}
-                <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    {kpis.map(k => (
-                        <div key={k.id} className="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
-                            <div className="flex items-start justify-between">
-                                <div>
-                                    <div className="text-xs text-gray-400">{k.label}</div>
-                                    <div className="mt-2 text-2xl font-bold">{k.value}</div>
-                                    <div className="text-xs text-gray-400 mt-1">{k.note}</div>
-                                </div>
-                                <div className="ml-4">
-                                    {k.tone === 'danger' && <div className="w-10 h-10 rounded bg-red-50 flex items-center justify-center text-red-600">!</div>}
-                                    {k.tone === 'success' && <div className="w-10 h-10 rounded bg-green-50 flex items-center justify-center text-green-600">✓</div>}
-                                    {k.tone === 'accent' && <div className="w-10 h-10 rounded bg-orange-50 flex items-center justify-center text-orange-600">📅</div>}
-                                    {k.tone === 'muted' && <div className="w-10 h-10 rounded bg-blue-50 flex items-center justify-center text-blue-600">👥</div>}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </section>
-
-                {/* Action Zone */}
-                <section className="sticky top-6 bg-transparent mb-6">
-                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-100 flex gap-4 items-center">
-                        <div className="flex-1 text-sm text-gray-600">Quick actions — make the most common tasks reachable from anywhere.</div>
-                        <div className="flex gap-3">
-                            {actions.map(a => (
-                                <button key={a.id}
-                                    className={
-                                        `px-4 py-2 rounded-md font-medium text-sm shadow-sm ${a.style === 'primary' ? 'bg-orange-500 text-white' : ''} ${a.style === 'secondary' ? 'bg-blue-50 text-blue-700 border border-blue-100' : ''} ${a.style === 'ghost' ? 'bg-white text-purple-600 border border-gray-100' : ''}`
-                                    }>
-                                    {a.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Recent Activity */}
-                    <div className="lg:col-span-2">
-                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-lg font-semibold">Recent Activity</h3>
-                                <div className="text-sm text-gray-400">All activity</div>
-                            </div>
-
-                            <ul className="space-y-4">
-                                {recent.map(r => (
-                                    <li key={r.id} className="flex items-start gap-4">
-                                        <div className={`w-3 h-3 rounded-full mt-2 ${r.dot === 'purple' ? 'bg-purple-500' : r.dot === 'blue' ? 'bg-blue-500' : 'bg-yellow-400'}`}></div>
-                                        <div>
-                                            <div className="text-sm font-medium">{r.text}</div>
-                                            <div className="text-xs text-gray-400 mt-1">{r.time}</div>
-                                        </div>
-                                    </li>
+                    <Card className="mt-3 rounded-lg p-2 overflow-x-auto">
+                        <CardTitle className="text-sm font-semibold mb-2">Bookings Overview</CardTitle>
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="text-xs">
+                                    <TableHead>Property</TableHead>
+                                    <TableHead>Customer</TableHead>
+                                    <TableHead>Contact</TableHead>
+                                    <TableHead>Token</TableHead>
+                                    <TableHead>Date</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead>Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {bookings.map((b) => (
+                                    <TableRow key={b.id} className="text-xs">
+                                        <TableCell>{b.property}</TableCell>
+                                        <TableCell>{b.customer}</TableCell>
+                                        <TableCell>
+                                            <div>{b.email}</div>
+                                            <div className="text-gray-500 text-[10px]">{b.phone}</div>
+                                        </TableCell>
+                                        <TableCell className="text-green-600 font-semibold">{b.token}</TableCell>
+                                        <TableCell>{b.date}</TableCell>
+                                        <TableCell>
+                                            <Badge className="px-2 py-0.5 text-[10px] rounded-md" variant="outline">{b.finalStatus}</Badge>
+                                        </TableCell>
+                                        <TableCell className="space-x-1">
+                                            <Button size="sm" variant="outline" className="rounded-md px-2 py-0.5 text-xs">View</Button>
+                                            <Button size="sm" className="rounded-md px-2 py-0.5 text-xs">Confirm</Button>
+                                            <Button size="sm" variant="destructive" className="rounded-md px-2 py-0.5 text-xs">Cancel</Button>
+                                        </TableCell>
+                                    </TableRow>
                                 ))}
-                            </ul>
-                        </div>
+                            </TableBody>
+                        </Table>
+                    </Card>
+                </TabsContent>
 
-                        <div className="mt-6 bg-white rounded-lg border border-gray-100 shadow-sm p-6">
-                            <h3 className="text-lg font-semibold mb-3">Performance Insights</h3>
-                            <div className="text-sm text-gray-500">A compact insight panel — show charts, trends, and suggestions here. (Placeholder)</div>
-                        </div>
+                {/* Analytics Tab */}
+                <TabsContent value="analytics">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+                        <Card className="text-center p-2 rounded-lg">
+                            <CardContent className="text-lg font-bold">8 Properties</CardContent>
+                        </Card>
+                        <Card className="text-center p-2 rounded-lg">
+                            <CardContent className="text-lg font-bold">{bookings.length} Bookings</CardContent>
+                        </Card>
+                        <Card className="text-center p-2 rounded-lg">
+                            <CardContent className="text-lg font-bold">323 Avg. Views</CardContent>
+                        </Card>
                     </div>
 
-                    {/* Right rail */}
-                    <aside>
-                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 mb-4">
-                            <h4 className="text-sm font-semibold mb-2">Today</h4>
-                            <div className="text-sm text-gray-500">2 tasks due — <button className="text-xs underline">View</button></div>
-                        </div>
-
-                        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6">
-                            <h4 className="text-sm font-semibold mb-2">Shortcuts</h4>
-                            <ul className="space-y-2 text-sm">
-                                <li className="px-2 py-2 rounded hover:bg-gray-50">Assign next booking</li>
-                                <li className="px-2 py-2 rounded hover:bg-gray-50">Invite RM</li>
-                            </ul>
-                        </div>
-                    </aside>
-                </div>
-            </main>
+                    <Card className="rounded-lg p-2">
+                        <CardTitle className="text-sm font-semibold mb-2">Property Performance</CardTitle>
+                        <ResponsiveContainer width="100%" height={200}>
+                            <BarChart data={properties}>
+                                <XAxis dataKey="title" tick={{ fontSize: 10 }} interval={0} angle={-15} textAnchor="end" height={50} />
+                                <YAxis tick={{ fontSize: 10 }} />
+                                <Tooltip />
+                                <Bar dataKey="views" fill="#4f46e5" radius={[4, 4, 0, 0]} name="Views" />
+                                <Bar dataKey="bookings" fill="#22c55e" radius={[4, 4, 0, 0]} name="Bookings" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Card>
+                </TabsContent>
+            </Tabs>
         </div>
     );
 }

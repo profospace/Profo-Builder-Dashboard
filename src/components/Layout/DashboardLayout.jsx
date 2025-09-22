@@ -128,6 +128,46 @@
 
 // export default DashboardLayout
 
+// import React from "react";
+// import Sidebar from './Sidebar'
+// import Header from './Header'
+
+// function DashboardLayout({ children }) {
+//     return (
+//         <div className="flex h-screen bg-[#F7F8F6]">
+//             {/* Sidebar */}
+//             <aside className=" text-white flex flex-col justify-center mx-2">
+//                 <Sidebar /> {/* Sidebar nav items */}
+//             </aside>
+
+//             {/* Main Content */}
+//             <div className="flex-1 flex flex-col overflow-hidden">
+//                 {/* Header */}
+//                 <Header />
+
+//                 {/* Content Area */}
+//                 {/* <main className="flex-1 overflow-y-auto p-6 overflow-x-hidden">
+//                     {children}
+//                 </main> */}
+
+
+//                 <main className="flex-1  overflow-auto py-1 px-2">
+//                     <div className="max-w-7xl mx-auto">
+//                     {children}
+//                     </div>
+//                 </main>
+
+
+//             </div>
+
+//         </div>
+//     );
+// }
+
+// export default DashboardLayout;
+
+
+
 import React from "react";
 import Sidebar from './Sidebar'
 import Header from './Header'
@@ -136,7 +176,7 @@ function DashboardLayout({ children }) {
     return (
         <div className="flex h-screen bg-[#F7F8F6]">
             {/* Sidebar */}
-            <aside className=" text-white flex flex-col justify-center mx-2">
+            <aside className=" text-white flex flex-col justify-center">
                 <Sidebar /> {/* Sidebar nav items */}
             </aside>
 
@@ -151,9 +191,9 @@ function DashboardLayout({ children }) {
                 </main> */}
 
 
-                <main className="flex-1  overflow-auto py-1 px-2">
+                <main className="overflow-auto">
                     <div className="max-w-7xl mx-auto">
-                    {children}
+                        {children}
                     </div>
                 </main>
 
