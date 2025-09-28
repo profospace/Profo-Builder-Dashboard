@@ -2008,10 +2008,13 @@ import {
   Activity, CalendarDays, FileText,
   SectionIcon,
   Copy,
-  Check
+  Check,
+  IndianRupee
 } from 'lucide-react';
 import { base_url } from '../utils/baseurl';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const RmPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -2313,99 +2316,198 @@ const RmPage = () => {
     console.log("filteredBookings", filteredBookings)
 
     return (
-      <div className="space-y-4">
-        {filteredBookings.map(booking => (
-          <div key={booking._id || booking.id} className="border border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition-colors">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <h4 className="font-semibold text-gray-900 text-lg">
-                    {booking.property?.post_title || booking.property?.title}
-                  </h4>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
-                      booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-green-100 text-green-700'
-                    }`}>
-                    {booking.priority} PRIORITY
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="space-y-2">
-                    <p className="text-gray-600">
-                      <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Phone:</span> {booking.tokenPaidBy?.phone}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Email:</span> {booking.tokenPaidBy?.email}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-gray-600 flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      {booking.property?.address}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Price:</span> ₹{booking.property?.price?.toLocaleString('en-IN')}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-gray-600 flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      Scheduled: {formatDateTime(booking.siteVisitScheduledAt)}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Type:</span> {booking.propertyType}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Created:</span> {formatDate(booking.createdAt)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className='flex flex-col gap-1'>
-                <button
-                  onClick={() => {
-                    setSelectedBooking(booking);
-                    setShowAssignModal(true);
-                  }}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm font-medium transition-colors"
-                >
-                  Assign RM
-                </button>
-                <button
-                  onClick={() => {
-                    navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
-                  }}
-                  className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
-                >
-                  User Summary
-                </button>
-                {/* <button
-                  onClick={() => {
-                    navigate(`/user/search-history/${booking?.tokenPaidBy?._id}`);
-                  }}
-                  className="px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
-                >
-                  User Searches
-                </button> */}
-              </div>
-            </div>
-          </div>
-        ))}
+      // <div className="space-y-4">
+      //   {filteredBookings.map(booking => (
+      //     <div key={booking._id || booking.id} className="border border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition-colors">
+      //       <div className="flex justify-between items-start mb-4">
+      //         <div className="flex-1">
+      //           <div className="flex items-center gap-3 mb-3">
+      //             <h4 className="font-semibold text-gray-900 text-lg">
+      //               {booking.property?.post_title || booking.property?.title}
+      //             </h4>
+      //             <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
+      //                 booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+      //                   'bg-green-100 text-green-700'
+      //               }`}>
+      //               {booking.priority} PRIORITY
+      //             </span>
+      //           </div>
+      //           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      //             <div className="space-y-2">
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Phone:</span> {booking.tokenPaidBy?.phone}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Email:</span> {booking.tokenPaidBy?.email}
+      //               </p>
+      //             </div>
+      //             <div className="space-y-2">
+      //               <p className="text-gray-600 flex items-center gap-2">
+      //                 <MapPin className="h-4 w-4" />
+      //                 {booking.property?.address}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Price:</span> ₹{booking.property?.price?.toLocaleString('en-IN')}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
+      //               </p>
+      //             </div>
+      //             <div className="space-y-2">
+      //               <p className="text-gray-600 flex items-center gap-2">
+      //                 <Clock className="h-4 w-4" />
+      //                 Scheduled: {formatDateTime(booking.siteVisitScheduledAt)}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Type:</span> {booking.propertyType}
+      //               </p>
+      //               <p className="text-gray-600">
+      //                 <span className="font-medium">Created:</span> {formatDate(booking.createdAt)}
+      //               </p>
+      //             </div>
+      //           </div>
+      //         </div>
+      //         <div className='flex flex-col gap-1'>
+      //           <button
+      //             onClick={() => {
+      //               setSelectedBooking(booking);
+      //               setShowAssignModal(true);
+      //             }}
+      //             className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm font-medium transition-colors"
+      //           >
+      //             Assign RM
+      //           </button>
+      //           <button
+      //             onClick={() => {
+      //               navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+      //             }}
+      //             className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+      //           >
+      //             User Summary
+      //           </button>
+      //           {/* <button
+      //             onClick={() => {
+      //               navigate(`/user/search-history/${booking?.tokenPaidBy?._id}`);
+      //             }}
+      //             className="px-6 py-3 bg-yellow-500 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+      //           >
+      //             User Searches
+      //           </button> */}
+      //         </div>
+      //       </div>
+      //     </div>
+      //   ))}
 
-        {filteredBookings.length === 0 && (
-          <div className="text-center py-12">
-            <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">No unassigned bookings found</p>
-            <p className="text-gray-400 text-sm">All bookings have been assigned or no bookings match your filter</p>
-          </div>
-        )}
-      </div>
+      //   {filteredBookings.length === 0 && (
+      //     <div className="text-center py-12">
+      //       <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+      //       <p className="text-gray-500 text-lg">No unassigned bookings found</p>
+      //       <p className="text-gray-400 text-sm">All bookings have been assigned or no bookings match your filter</p>
+      //     </div>
+      //   )}
+      // </div>
+
+      <div className="space-y-6">
+      {filteredBookings.map((booking) => (
+        <Card key={booking._id || booking.id} className="rounded-2xl border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+            <div className="flex items-center gap-3">
+              <CardTitle className="text-xl font-semibold">
+                {booking.property?.post_title || booking.property?.title}
+              </CardTitle>
+              <span
+                className={`px-3 py-1 text-xs rounded-full font-medium tracking-wide ${
+                  booking.priority === "HIGH"
+                    ? "bg-red-100 text-red-700"
+                    : booking.priority === "MEDIUM"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : "bg-green-100 text-green-700"
+                }`}
+              >
+                {booking.priority} PRIORITY
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            <div className="space-y-3">
+              <p className="text-gray-700 flex items-center gap-2">
+                <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
+              </p>
+              <p className="text-gray-700 flex items-center gap-2">
+                <Phone className="h-4 w-4 text-gray-500" />
+                {booking.tokenPaidBy?.phone}
+              </p>
+              <p className="text-gray-700 flex items-center gap-2">
+                <Mail className="h-4 w-4 text-gray-500" />
+                {booking.tokenPaidBy?.email}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-gray-700 flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-gray-500" />
+                {booking.property?.address}
+              </p>
+              <p className="text-gray-700 flex items-center gap-2">
+                <IndianRupee className="h-4 w-4 text-gray-500" />
+                Price: ₹{booking.property?.price?.toLocaleString("en-IN")}
+              </p>
+              <p className="text-gray-700 flex items-center gap-2">
+                <IndianRupee className="h-4 w-4 text-gray-500" />
+                Token: ₹{booking.tokenAmount}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-gray-700 flex items-center gap-2">
+                <Clock className="h-4 w-4 text-gray-500" />
+                {formatDateTime(booking.siteVisitScheduledAt)}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-medium">Type:</span> {booking.propertyType}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-medium">Created:</span> {formatDate(booking.createdAt)}
+              </p>
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col sm:flex-row sm:justify-end gap-3">
+            <Button
+              onClick={() => {
+                setSelectedBooking(booking);
+                setShowAssignModal(true);
+              }}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Assign RM
+            </Button>
+            <Button
+              onClick={() => {
+                navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+              }}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              User Summary
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
+
+      {filteredBookings.length === 0 && (
+        <div className="text-center py-16">
+          <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-500 text-lg font-medium">
+            No unassigned bookings found
+          </p>
+          <p className="text-gray-400 text-sm">
+            All bookings have been assigned or no bookings match your filter
+          </p>
+        </div>
+      )}
+    </div>
     );
   };
 
@@ -3715,25 +3817,25 @@ const RmPage = () => {
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setShowAddRMModal(true)}
-                className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg border border-blue-200 transition-colors duration-200"
+                className="cursor-pointer px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg border border-blue-200 transition-colors duration-200"
               >
                 Add RM
               </button>
               <button
                 onClick={() => setActiveTab('bookings')}
-                className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                className="cursor-pointer px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
               >
                 Assign Bookings
               </button>
               <button
                 onClick={() => setActiveTab('performance')}
-                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                className="cursor-pointer px-4 py-2 bg-white border hover:text-white border-purple-500 hover:bg-purple-600 text-purple-500 text-sm font-medium rounded-lg transition-colors duration-200"
               >
                 View Performance
               </button>
               <button
                 onClick={() => setActiveTab('rms')}
-                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                className="cursor-pointer px-4 py-2 bg-white border hover:text-white border-purple-500 hover:bg-purple-600 text-purple-500 text-sm font-medium rounded-lg transition-colors duration-200"
               >
                 Manage RMs
               </button>

@@ -230,6 +230,7 @@ import RmPage from './pages/RmPage';
 import UserBookings from './pages/UserBookings';
 import UserSearchHistory from './pages/UserSearchHistory';
 import FilterChipsUI from './pages/FilterChipsUI';
+import ChatInterface from './pages/ChatInterface';
 
 const App = () => {
   const location = useLocation();
@@ -380,6 +381,8 @@ const App = () => {
           path="/testing"
           element={<FilterChipsUI />}
         />
+        <Route path='/chat-interface' element={<ChatInterface />} />
+
         <Route path="/user/search-history/:id" element={<UserSearchHistory />} />
         <Route
           path="/settings"
