@@ -3,7 +3,7 @@ import { Send, Phone, ArrowLeft, MoreVertical, Image, Paperclip } from 'lucide-r
 import io from 'socket.io-client';
 import { base_url } from '@/utils/baseurl';
 
-const ChatInterface = ({ propertyId = '68bd3d9a84c3d1e33ba8b123', builderId = '67f777a6566ca9e7ea88c593', userType = 'BUILDER' }) => {
+const ChatInterfaceCopy = ({ propertyId = '68bd3d9a84c3d1e33ba8b123', builderId = '67f777a6566ca9e7ea88c593', userType = 'BUILDER' }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [conversation, setConversation] = useState(null);
@@ -409,4 +409,4 @@ const ChatInterface = ({ propertyId = '68bd3d9a84c3d1e33ba8b123', builderId = '6
     );
 };
 
-export default ChatInterface;
+export default ChatInterfaceCopy;
