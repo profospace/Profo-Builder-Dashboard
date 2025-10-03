@@ -430,21 +430,239 @@
 
 
 
+// import React, { useState } from 'react';
+// import {
+//     LayoutDashboard,
+//     BookOpen,
+//     GraduationCap,
+//     MessageCircle,
+//     Bell,
+//     Calendar,
+//     Users2,
+//     Settings,
+//     ChevronDown,
+//     ChevronUp,
+//     BarChart3,
+//     PieChart,
+//     Activity
+// } from 'lucide-react';
+// import { useLocation, useNavigate } from 'react-router-dom';
+
+// const Sidebar = () => {
+//     const navigate = useNavigate();
+//     const location = useLocation();
+//     const [expandedMenus, setExpandedMenus] = useState({});
+
+//     const toggleSubmenu = (menuName) => {
+//         setExpandedMenus(prev => ({
+//             ...prev,
+//             [menuName]: !prev[menuName]
+//         }));
+//     };
+
+//     const menuItems = [
+//         {
+//             name: 'My Properties',
+//             icon: LayoutDashboard,
+//             route: '/properties',
+//             category: 'DASHBOARD'
+//         },
+//         {
+//             name: 'My Enquiries',
+//             icon: BookOpen,
+//             route: '/enquiries',
+//             category: 'DASHBOARD'
+//         },
+//         {
+//             name: 'Performance',
+//             icon: GraduationCap,
+//             route: '/performance',
+//             category: 'ANALYTICS',
+//             hasSubmenu: true,
+//             submenu: [
+//                 { name: 'Overview', route: '/performance/overview', icon: BarChart3 },
+//                 { name: 'Detailed Reports', route: '/performance/detailed', icon: PieChart },
+//                 { name: 'Real-time Data', route: '/performance/realtime', icon: Activity }
+//             ]
+//         },
+//         {
+//             name: 'Bookings',
+//             icon: MessageCircle,
+//             route: '/bookings',
+//             category: 'BOOKING OPERATIONS'
+//         },
+//         {
+//             name: 'Callbacks',
+//             icon: Bell,
+//             route: '/callbacks',
+//             category: 'BOOKING OPERATIONS',
+//             badge: '2'
+//         },
+//         {
+//             name: 'RM Bookings',
+//             icon: Calendar,
+//             route: '/rm-manager',
+//             category: 'TEAM MANAGEMENT'
+//         },
+//         {
+//             name: 'Profile',
+//             icon: Calendar,
+//             route: '/profile',
+//             category: 'Extra'
+//         },
+//         {
+//             name: 'Settings',
+//             icon: Calendar,
+//             route: '/settings',
+//             category: 'Extra'
+//         },
+//     ];
+
+//     const groupedMenus = menuItems.reduce((acc, item) => {
+//         if (!acc[item.category]) {
+//             acc[item.category] = [];
+//         }
+//         acc[item.category].push(item);
+//         return acc;
+//     }, {});
+
+//     const renderMenuItem = (item) => {
+//         const hasSubmenu = item.hasSubmenu && item.submenu;
+//         const isExpanded = expandedMenus[item.name];
+//         const isActive = location.pathname === item.route;
+
+//         return (
+//             <div key={item.name}>
+//                 <div
+//                     onClick={() => {
+//                         if (hasSubmenu) {
+//                             toggleSubmenu(item.name);
+//                         } else {
+//                             navigate(item.route);
+//                         }
+//                     }}
+//                     className={`
+//                         flex items-center gap-3 px-4 py-2 rounded-sm text-sm transition-all duration-200 cursor-pointer
+//                         ${isActive
+//                             ? 'bg-blue-50 text-black'
+//                             : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+//                         }
+//                     `}
+//                 >
+//                     <item.icon size={18} />
+//                     <span className="flex-1">{item.name}</span>
+//                     {item.badge && (
+//                         <div className="min-w-5 h-5 bg-red-100 text-red-600 text-xs font-medium rounded-full flex items-center justify-center px-1">
+//                             {item.badge}
+//                         </div>
+//                     )}
+//                     {hasSubmenu && (
+//                         <div className="ml-2">
+//                             {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+//                         </div>
+//                     )}
+//                 </div>
+
+//                 {hasSubmenu && isExpanded && (
+//                     <div className="ml-4 mt-1 space-y-1">
+//                         {item.submenu.map((subItem, subIndex) => (
+//                             <div
+//                                 key={subIndex}
+//                                 onClick={() => navigate(subItem.route)}
+//                                 className={`
+//                                     flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition-all duration-200 cursor-pointer
+//                                     ${location.pathname === subItem.route
+//                                         ? 'bg-blue-50 text-blue-600'
+//                                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+//                                     }
+//                                 `}
+//                             >
+//                                 <subItem.icon size={16} />
+//                                 <span>{subItem.name}</span>
+//                             </div>
+//                         ))}
+//                     </div>
+//                 )}
+//             </div>
+//         );
+//     };
+
+
+//     return (
+//         <div className="w-64 h-screen bg-white flex flex-col shadow-lg border-r border-gray-100">
+//             {/* Logo Section */}
+//             {/* <div className="p-6 ">
+//                 <div className="flex items-center gap-3">
+//                     <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+//                         <span className="text-white font-bold text-lg">P</span>
+//                     </div>
+//                     <div>
+//                         <h1 className="text-xl font-bold text-gray-900">PROFO</h1>
+//                         <p className="text-sm text-gray-500">Builder Dashboard</p>
+//                     </div>
+//                 </div>
+//             </div> */}
+
+//             <div className="px-6 py-5 flex items-center">
+//                 <img
+//                     src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
+//                     className="w-11 h-auto"
+//                 />
+//                 <span className="relative text-[crimson] text-3xl font-bold">
+//                     PROFO
+//                     <span className="absolute -top-0 -right-7 bg-[#000] text-white text-[8px] font-semibold rounded-full px-2 py-0.5">
+//                         IQ
+//                     </span>
+//                 </span>
+//             </div>
+
+//             {/* Navigation Menu */}
+//             {/* <nav className="flex-1 px-4 py-0 overflow-y-auto">
+//                 {Object.entries(groupedMenus).map(([category, items]) => (
+//                     <div key={category} className="mb-8">
+//                         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
+//                             {category}
+//                         </h3>
+//                         <div className="space-y-2">
+//                             {items.map(renderMenuItem)}
+//                         </div>
+//                     </div>
+//                 ))}
+//             </nav> */}
+
+//             <nav
+//                 className="
+//                 flex-1 px-2 py-0 overflow-y-auto 
+//                 scrollbar-hide
+//             "
+//             >
+//                 {Object.entries(groupedMenus).map(([category, items]) => (
+//                     <div key={category} className="mb-8">
+//                         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
+//                             {category}
+//                         </h3>
+//                         <div className="space-y-2">{items.map(renderMenuItem)}</div>
+//                     </div>
+//                 ))}
+//             </nav>
+
+
+
+//         </div>
+//     );
+// };
+
+// export default Sidebar;
+
 import React, { useState } from 'react';
 import {
     LayoutDashboard,
     BookOpen,
-    GraduationCap,
     MessageCircle,
     Bell,
     Calendar,
-    Users2,
-    Settings,
     ChevronDown,
     ChevronUp,
-    BarChart3,
-    PieChart,
-    Activity
 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -454,74 +672,43 @@ const Sidebar = () => {
     const [expandedMenus, setExpandedMenus] = useState({});
 
     const toggleSubmenu = (menuName) => {
-        setExpandedMenus(prev => ({
+        setExpandedMenus((prev) => ({
             ...prev,
-            [menuName]: !prev[menuName]
+            [menuName]: !prev[menuName],
         }));
     };
 
+    // Full Menu
     const menuItems = [
-        {
-            name: 'My Properties',
-            icon: LayoutDashboard,
-            route: '/properties',
-            category: 'DASHBOARD'
-        },
-        {
-            name: 'My Enquiries',
-            icon: BookOpen,
-            route: '/enquiries',
-            category: 'DASHBOARD'
-        },
+        { name: 'My Properties', icon: LayoutDashboard, route: '/properties', category: 'DASHBOARD' },
+        { name: 'My Enquiries', icon: BookOpen, route: '/enquiries', category: 'DASHBOARD' },
         {
             name: 'Performance',
-            icon: GraduationCap,
+            icon: Calendar,
             route: '/performance',
             category: 'ANALYTICS',
             hasSubmenu: true,
             submenu: [
-                { name: 'Overview', route: '/performance/overview', icon: BarChart3 },
-                { name: 'Detailed Reports', route: '/performance/detailed', icon: PieChart },
-                { name: 'Real-time Data', route: '/performance/realtime', icon: Activity }
-            ]
+                { name: 'Overview', route: '/performance/overview', icon: LayoutDashboard },
+                { name: 'Detailed Reports', route: '/performance/detailed', icon: BookOpen },
+                { name: 'Real-time Data', route: '/performance/realtime', icon: MessageCircle },
+            ],
         },
-        {
-            name: 'Bookings',
-            icon: MessageCircle,
-            route: '/bookings',
-            category: 'BOOKING OPERATIONS'
-        },
-        {
-            name: 'Callbacks',
-            icon: Bell,
-            route: '/callbacks',
-            category: 'BOOKING OPERATIONS',
-            badge: '2'
-        },
-        {
-            name: 'RM Bookings',
-            icon: Calendar,
-            route: '/rm-manager',
-            category: 'TEAM MANAGEMENT'
-        },
-        {
-            name: 'Profile',
-            icon: Calendar,
-            route: '/profile',
-            category: 'Extra'
-        },
-        {
-            name: 'Settings',
-            icon: Calendar,
-            route: '/settings',
-            category: 'Extra'
-        },
+        { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS' },
+        { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
+        { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT' },
+        { name: 'Chats', icon: Calendar, route: '/chat-interface', category: 'CHAT' },
+        { name: 'Profile', icon: Calendar, route: '/profile', category: 'Extra' },
+        { name: 'Settings', icon: Calendar, route: '/settings', category: 'Extra' },
     ];
 
+    // Filter for mobile bottom nav (exclude Profile, Settings, Performance)
+    const mobileNavItems = menuItems.filter(
+        (item) => !['Profile', 'Settings', 'Performance'].includes(item.name)
+    );
+
     const groupedMenus = menuItems.reduce((acc, item) => {
-        if (!acc[item.category]) {
-            acc[item.category] = [];
-        }
+        if (!acc[item.category]) acc[item.category] = [];
         acc[item.category].push(item);
         return acc;
     }, {});
@@ -535,18 +722,11 @@ const Sidebar = () => {
             <div key={item.name}>
                 <div
                     onClick={() => {
-                        if (hasSubmenu) {
-                            toggleSubmenu(item.name);
-                        } else {
-                            navigate(item.route);
-                        }
+                        if (hasSubmenu) toggleSubmenu(item.name);
+                        else navigate(item.route);
                     }}
-                    className={`
-                        flex items-center gap-3 px-4 py-2 rounded-sm text-sm transition-all duration-200 cursor-pointer
-                        ${isActive
-                            ? 'bg-blue-50 text-black'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-                        }
+                    className={`flex items-center gap-3 px-4 py-2 rounded-sm text-sm cursor-pointer
+                        ${isActive ? 'bg-blue-50 text-black' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'}
                     `}
                 >
                     <item.icon size={18} />
@@ -556,11 +736,7 @@ const Sidebar = () => {
                             {item.badge}
                         </div>
                     )}
-                    {hasSubmenu && (
-                        <div className="ml-2">
-                            {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                        </div>
-                    )}
+                    {hasSubmenu && <div>{isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</div>}
                 </div>
 
                 {hasSubmenu && isExpanded && (
@@ -569,12 +745,10 @@ const Sidebar = () => {
                             <div
                                 key={subIndex}
                                 onClick={() => navigate(subItem.route)}
-                                className={`
-                                    flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition-all duration-200 cursor-pointer
+                                className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm cursor-pointer
                                     ${location.pathname === subItem.route
                                         ? 'bg-blue-50 text-blue-600'
-                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
-                                    }
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'}
                                 `}
                             >
                                 <subItem.icon size={16} />
@@ -587,68 +761,54 @@ const Sidebar = () => {
         );
     };
 
-
     return (
-        <div className="w-64 h-screen bg-white flex flex-col shadow-lg border-r border-gray-100">
-            {/* Logo Section */}
-            {/* <div className="p-6 ">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">P</span>
-                    </div>
-                    <div>
-                        <h1 className="text-xl font-bold text-gray-900">PROFO</h1>
-                        <p className="text-sm text-gray-500">Builder Dashboard</p>
-                    </div>
-                </div>
-            </div> */}
-
-            <div className="px-6 py-5 flex items-center">
-                <img
-                    src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
-                    className="w-11 h-auto"
-                />
-                <span className="relative text-[crimson] text-3xl font-bold">
-                    PROFO
-                    <span className="absolute -top-0 -right-7 bg-[#000] text-white text-[8px] font-semibold rounded-full px-2 py-0.5">
-                        IQ
+        <>
+            {/* Desktop Sidebar */}
+            <div className="hidden md:flex w-64 h-screen bg-white flex-col shadow-lg border-r border-gray-100">
+                <div className="px-6 py-5 flex items-center">
+                    <img
+                        src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"
+                        className="w-11 h-auto"
+                        alt="logo"
+                    />
+                    <span className="relative text-[crimson] text-3xl font-bold">
+                        PROFO
+                        <span className="absolute -top-0 -right-7 bg-black text-white text-[8px] font-semibold rounded-full px-2 py-0.5">
+                            IQ
+                        </span>
                     </span>
-                </span>
+                </div>
+
+                <nav className="flex-1 px-2 overflow-y-auto scrollbar-hide">
+                    {Object.entries(groupedMenus).map(([category, items]) => (
+                        <div key={category} className="mb-8">
+                            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
+                                {category}
+                            </h3>
+                            <div className="space-y-2">{items.map(renderMenuItem)}</div>
+                        </div>
+                    ))}
+                </nav>
             </div>
 
-            {/* Navigation Menu */}
-            {/* <nav className="flex-1 px-4 py-0 overflow-y-auto">
-                {Object.entries(groupedMenus).map(([category, items]) => (
-                    <div key={category} className="mb-8">
-                        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
-                            {category}
-                        </h3>
-                        <div className="space-y-2">
-                            {items.map(renderMenuItem)}
-                        </div>
-                    </div>
-                ))}
-            </nav> */}
-
-            <nav
-                className="
-                flex-1 px-2 py-0 overflow-y-auto 
-                scrollbar-hide
-            "
-            >
-                {Object.entries(groupedMenus).map(([category, items]) => (
-                    <div key={category} className="mb-8">
-                        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-4">
-                            {category}
-                        </h3>
-                        <div className="space-y-2">{items.map(renderMenuItem)}</div>
-                    </div>
-                ))}
-            </nav>
-
-
-
-        </div>
+            {/* Mobile Bottom Nav */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-inner flex justify-around items-center py-2 md:hidden z-50">
+                {mobileNavItems.map((item) => {
+                    const isActive = location.pathname === item.route;
+                    return (
+                        <button
+                            key={item.name}
+                            onClick={() => navigate(item.route)}
+                            className={`flex flex-col items-center text-xs ${isActive ? 'text-blue-600' : 'text-gray-500'
+                                }`}
+                        >
+                            <item.icon size={20} />
+                            <span className="mt-1">{item.name.split(" ")[1] || item.name}</span>
+                        </button>
+                    );
+                })}
+            </div>
+        </>
     );
 };
 
