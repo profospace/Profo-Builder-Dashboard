@@ -231,6 +231,7 @@ import UserBookings from './pages/UserBookings';
 import UserSearchHistory from './pages/UserSearchHistory';
 import FilterChipsUI from './pages/FilterChipsUI';
 import ChatInterface from './pages/ChatInterface';
+import BuilderOfferManagement from './pages/BuilderOfferManagement';
 
 const App = () => {
   const location = useLocation();
@@ -380,6 +381,10 @@ const App = () => {
         <Route
           path="/testing"
           element={<FilterChipsUI />}
+        />
+        <Route
+          path="/builder/offer/management"
+          element={<BuilderOfferManagement />}
         />
         <Route path='/chat-interface' element={<ChatInterface />} />
 
