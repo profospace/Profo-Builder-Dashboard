@@ -682,18 +682,18 @@ const Sidebar = () => {
     const menuItems = [
         { name: 'My Properties', icon: LayoutDashboard, route: '/properties', category: 'DASHBOARD' },
         { name: 'My Enquiries', icon: BookOpen, route: '/enquiries', category: 'DASHBOARD' },
-        {
-            name: 'Performance',
-            icon: Calendar,
-            route: '/performance',
-            category: 'ANALYTICS',
-            hasSubmenu: true,
-            submenu: [
-                { name: 'Overview', route: '/performance/overview', icon: LayoutDashboard },
-                { name: 'Detailed Reports', route: '/performance/detailed', icon: BookOpen },
-                { name: 'Real-time Data', route: '/performance/realtime', icon: MessageCircle },
-            ],
-        },
+        // {
+        //     name: 'Performance',
+        //     icon: Calendar,
+        //     route: '/performance',
+        //     category: 'ANALYTICS',
+        //     hasSubmenu: true,
+        //     submenu: [
+        //         { name: 'Overview', route: '/performance/overview', icon: LayoutDashboard },
+        //         { name: 'Detailed Reports', route: '/performance/detailed', icon: BookOpen },
+        //         { name: 'Real-time Data', route: '/performance/realtime', icon: MessageCircle },
+        //     ],
+        // },
         { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS' },
         { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
         { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT' },
