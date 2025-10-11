@@ -696,7 +696,7 @@ const Sidebar = () => {
         // },
         { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS' },
         { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
-        { name: 'RM Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT' },
+        { name: 'RM_Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT' },
         { name: 'Chats', icon: Calendar, route: '/chat-interface', category: 'CHAT' },
         { name: 'Offer', icon: Calendar, route: '/builder/offer/management', category: 'OFFER MANAGEMENT' },
         { name: 'Profile', icon: Calendar, route: '/profile', category: 'Extra' },

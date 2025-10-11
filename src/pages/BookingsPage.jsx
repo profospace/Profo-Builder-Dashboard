@@ -267,6 +267,7 @@ import React, { useState, useEffect } from 'react';
 import { MapPin, Eye, Users, Calendar, Square } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Button } from '@/components/ui/button';
 
 function BookingsPage() {
     const [selectedPropertyId, setSelectedPropertyId] = useState(null);
@@ -350,8 +351,8 @@ function BookingsPage() {
                         <button
                             onClick={() => setActiveTab('properties')}
                             className={`rounded-md px-3 py-1 text-sm transition-colors ${activeTab === 'properties'
-                                    ? 'bg-white text-gray-900 shadow-sm font-medium'
-                                    : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-white text-gray-900 shadow-sm font-medium'
+                                : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
                             Properties
@@ -359,8 +360,8 @@ function BookingsPage() {
                         <button
                             onClick={() => setActiveTab('bookings')}
                             className={`rounded-md px-3 py-1 text-sm transition-colors ${activeTab === 'bookings'
-                                    ? 'bg-white text-gray-900 shadow-sm font-medium'
-                                    : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-white text-gray-900 shadow-sm font-medium'
+                                : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
                             Bookings
@@ -368,8 +369,8 @@ function BookingsPage() {
                         <button
                             onClick={() => setActiveTab('analytics')}
                             className={`rounded-md px-3 py-1 text-sm transition-colors ${activeTab === 'analytics'
-                                    ? 'bg-white text-gray-900 shadow-sm font-medium'
-                                    : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-white text-gray-900 shadow-sm font-medium'
+                                : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
                             Analytics
@@ -387,19 +388,17 @@ function BookingsPage() {
                                 className={`bg-white rounded-lg shadow-sm hover:shadow-md transition border p-2 cursor-pointer ${selectedPropertyId === property._id ? 'ring-2 ring-blue-500' : ''
                                     }`}
                             >
-                                <div className="p-2">
+                                <div className="p-1">
                                     <h3 className="text-base font-semibold text-gray-900 mb-1">{property.post_title}</h3>
                                     <p className="text-xs text-gray-500 mb-2">{property.address}, {property.city}</p>
-                                    <p className="font-semibold text-sm mb-2">{formatPrice(property.price, property.priceUnit)}</p>
-                                    <div className="flex justify-between text-xs mt-1">
-                                        <span>👁 {property.total_views || 0}</span>
-                                        <span>📑 {property.bookings?.length || 0}</span>
-                                    </div>
-                                    <div className={`mt-2 inline-block text-xs px-2 py-0.5 rounded-md ${selectedPropertyId === property._id
-                                            ? 'bg-blue-100 text-blue-700'
-                                            : 'bg-gray-100 text-gray-600'
-                                        }`}>
-                                        {selectedPropertyId === property._id ? 'Selected' : 'Available'}
+                                    <div className='flex justify-between '>
+                                        <div className='flex flex-col'>
+                                            {/* <p className="font-semibold text-sm mb-2">{formatPrice(property.price, property.priceUnit)}</p> */}
+                                            {
+                                                property.bookings?.length > 0 && <p className="bg-orange-500 text-white px-2 py-1 rounded-md font-semibold text-sm mb-2">{(property.bookings?.length)} Bookings Done</p>
+                                            }
+                                        </div>
+                                        <Button>View</Button>
                                     </div>
                                 </div>
                             </div>
@@ -445,71 +444,136 @@ function BookingsPage() {
                         </div> */}
 
                         {/* Bookings Table */}
-                        <div className="bg-white rounded-lg shadow-sm border p-2 overflow-x-auto">
-                            <h3 className="text-sm font-semibold mb-2">Bookings Overview</h3>
+                        <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all">
+                            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                                <h3 className="text-sm md:text-base font-semibold text-gray-900 tracking-tight">Bookings Overview</h3>
+                                <span className="text-xs text-gray-500">{allBookings.length} total</span>
+                            </div>
+
                             {allBookings.length > 0 ? (
-                                <table className="w-full text-xs">
-                                    <thead>
-                                        <tr className="text-xs border-b bg-gray-50">
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Property</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Customer</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Contact</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Token</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Date</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Status</th>
-                                            <th className="px-3 py-2 text-left font-semibold text-gray-700">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {allBookings.map((booking, index) => (
-                                            <tr
-                                                key={booking._id}
-                                                className={`text-xs border-b hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
-                                                    }`}
-                                            >
-                                                <td className="px-3 py-2">{booking.propertyTitle}</td>
-                                                <td className="px-3 py-2">{booking.tokenPaidBy?.name || 'N/A'}</td>
-                                                <td className="px-3 py-2">
-                                                    <div>{booking.tokenPaidBy?.email || 'N/A'}</div>
-                                                    <div className="text-gray-500 text-[10px]">{booking.tokenPaidBy?.phone || 'N/A'}</div>
-                                                </td>
-                                                <td className="px-3 py-2 text-green-600 font-semibold">
-                                                    ₹{booking.tokenAmount?.toLocaleString() || 0}
-                                                </td>
-                                                <td className="px-3 py-2">{formatDate(booking.bookedAt)}</td>
-                                                <td className="px-3 py-2">
-                                                    <span
-                                                        className={`px-2 py-0.5 text-[10px] rounded-md font-medium border ${booking.confirmedByDeveloper
-                                                                ? 'bg-green-100 text-green-700 border-green-200'
-                                                                : 'bg-orange-100 text-orange-700 border-orange-200'
-                                                            }`}
-                                                    >
-                                                        {booking.finalPaymentStatus || 'PENDING'}
-                                                    </span>
-                                                </td>
-                                                <td className="px-3 py-2 space-x-1">
-                                                    <button className="rounded-md px-2 py-0.5 text-xs border border-gray-300 hover:bg-gray-50">
-                                                        View
-                                                    </button>
-                                                    <button className="rounded-md px-2 py-0.5 text-xs bg-blue-600 text-white hover:bg-blue-700">
-                                                        Confirm
-                                                    </button>
-                                                    <button className="rounded-md px-2 py-0.5 text-xs bg-red-600 text-white hover:bg-red-700">
-                                                        Cancel
-                                                    </button>
-                                                </td>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full text-[13px] text-gray-700">
+                                        <thead>
+                                            <tr className="text-[11px] md:text-xs text-gray-500 uppercase bg-gray-50">
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Property</th>
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Customer</th>
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Contact</th>
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Token</th>
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Date</th>
+                                                <th className="px-3 py-2 text-left font-medium whitespace-nowrap">Status</th>
+                                                <th className="px-3 py-2 text-center font-medium whitespace-nowrap">Action</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                            {allBookings.map((booking, index) => (
+                                                <tr
+                                                    key={booking._id}
+                                                    className={`transition-colors duration-200 hover:bg-gray-50 border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'
+                                                        }`}
+                                                >
+                                                    {/* Property */}
+                                                    <td className="px-3 py-2 font-medium text-gray-900 truncate max-w-[150px]">
+                                                        {booking.propertyTitle}
+                                                    </td>
+
+                                                    {/* Customer */}
+                                                    <td className="px-3 py-2 truncate max-w-[120px]">
+                                                        {booking.tokenPaidBy?.name || 'N/A'}
+                                                    </td>
+
+                                                    {/* Contact */}
+                                                    <td className="px-3 py-2">
+                                                        <div className="truncate max-w-[150px]">{booking.tokenPaidBy?.email || 'N/A'}</div>
+                                                        <div className="text-[10px] text-gray-400 truncate">{booking.tokenPaidBy?.phone || 'N/A'}</div>
+                                                    </td>
+
+                                                    {/* Token */}
+                                                    <td className="px-3 py-2 text-green-600 font-semibold whitespace-nowrap">
+                                                        ₹{booking.tokenAmount?.toLocaleString() || 0}
+                                                    </td>
+
+                                                    {/* Date */}
+                                                    <td className="px-3 py-2 text-gray-600 whitespace-nowrap">
+                                                        {formatDate(booking.bookedAt)}
+                                                    </td>
+
+                                                    {/* Status */}
+                                                    <td className="px-3 py-2 whitespace-nowrap">
+                                                        <span
+                                                            className={`inline-flex items-center px-2.5 py-0.5 text-[10px] md:text-[11px] font-medium rounded-full capitalize
+                    ${booking.finalPaymentStatus?.toLowerCase() === 'active'
+                                                                    ? 'bg-green-100 text-green-700'
+                                                                    : booking.finalPaymentStatus?.toLowerCase() === 'inactive'
+                                                                        ? 'bg-red-100 text-red-700'
+                                                                        : booking.finalPaymentStatus?.toLowerCase() === 'pending'
+                                                                            ? 'bg-orange-100 text-orange-700'
+                                                                            : booking.finalPaymentStatus?.toLowerCase() === 'bouncing'
+                                                                                ? 'bg-purple-100 text-purple-700'
+                                                                                : booking.finalPaymentStatus?.toLowerCase() === 'on sale'
+                                                                                    ? 'bg-blue-100 text-blue-700'
+                                                                                    : 'bg-yellow-100 text-yellow-700'
+                                                                }`}
+                                                        >
+                                                            {booking.finalPaymentStatus || 'Pending'}
+                                                        </span>
+                                                    </td>
+
+                                                    {/* Actions */}
+                                                    <td className="px-3 py-2 text-center">
+                                                        <div className="flex items-center justify-center gap-1.5">
+                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
+                                                                View
+                                                            </button>
+                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
+                                                                Confirm
+                                                            </button>
+                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-red-500 text-white hover:bg-red-600 transition">
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+
+                                    {/* Pagination */}
+                                    <div className="flex items-center justify-center gap-1.5 py-3 border-t border-gray-100 text-[11px] md:text-xs text-gray-600">
+                                        <button className="px-2.5 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition">
+                                            Previous
+                                        </button>
+                                        <div className="flex items-center gap-1">
+                                            {[1, 2, 3, 4, 5].map((page) => (
+                                                <button
+                                                    key={page}
+                                                    className={`px-2.5 py-1 rounded-md ${page === 3
+                                                        ? 'bg-blue-600 text-white'
+                                                        : 'border border-gray-300 hover:bg-gray-100'
+                                                        }`}
+                                                >
+                                                    {page.toString().padStart(2, '0')}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <button className="px-2.5 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition">
+                                            Next
+                                        </button>
+                                    </div>
+                                </div>
                             ) : (
-                                <div className="text-center py-8 text-gray-500">
-                                    <Calendar size={32} className="mx-auto text-gray-400 mb-2" />
-                                    <h4 className="text-sm font-medium text-gray-600 mb-1">No bookings yet</h4>
-                                    <p className="text-xs">No properties have received bookings.</p>
+                                <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+                                    <div className="bg-gray-100 p-4 rounded-full mb-2">
+                                        <Calendar size={28} className="text-gray-400" />
+                                    </div>
+                                    <h4 className="text-sm font-medium text-gray-700 mb-1">No bookings yet</h4>
+                                    <p className="text-xs text-gray-500">No properties have received bookings.</p>
                                 </div>
                             )}
                         </div>
+
+
+
                     </div>
                 )}
 
