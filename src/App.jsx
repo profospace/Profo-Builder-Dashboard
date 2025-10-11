@@ -247,13 +247,28 @@ const App = () => {
   const { user } = useSelector((state) => state.auth)
   // console.log("state", user)
 
-  useEffect(
-    () => {
-      if (!user) {
-        navigate('/signin')
-      }
-    }, []
-  )
+  // useEffect(
+  //   () => {
+  //     if (!user) {
+  //       navigate('/signin')
+  //     }
+  //   }, []
+  // )
+
+  // Around line 38 - REPLACE the existing useEffect
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin');
+    }
+  }, [user, navigate]); // ✅ Added dependencies
+
+  // Add this new useEffect after the above one
+  useEffect(() => {
+    // ✅ Redirect authenticated users away from signin
+    if (user && location.pathname === '/signin') {
+      navigate('/properties', { replace: true });
+    }
+  }, [user, location.pathname, navigate]);
 
   // Routes that should NOT use the DashboardLayout
   const publicRoutes = ['/signin'];

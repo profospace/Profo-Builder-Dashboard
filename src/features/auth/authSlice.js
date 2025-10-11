@@ -135,13 +135,29 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 // Sign out async thunk
-export const signOut = createAsyncThunk('auth/signOut', async (_, thunkAPI) => {
+// export const signOut = createAsyncThunk('auth/signOut', async (_, thunkAPI) => {
+//   try {
+//     return await authService.signOut()
+//   } catch (error) {
+//     return thunkAPI.rejectWithValue(error)
+//   }
+// })
+
+// Sign out
+export const signOut = async () => {
   try {
-    return await authService.signOut()
+    // Clear localStorage
+    localStorage.removeItem('user'); // ✅ Changed from localStorage.clear()
+
+    // Return a success response
+    return { success: true, message: "Logged out successfully" };
   } catch (error) {
-    return thunkAPI.rejectWithValue(error)
+    console.error("Sign out error:", error);
+    throw error;
   }
-})
+};
+
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -242,25 +258,25 @@ const authSlice = createSlice({
         state.message = action.payload.response.data.error
       })
       // Sign out cases
-      .addCase(signOut.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(signOut.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = null
-        // Clear OTP states on logout
-        state.otpSent = false
-        state.phoneVerified = false
-        state.currentPhoneNumber = null
-      })
-      .addCase(signOut.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.isSuccess = false
-        state.user = null
-        state.message = action.payload.message
-      })
+      // .addCase(signOut.pending, (state) => {
+      //   state.isLoading = true
+      // })
+      // .addCase(signOut.fulfilled, (state, action) => {
+      //   state.isLoading = false
+      //   state.isSuccess = true
+      //   state.user = null
+      //   // Clear OTP states on logout
+      //   state.otpSent = false
+      //   state.phoneVerified = false
+      //   state.currentPhoneNumber = null
+      // })
+      // .addCase(signOut.rejected, (state, action) => {
+      //   state.isLoading = false
+      //   state.isError = true
+      //   state.isSuccess = false
+      //   state.user = null
+      //   state.message = action.payload.message
+      // })
   }
 })
 export const { resetAuthState, clearOTPState } = authSlice.actions
