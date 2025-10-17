@@ -3277,25 +3277,22 @@ const ConversationsTab = ({ socketConnected }) => {
                                 {/* Avatar */}
                                 <div className="flex-shrink-0 relative h-10 w-10 sm:h-10 sm:w-10 lg:h-12 lg:w-12">
                                     {conversation?.user?.name ? (
-                                        <img
-                                            src={`https://avatar.iran.liara.run/username?username=${(() => {
-                                                const nameParts = conversation?.user?.name?.split(" ");
-                                                const firstName = nameParts[0];
-                                                const lastName = nameParts[1] || "";
-                                                return `${firstName}+${lastName}`;
-                                            })()}`}
-                                            alt={conversation.user.name}
-                                            className="rounded-full"
-                                        />
+                                        <div className="rounded-full bg-blue-200 flex items-center justify-center h-full w-full">
+                                            <span className="text-blue-700 font-medium text-lg">
+                                                {conversation.user.name
+                                                    .split(" ")
+                                                    .map((n) => n[0])
+                                                    .join("")
+                                                    .toUpperCase()}
+                                            </span>
+                                        </div>
                                     ) : (
-                                        <img
-                                            src={`https://avatar.iran.liara.run/username?username=AU`}
-                                            alt="Anonymous User"
-                                            className="rounded-full"
-                                        />
+                                        <div className="rounded-full bg-gray-200 flex items-center justify-center h-full w-full">
+                                            <span className="text-gray-600 font-medium text-lg">AU</span>
+                                        </div>
                                     )}
-
                                 </div>
+
 
                                 {/* Conversation info */}
                                 <div className="flex-1 min-w-0">

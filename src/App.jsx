@@ -232,6 +232,8 @@ import UserSearchHistory from './pages/UserSearchHistory';
 import FilterChipsUI from './pages/FilterChipsUI';
 import ChatInterface from './pages/ChatInterface';
 import BuilderOfferManagement from './pages/BuilderOfferManagement';
+import ViewPropertyBookingPage from './pages/ViewPropertyBookingPage';
+import ViewBookingInfo from './pages/ViewBookingInfo';
 
 const App = () => {
   const location = useLocation();
@@ -366,6 +368,20 @@ const App = () => {
           path="/bookings"
           element={
             <BookingsPage
+            />
+          }
+        />
+        <Route
+          path="/view/property/booking/:id"
+          element={
+            <ViewPropertyBookingPage
+            />
+          }
+        />
+        <Route
+          path="/view/booking/info/:booking_id"
+          element={
+            <ViewBookingInfo
             />
           }
         />
