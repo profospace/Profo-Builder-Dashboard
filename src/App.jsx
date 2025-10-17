@@ -236,6 +236,9 @@ import ViewPropertyBookingPage from './pages/ViewPropertyBookingPage';
 import ViewBookingInfo from './pages/ViewBookingInfo';
 
 const App = () => {
+  const [propertyInteractionsFetched, setPropertyInteractionsFetched] = useState(false);
+  const [projectInteractionsFetched, setProjectInteractionsFetched] = useState(false);
+
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -279,31 +282,58 @@ const App = () => {
 
 
 
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(getAllProperties(user?.id)); // Builder All Property fetch
+  //     dispatch(getAllProjects(user?.id)); // Builder All Projects fetch
+  //   }
+  // }, [user, dispatch]);
+
   useEffect(() => {
     if (user) {
-      dispatch(getAllProperties(user?.id)); // Builder All Property fetch
-      dispatch(getAllProjects(user?.id)); // Builder All Projects fetch
+      dispatch(getAllProperties(user?.id));
+      dispatch(getAllProjects(user?.id));
+      setPropertyInteractionsFetched(false);
+      setProjectInteractionsFetched(false);
     }
   }, [user, dispatch]);
 
   // Run after properties data is fetched
+  // useEffect(() => {
+  //   if (properties.length > 0 && user) {
+  //     properties.forEach(property => {
+  //       dispatch(fetchPropertyInteractions({ builderId: user?.id, propertyId: property.post_id }));
+  //     });
+  //   }
+  // }, [properties, dispatch, user]);
   useEffect(() => {
-    if (properties.length > 0 && user) {
+    if (properties.length > 0 && user && !propertyInteractionsFetched) {
       properties.forEach(property => {
         dispatch(fetchPropertyInteractions({ builderId: user?.id, propertyId: property.post_id }));
       });
+      setPropertyInteractionsFetched(true); // Prevent rerun
     }
-  }, [properties, dispatch, user]);
+  }, [properties, user, dispatch, propertyInteractionsFetched]);
+
   
 
   // Run after properties data is fetched
+  // useEffect(() => {
+  //   if (projects.length > 0 && user) {
+  //     projects.forEach(project => {
+  //       dispatch(getProjectAllInteractions({ builderId: user?.id, projectId: project.projectId }));
+  //     });
+  //   }
+  // }, [projects, dispatch, user]);
+
   useEffect(() => {
-    if (projects.length > 0 && user) {
+    if (projects.length > 0 && user && !projectInteractionsFetched) {
       projects.forEach(project => {
         dispatch(getProjectAllInteractions({ builderId: user?.id, projectId: project.projectId }));
       });
+      setProjectInteractionsFetched(true); // Prevent rerun
     }
-  }, [projects, dispatch, user]);
+  }, [projects, user, dispatch, projectInteractionsFetched]);
 
 
   // useEffect(() => {
