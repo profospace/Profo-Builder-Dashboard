@@ -881,360 +881,765 @@ const PropertyResponses = () => {
         );
     }
 
+    // return (
+    //     <div className="min-h-screen bg-gray-50">
+    //         {/* Responsive Container */}
+    //         <div className="max-w-md mx-auto lg:max-w-4xl xl:max-w-6xl">
+
+    //             {/* Header with Last Login */}
+    //             <div className="px-4 lg:px-8 py-6">
+    //                 {/* Modern Property Cards */}
+    //                 <div className="mb-6">
+    //                     {/* Sleek Property Cards */}
+    //                     <div className="flex gap-6 items-center">
+    //                         {propertiesData.map((property, index) => {
+    //                             const isExpanded = expandedCards[property.id];
+    //                             const isSelected = selectedProperty && selectedProperty.id === property.id;
+    //                             const totalEngagement = property.stats.visits + property.stats.contacts + property.stats.saves;
+
+    //                             return (
+    //                                 <div
+    //                                     key={property.id}
+    //                                     className={`bg-white rounded-2xl border transition-all duration-300 hover:shadow-lg ${isSelected
+    //                                         ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20'
+    //                                         : 'border-gray-200 hover:border-gray-300'
+    //                                         }`}
+    //                                 >
+    //                                     {/* Collapsed View */}
+    //                                     <div
+    //                                         className="p-4 cursor-pointer"
+    //                                         onClick={() => {
+    //                                             setCurrentPropertyIndex(index);
+    //                                             setSelectedProperty(property);
+    //                                         }}
+    //                                     >
+    //                                         <div className="flex items-center gap-4">
+    //                                             {/* Property Image */}
+    //                                             <div className="relative flex-shrink-0">
+    //                                                 <img
+    //                                                     src={property.image}
+    //                                                     alt={property.title}
+    //                                                     className="w-16 h-16 object-cover rounded-xl"
+    //                                                     onError={(e) => {
+    //                                                         e.target.src = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop";
+    //                                                     }}
+    //                                                 />
+    //                                                 {index < 3 && (
+    //                                                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+    //                                                         <TrendingUp className="w-3 h-3 text-white" />
+    //                                                     </div>
+    //                                                 )}
+    //                                             </div>
+
+    //                                             {/* Property Info */}
+    //                                             <div className="flex-1 min-w-0">
+    //                                                 <div className="flex items-start justify-between">
+    //                                                     <div className="min-w-0 flex-1">
+    //                                                         <h3 className="font-semibold text-gray-900 text-sm truncate">
+    //                                                             {property.title}
+    //                                                         </h3>
+    //                                                         <div className="flex items-center text-xs text-gray-500 mt-1">
+    //                                                             <MapPin className="w-3 h-3 mr-1" />
+    //                                                             <span className="truncate">{property.location}</span>
+    //                                                         </div>
+    //                                                     </div>
+    //                                                 </div>
+
+    //                                                 {/* Quick Stats */}
+    //                                                 <div className="flex items-center justify-between mt-3">
+    //                                                     <div className="flex items-center space-x-4">
+    //                                                         <div className="flex items-center text-xs">
+    //                                                             <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+    //                                                             <span className="text-gray-600">{property.stats.visits} views</span>
+    //                                                         </div>
+    //                                                         <div className="flex items-center text-xs">
+    //                                                             <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+    //                                                             <span className="text-gray-600">{property.stats.contacts} contacts</span>
+    //                                                         </div>
+    //                                                     </div>
+    //                                                     <div className="flex items-center text-xs text-gray-500">
+    //                                                         <Hash className="w-3 h-3 mr-1" />
+    //                                                         {property.id.slice(-6)}
+    //                                                     </div>
+    //                                                 </div>
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>
+
+    //                                     {/* Expanded View */}
+    //                                     {isExpanded && (
+    //                                         <div className="px-4 pb-4 border-t border-gray-100">
+    //                                             <div className="pt-4">
+    //                                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+    //                                                     <div className="text-center p-3 bg-blue-50 rounded-lg">
+    //                                                         <div className="text-xl font-bold text-blue-600">{property.stats.visits}</div>
+    //                                                         <div className="text-xs text-blue-600">Views</div>
+    //                                                     </div>
+    //                                                     <div className="text-center p-3 bg-green-50 rounded-lg">
+    //                                                         <div className="text-xl font-bold text-green-600">{property.stats.contacts}</div>
+    //                                                         <div className="text-xs text-green-600">Contacts</div>
+    //                                                     </div>
+    //                                                     <div className="text-center p-3 bg-red-50 rounded-lg">
+    //                                                         <div className="text-xl font-bold text-red-500">{property.stats.saves}</div>
+    //                                                         <div className="text-xs text-red-500">Saves</div>
+    //                                                     </div>
+    //                                                     <div className="text-center p-3 bg-purple-50 rounded-lg">
+    //                                                         <div className="text-xl font-bold text-purple-600">{totalEngagement}</div>
+    //                                                         <div className="text-xs text-purple-600">Total</div>
+    //                                                     </div>
+    //                                                 </div>
+
+    //                                                 {/* Recent Interactions Preview */}
+    //                                                 <div className="mb-4">
+    //                                                     <h4 className="text-sm font-medium text-gray-700 mb-2">Recent Activity</h4>
+    //                                                     <div className="space-y-2">
+    //                                                         {property.interactions.slice(0, 2).map((interaction, idx) => (
+    //                                                             <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+    //                                                                 <div className="flex items-center gap-2">
+    //                                                                     <div className={`w-6 h-6 rounded-full flex items-center justify-center ${getInteractionColor(interaction.type)}`}>
+    //                                                                         {getInteractionIcon(interaction.type)}
+    //                                                                     </div>
+    //                                                                     <span className="text-sm text-gray-700">{interaction.user}</span>
+    //                                                                 </div>
+    //                                                                 <span className="text-xs text-gray-500">{interaction.time}</span>
+    //                                                             </div>
+    //                                                         ))}
+    //                                                     </div>
+    //                                                 </div>
+    //                                             </div>
+    //                                         </div>
+    //                                     )}
+
+    //                                     {/* Selection Indicator */}
+    //                                     {isSelected && (
+    //                                         <div className="absolute right-4 top-4">
+    //                                             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+    //                                         </div>
+    //                                     )}
+    //                                 </div>
+    //                             );
+    //                         })}
+    //                     </div>
+    //                 </div>
+
+    //                 {/* Interactions */}
+    //                 {selectedProperty && (
+    //                     <div>
+    //                         <div className="flex items-center justify-between mb-4">
+    //                             <div>
+    //                                 <h3 className="text-lg lg:text-xl font-semibold text-gray-900">
+    //                                     Recent Activity
+    //                                 </h3>
+    //                                 <p className="text-sm text-gray-500">
+    //                                     {filteredInteractions.length} interactions for {selectedProperty.title}
+    //                                 </p>
+    //                             </div>
+
+    //                             {/* Advanced Options Toggle with Calendar */}
+    //                             <div className="flex items-center gap-2">
+    //                                 <div className="relative">
+    //                                     <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+    //                                     <input
+    //                                         type="date"
+    //                                         value={dateFilter}
+    //                                         onChange={(e) => setDateFilter(e.target.value)}
+    //                                         className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+    //                                     />
+    //                                 </div>
+    //                                 <button
+    //                                     onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+    //                                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showAdvancedOptions ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+    //                                         }`}
+    //                                 >
+    //                                     <Filter className="w-4 h-4" />
+    //                                     <span className="hidden sm:inline">Filters</span>
+    //                                 </button>
+    //                             </div>
+    //                         </div>
+
+    //                         {/* Advanced Options Panel */}
+    //                         {showAdvancedOptions && (
+    //                             <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+    //                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //                                     {/* Search */}
+    //                                     <div>
+    //                                         <label className="block text-sm font-medium text-gray-700 mb-2">
+    //                                             Search
+    //                                         </label>
+    //                                         <div className="relative">
+    //                                             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+    //                                             <input
+    //                                                 type="text"
+    //                                                 placeholder="Name, phone..."
+    //                                                 value={searchQuery}
+    //                                                 onChange={(e) => setSearchQuery(e.target.value)}
+    //                                                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    //                                             />
+    //                                         </div>
+    //                                     </div>
+
+    //                                     {/* Type Filter */}
+    //                                     <div>
+    //                                         <label className="block text-sm font-medium text-gray-700 mb-2">
+    //                                             Type
+    //                                         </label>
+    //                                         <select
+    //                                             value={typeFilter}
+    //                                             onChange={(e) => setTypeFilter(e.target.value)}
+    //                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    //                                         >
+    //                                             <option value="all">All Types</option>
+    //                                             <option value="contact">Contacts</option>
+    //                                             <option value="visit">Visits</option>
+    //                                             <option value="save">Saves</option>
+    //                                         </select>
+    //                                     </div>
+    //                                 </div>
+
+    //                                 {/* Filter Actions */}
+    //                                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+    //                                     <span className="text-sm text-gray-500">
+    //                                         {filteredInteractions.length} results
+    //                                     </span>
+    //                                     <button
+    //                                         onClick={clearFilters}
+    //                                         className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+    //                                     >
+    //                                         Clear All
+    //                                     </button>
+    //                                 </div>
+    //                             </div>
+    //                         )}
+
+    //                         {/* Chip Filters */}
+    //                         <div className="flex flex-wrap gap-2 mb-6">
+    //                             {filterChips.map((chip) => {
+    //                                 const IconComponent = chip.icon;
+    //                                 const isActive = typeFilter === chip.id;
+    //                                 const interactionCount = chip.id === 'all'
+    //                                     ? selectedProperty.interactions.length
+    //                                     : selectedProperty.interactions.filter(i => i.type === chip.id).length;
+
+    //                                 return (
+    //                                     <button
+    //                                         key={chip.id}
+    //                                         onClick={() => setTypeFilter(chip.id)}
+    //                                         className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all ${isActive
+    //                                             ? chip.color + ' shadow-sm'
+    //                                             : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+    //                                             }`}
+    //                                     >
+    //                                         <IconComponent className="w-4 h-4" />
+    //                                         {chip.label}
+    //                                         <span className={`text-xs px-1.5 py-0.5 rounded-full ${isActive
+    //                                             ? 'bg-white/80 text-gray-700'
+    //                                             : 'bg-gray-100 text-gray-500'
+    //                                             }`}>
+    //                                             {interactionCount}
+    //                                         </span>
+    //                                     </button>
+    //                                 );
+    //                             })}
+    //                         </div>
+
+    //                         {/* Interaction Cards with Call Button */}
+    //                         <div className="space-y-3">
+    //                             {filteredInteractions.map((interaction, index) => (
+    //                                 <div key={`${interaction.timestamp}-${index}`} className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+    //                                     <div className="flex items-start justify-between">
+    //                                         <div className="flex items-start space-x-3 flex-1">
+    //                                             {/* Icon */}
+    //                                             <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center ${getInteractionColor(interaction.type)}`}>
+    //                                                 {getInteractionIcon(interaction.type)}
+    //                                             </div>
+
+    //                                             {/* Content */}
+    //                                             <div className="flex-1 min-w-0">
+    //                                                 <p className="text-sm lg:text-base font-medium text-gray-900">
+    //                                                     {interaction.user}
+    //                                                 </p>
+    //                                                 <div className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-4 text-xs lg:text-sm text-gray-500 mt-1">
+    //                                                     {interaction.phone !== 'N/A' && (
+    //                                                         <div className="flex items-center">
+    //                                                             <Phone className="w-3 h-3 mr-1" />
+    //                                                             {interaction.phone}
+    //                                                         </div>
+    //                                                     )}
+    //                                                     <div className="flex items-center">
+    //                                                         <Clock className="w-3 h-3 mr-1" />
+    //                                                         {interaction.time}
+    //                                                     </div>
+    //                                                 </div>
+    //                                                 {interaction.email && interaction.email !== 'N/A' && (
+    //                                                     <div className="text-xs text-gray-500 mt-1">
+    //                                                         {interaction.email}
+    //                                                     </div>
+    //                                                 )}
+    //                                                 {interaction.budget && interaction.budget !== 'Not specified' && (
+    //                                                     <div className="mt-2">
+    //                                                         <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+    //                                                             {interaction.budget}
+    //                                                         </span>
+    //                                                     </div>
+    //                                                 )}
+    //                                             </div>
+    //                                         </div>
+
+    //                                         {/* Call Button */}
+    //                                         <div className="flex items-center gap-2 ml-4">
+    //                                             {interaction.phone && interaction.phone !== 'N/A' && (
+    //                                                 <button
+    //                                                     onClick={() => handleCall(interaction.phone)}
+    //                                                     className="flex items-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium"
+    //                                                 >
+    //                                                     <Phone className="w-4 h-4" />
+    //                                                     <span className="hidden sm:inline">Call</span>
+    //                                                 </button>
+    //                                             )}
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+    //                         </div>
+
+    //                         {filteredInteractions.length === 0 && (
+    //                             <div className="text-center py-12">
+    //                                 <div className="w-12 h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+    //                                     <Search className="w-6 h-6 text-gray-400" />
+    //                                 </div>
+    //                                 <h3 className="text-sm font-medium text-gray-900 mb-1">No interactions found</h3>
+    //                                 <p className="text-sm text-gray-500">Try adjusting your filters to see more results.</p>
+    //                                 <button
+    //                                     onClick={clearFilters}
+    //                                     className="mt-4 text-sm text-blue-600 hover:text-blue-700 font-medium"
+    //                                 >
+    //                                     Clear filters
+    //                                 </button>
+    //                             </div>
+    //                         )}
+
+    //                         {/* Call to Action */}
+    //                         {filteredInteractions.length > 0 && (
+    //                             <div className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-4 lg:p-6 text-white">
+    //                                 <div className="text-center">
+    //                                     <p className="text-sm opacity-90 mb-2">Ready to connect with leads?</p>
+    //                                     <button className="bg-white text-blue-600 px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
+    //                                         Export Contact List
+    //                                     </button>
+    //                                 </div>
+    //                             </div>
+    //                         )}
+    //                     </div>
+    //                 )}
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
+
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Responsive Container */}
-            <div className="max-w-md mx-auto lg:max-w-4xl xl:max-w-6xl">
+            <div className="max-w-6xl mx-auto px-4 lg:px-8 py-6">
+                {/* Header */}
+                <div className="mb-6">
+                    <h2 className="text-lg lg:text-2xl font-semibold text-gray-800 mb-1">
+                        Properties Overview
+                    </h2>
+                    <p className="text-gray-500 text-sm">
+                        Select a property to view its engagement and interactions.
+                    </p>
+                </div>
 
-                {/* Header with Last Login */}
-                <div className="px-4 lg:px-8 py-6">
-                    {/* Modern Property Cards */}
-                    <div className="mb-6">
-                        {/* Sleek Property Cards */}
-                        <div className="flex gap-6 items-center">
-                            {propertiesData.map((property, index) => {
-                                const isExpanded = expandedCards[property.id];
-                                const isSelected = selectedProperty && selectedProperty.id === property.id;
-                                const totalEngagement = property.stats.visits + property.stats.contacts + property.stats.saves;
+                {/* Scrollable Property Cards */}
+                <div className="relative">
+                    <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+                        {propertiesData.map((property, index) => {
+                            const isExpanded = expandedCards[property.id];
+                            const isSelected =
+                                selectedProperty && selectedProperty.id === property.id;
+                            const totalEngagement =
+                                property.stats.visits +
+                                property.stats.contacts +
+                                property.stats.saves;
 
-                                return (
+                            return (
+                                <div
+                                    key={property.id}
+                                    className={`flex-shrink-0 w-[90%] sm:w-[70%] md:w-[45%] lg:w-[32%] xl:w-[28%] bg-white rounded-md border transition-all duration-300 snap-start hover:shadow-lg ${isSelected
+                                        ? "border-blue-500 shadow-md ring-1 ring-blue-500/20"
+                                        : "border-gray-200 hover:border-gray-300"
+                                        }`}
+                                >
+                                    {/* Collapsed View */}
                                     <div
-                                        key={property.id}
-                                        className={`bg-white rounded-2xl border transition-all duration-300 hover:shadow-lg ${isSelected
-                                            ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20'
-                                            : 'border-gray-200 hover:border-gray-300'
-                                            }`}
+                                        className="p-1.5 cursor-pointer"
+                                        onClick={() => {
+                                            setCurrentPropertyIndex(index);
+                                            setSelectedProperty(property);
+                                        }}
                                     >
-                                        {/* Collapsed View */}
-                                        <div
-                                            className="p-4 cursor-pointer"
-                                            onClick={() => {
-                                                setCurrentPropertyIndex(index);
-                                                setSelectedProperty(property);
-                                            }}
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                {/* Property Image */}
-                                                <div className="relative flex-shrink-0">
-                                                    <img
-                                                        src={property.image}
-                                                        alt={property.title}
-                                                        className="w-16 h-16 object-cover rounded-xl"
-                                                        onError={(e) => {
-                                                            e.target.src = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop";
-                                                        }}
-                                                    />
-                                                    {index < 3 && (
-                                                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
-                                                            <TrendingUp className="w-3 h-3 text-white" />
-                                                        </div>
-                                                    )}
+                                        <div className="flex items-center gap-4">
+                                            {/* Property Image */}
+                                            <div className="relative flex-shrink-0">
+                                                <img
+                                                    src={property.image}
+                                                    alt={property.title}
+                                                    className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl"
+                                                    onError={(e) => {
+                                                        e.target.src =
+                                                            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop";
+                                                    }}
+                                                />
+                                                {/* {index < 3 && (
+                                                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-sm">
+                                                        <TrendingUp className="w-3 h-3 text-white" />
+                                                    </div>
+                                                )} */}
+                                            </div>
+
+                                            {/* Property Info */}
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="font-semibold text-gray-900 text-sm truncate">
+                                                    {property.title}
+                                                </h3>
+                                                <div className="flex items-center text-xs text-gray-500 mt-1">
+                                                    <MapPin className="w-3 h-3 mr-1" />
+                                                    <span className="truncate">{property.location}</span>
                                                 </div>
 
-                                                {/* Property Info */}
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-start justify-between">
-                                                        <div className="min-w-0 flex-1">
-                                                            <h3 className="font-semibold text-gray-900 text-sm truncate">
-                                                                {property.title}
-                                                            </h3>
-                                                            <div className="flex items-center text-xs text-gray-500 mt-1">
-                                                                <MapPin className="w-3 h-3 mr-1" />
-                                                                <span className="truncate">{property.location}</span>
-                                                            </div>
+                                                {/* Quick Stats */}
+                                                <div className="flex items-center justify-between mt-3">
+                                                    <div className="flex items-center space-x-3">
+                                                        <div className="flex items-center text-xs">
+                                                            <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                                                            <span className="text-gray-600">
+                                                                {property.stats.visits} views
+                                                            </span>
                                                         </div>
-                                                    </div>
-
-                                                    {/* Quick Stats */}
-                                                    <div className="flex items-center justify-between mt-3">
-                                                        <div className="flex items-center space-x-4">
-                                                            <div className="flex items-center text-xs">
-                                                                <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                                                                <span className="text-gray-600">{property.stats.visits} views</span>
-                                                            </div>
-                                                            <div className="flex items-center text-xs">
-                                                                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                                                <span className="text-gray-600">{property.stats.contacts} contacts</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-center text-xs text-gray-500">
-                                                            <Hash className="w-3 h-3 mr-1" />
-                                                            {property.id.slice(-6)}
+                                                        <div className="flex items-center text-xs">
+                                                            <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                                            <span className="text-gray-600">
+                                                                {property.stats.contacts} contacts
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {/* Expanded View */}
-                                        {isExpanded && (
-                                            <div className="px-4 pb-4 border-t border-gray-100">
-                                                <div className="pt-4">
-                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                                                        <div className="text-center p-3 bg-blue-50 rounded-lg">
-                                                            <div className="text-xl font-bold text-blue-600">{property.stats.visits}</div>
-                                                            <div className="text-xs text-blue-600">Views</div>
+                                    {/* Expanded View */}
+                                    {isExpanded && (
+                                        <div className="px-4 pb-4 border-t border-gray-100">
+                                            <div className="pt-4">
+                                                {/* Stats Grid */}
+                                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                                                    {[
+                                                        {
+                                                            label: "Views",
+                                                            value: property.stats.visits,
+                                                            color: "text-blue-600 bg-blue-50",
+                                                        },
+                                                        {
+                                                            label: "Contacts",
+                                                            value: property.stats.contacts,
+                                                            color: "text-green-600 bg-green-50",
+                                                        },
+                                                        {
+                                                            label: "Saves",
+                                                            value: property.stats.saves,
+                                                            color: "text-red-500 bg-red-50",
+                                                        },
+                                                        {
+                                                            label: "Total",
+                                                            value: totalEngagement,
+                                                            color: "text-purple-600 bg-purple-50",
+                                                        },
+                                                    ].map((stat) => (
+                                                        <div
+                                                            key={stat.label}
+                                                            className={`text-center p-3 rounded-lg ${stat.color}`}
+                                                        >
+                                                            <div className="text-lg font-bold">
+                                                                {stat.value}
+                                                            </div>
+                                                            <div className="text-xs opacity-80">
+                                                                {stat.label}
+                                                            </div>
                                                         </div>
-                                                        <div className="text-center p-3 bg-green-50 rounded-lg">
-                                                            <div className="text-xl font-bold text-green-600">{property.stats.contacts}</div>
-                                                            <div className="text-xs text-green-600">Contacts</div>
-                                                        </div>
-                                                        <div className="text-center p-3 bg-red-50 rounded-lg">
-                                                            <div className="text-xl font-bold text-red-500">{property.stats.saves}</div>
-                                                            <div className="text-xs text-red-500">Saves</div>
-                                                        </div>
-                                                        <div className="text-center p-3 bg-purple-50 rounded-lg">
-                                                            <div className="text-xl font-bold text-purple-600">{totalEngagement}</div>
-                                                            <div className="text-xs text-purple-600">Total</div>
-                                                        </div>
-                                                    </div>
+                                                    ))}
+                                                </div>
 
-                                                    {/* Recent Interactions Preview */}
-                                                    <div className="mb-4">
-                                                        <h4 className="text-sm font-medium text-gray-700 mb-2">Recent Activity</h4>
-                                                        <div className="space-y-2">
-                                                            {property.interactions.slice(0, 2).map((interaction, idx) => (
-                                                                <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                                {/* Recent Activity */}
+                                                <div>
+                                                    <h4 className="text-sm font-medium text-gray-700 mb-2">
+                                                        Recent Activity
+                                                    </h4>
+                                                    <div className="space-y-2">
+                                                        {property.interactions.slice(0, 2).map(
+                                                            (interaction, idx) => (
+                                                                <div
+                                                                    key={idx}
+                                                                    className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
+                                                                >
                                                                     <div className="flex items-center gap-2">
-                                                                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${getInteractionColor(interaction.type)}`}>
+                                                                        <div
+                                                                            className={`w-6 h-6 rounded-full flex items-center justify-center ${getInteractionColor(
+                                                                                interaction.type
+                                                                            )}`}
+                                                                        >
                                                                             {getInteractionIcon(interaction.type)}
                                                                         </div>
-                                                                        <span className="text-sm text-gray-700">{interaction.user}</span>
+                                                                        <span className="text-sm text-gray-700 truncate">
+                                                                            {interaction.user}
+                                                                        </span>
                                                                     </div>
-                                                                    <span className="text-xs text-gray-500">{interaction.time}</span>
+                                                                    <span className="text-xs text-gray-500">
+                                                                        {interaction.time}
+                                                                    </span>
                                                                 </div>
-                                                            ))}
-                                                        </div>
+                                                            )
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
-
-                                        {/* Selection Indicator */}
-                                        {isSelected && (
-                                            <div className="absolute right-4 top-4">
-                                                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
+                </div>
 
-                    {/* Interactions */}
-                    {selectedProperty && (
-                        <div>
-                            <div className="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 className="text-lg lg:text-xl font-semibold text-gray-900">
-                                        Recent Activity
-                                    </h3>
-                                    <p className="text-sm text-gray-500">
-                                        {filteredInteractions.length} interactions for {selectedProperty.title}
-                                    </p>
+                {/* Interactions Section */}
+                {selectedProperty && (
+                    <div className="mt-8">
+                        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+                            <div>
+                                <h3 className="text-lg lg:text-xl font-semibold text-gray-900">
+                                    Recent Activity
+                                </h3>
+                                <p className="text-sm text-gray-500">
+                                    {filteredInteractions.length} interactions for{" "}
+                                    {selectedProperty.title}
+                                </p>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <div className="relative">
+                                    <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    <input
+                                        type="date"
+                                        value={dateFilter}
+                                        onChange={(e) => setDateFilter(e.target.value)}
+                                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                    />
+                                </div>
+                                <button
+                                    onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showAdvancedOptions
+                                        ? "bg-blue-100 text-blue-700"
+                                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                        }`}
+                                >
+                                    <Filter className="w-4 h-4" />
+                                    <span className="hidden sm:inline">Filters</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Advanced Filters */}
+                        {showAdvancedOptions && (
+                            <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Search
+                                        </label>
+                                        <div className="relative">
+                                            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                            <input
+                                                type="text"
+                                                placeholder="Name, phone..."
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Type
+                                        </label>
+                                        <select
+                                            value={typeFilter}
+                                            onChange={(e) => setTypeFilter(e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        >
+                                            <option value="all">All Types</option>
+                                            <option value="contact">Contacts</option>
+                                            <option value="visit">Visits</option>
+                                            <option value="save">Saves</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                {/* Advanced Options Toggle with Calendar */}
-                                <div className="flex items-center gap-2">
-                                    <div className="relative">
-                                        <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                        <input
-                                            type="date"
-                                            value={dateFilter}
-                                            onChange={(e) => setDateFilter(e.target.value)}
-                                            className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                        />
-                                    </div>
+                                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                    <span className="text-sm text-gray-500">
+                                        {filteredInteractions.length} results
+                                    </span>
                                     <button
-                                        onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showAdvancedOptions ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                            }`}
+                                        onClick={clearFilters}
+                                        className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                                     >
-                                        <Filter className="w-4 h-4" />
-                                        <span className="hidden sm:inline">Filters</span>
+                                        Clear All
                                     </button>
                                 </div>
                             </div>
+                        )}
 
-                            {/* Advanced Options Panel */}
-                            {showAdvancedOptions && (
-                                <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {/* Search */}
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                Search
-                                            </label>
-                                            <div className="relative">
-                                                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Name, phone..."
-                                                    value={searchQuery}
-                                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {/* Type Filter */}
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                Type
-                                            </label>
-                                            <select
-                                                value={typeFilter}
-                                                onChange={(e) => setTypeFilter(e.target.value)}
-                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            >
-                                                <option value="all">All Types</option>
-                                                <option value="contact">Contacts</option>
-                                                <option value="visit">Visits</option>
-                                                <option value="save">Saves</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    {/* Filter Actions */}
-                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                                        <span className="text-sm text-gray-500">
-                                            {filteredInteractions.length} results
-                                        </span>
-                                        <button
-                                            onClick={clearFilters}
-                                            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-                                        >
-                                            Clear All
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Chip Filters */}
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {filterChips.map((chip) => {
-                                    const IconComponent = chip.icon;
-                                    const isActive = typeFilter === chip.id;
-                                    const interactionCount = chip.id === 'all'
+                        {/* Chip Filters */}
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            {filterChips.map((chip) => {
+                                const IconComponent = chip.icon;
+                                const isActive = typeFilter === chip.id;
+                                const interactionCount =
+                                    chip.id === "all"
                                         ? selectedProperty.interactions.length
-                                        : selectedProperty.interactions.filter(i => i.type === chip.id).length;
+                                        : selectedProperty.interactions.filter(
+                                            (i) => i.type === chip.id
+                                        ).length;
 
-                                    return (
-                                        <button
-                                            key={chip.id}
-                                            onClick={() => setTypeFilter(chip.id)}
-                                            className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all ${isActive
-                                                ? chip.color + ' shadow-sm'
-                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                                return (
+                                    <button
+                                        key={chip.id}
+                                        onClick={() => setTypeFilter(chip.id)}
+                                        className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all ${isActive
+                                            ? chip.color + " shadow-sm"
+                                            : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                                            }`}
+                                    >
+                                        <IconComponent className="w-4 h-4" />
+                                        {chip.label}
+                                        <span
+                                            className={`text-xs px-1.5 py-0.5 rounded-full ${isActive
+                                                ? "bg-white/80 text-gray-700"
+                                                : "bg-gray-100 text-gray-500"
                                                 }`}
                                         >
-                                            <IconComponent className="w-4 h-4" />
-                                            {chip.label}
-                                            <span className={`text-xs px-1.5 py-0.5 rounded-full ${isActive
-                                                ? 'bg-white/80 text-gray-700'
-                                                : 'bg-gray-100 text-gray-500'
-                                                }`}>
-                                                {interactionCount}
-                                            </span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
+                                            {interactionCount}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
 
-                            {/* Interaction Cards with Call Button */}
-                            <div className="space-y-3">
-                                {filteredInteractions.map((interaction, index) => (
-                                    <div key={`${interaction.timestamp}-${index}`} className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
-                                        <div className="flex items-start justify-between">
-                                            <div className="flex items-start space-x-3 flex-1">
-                                                {/* Icon */}
-                                                <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center ${getInteractionColor(interaction.type)}`}>
-                                                    {getInteractionIcon(interaction.type)}
-                                                </div>
+                        {/* Interaction Cards */}
+                        <div className="space-y-3">
+                            {filteredInteractions.map((interaction, index) => (
+                                <div
+                                    key={`${interaction.timestamp}-${index}`}
+                                    className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100"
+                                >
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-start space-x-3 flex-1">
+                                            <div
+                                                className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center ${getInteractionColor(
+                                                    interaction.type
+                                                )}`}
+                                            >
+                                                {getInteractionIcon(interaction.type)}
+                                            </div>
 
-                                                {/* Content */}
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm lg:text-base font-medium text-gray-900">
-                                                        {interaction.user}
-                                                    </p>
-                                                    <div className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-4 text-xs lg:text-sm text-gray-500 mt-1">
-                                                        {interaction.phone !== 'N/A' && (
-                                                            <div className="flex items-center">
-                                                                <Phone className="w-3 h-3 mr-1" />
-                                                                {interaction.phone}
-                                                            </div>
-                                                        )}
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm lg:text-base font-medium text-gray-900">
+                                                    {interaction.user}
+                                                </p>
+                                                <div className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-4 text-xs lg:text-sm text-gray-500 mt-1">
+                                                    {interaction.phone !== "N/A" && (
                                                         <div className="flex items-center">
-                                                            <Clock className="w-3 h-3 mr-1" />
-                                                            {interaction.time}
-                                                        </div>
-                                                    </div>
-                                                    {interaction.email && interaction.email !== 'N/A' && (
-                                                        <div className="text-xs text-gray-500 mt-1">
-                                                            {interaction.email}
+                                                            <Phone className="w-3 h-3 mr-1" />
+                                                            {interaction.phone}
                                                         </div>
                                                     )}
-                                                    {interaction.budget && interaction.budget !== 'Not specified' && (
+                                                    <div className="flex items-center">
+                                                        <Clock className="w-3 h-3 mr-1" />
+                                                        {interaction.time}
+                                                    </div>
+                                                </div>
+                                                {interaction.email && interaction.email !== "N/A" && (
+                                                    <div className="text-xs text-gray-500 mt-1">
+                                                        {interaction.email}
+                                                    </div>
+                                                )}
+                                                {interaction.budget &&
+                                                    interaction.budget !== "Not specified" && (
                                                         <div className="mt-2">
                                                             <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
                                                                 {interaction.budget}
                                                             </span>
                                                         </div>
                                                     )}
-                                                </div>
-                                            </div>
-
-                                            {/* Call Button */}
-                                            <div className="flex items-center gap-2 ml-4">
-                                                {interaction.phone && interaction.phone !== 'N/A' && (
-                                                    <button
-                                                        onClick={() => handleCall(interaction.phone)}
-                                                        className="flex items-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium"
-                                                    >
-                                                        <Phone className="w-4 h-4" />
-                                                        <span className="hidden sm:inline">Call</span>
-                                                    </button>
-                                                )}
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
 
-                            {filteredInteractions.length === 0 && (
-                                <div className="text-center py-12">
-                                    <div className="w-12 h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                        <Search className="w-6 h-6 text-gray-400" />
+                                        {/* Call Button */}
+                                        <div className="flex items-center gap-2 ml-4">
+                                            {interaction.phone && interaction.phone !== "N/A" && (
+                                                <button
+                                                    onClick={() => handleCall(interaction.phone)}
+                                                    className="flex items-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium"
+                                                >
+                                                    <Phone className="w-4 h-4" />
+                                                    <span className="hidden sm:inline">Call</span>
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                    <h3 className="text-sm font-medium text-gray-900 mb-1">No interactions found</h3>
-                                    <p className="text-sm text-gray-500">Try adjusting your filters to see more results.</p>
-                                    <button
-                                        onClick={clearFilters}
-                                        className="mt-4 text-sm text-blue-600 hover:text-blue-700 font-medium"
-                                    >
-                                        Clear filters
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* No Interactions */}
+                        {filteredInteractions.length === 0 && (
+                            <div className="text-center py-12">
+                                <div className="w-12 h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                    <Search className="w-6 h-6 text-gray-400" />
+                                </div>
+                                <h3 className="text-sm font-medium text-gray-900 mb-1">
+                                    No interactions found
+                                </h3>
+                                <p className="text-sm text-gray-500">
+                                    Try adjusting your filters to see more results.
+                                </p>
+                                <button
+                                    onClick={clearFilters}
+                                    className="mt-4 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                                >
+                                    Clear filters
+                                </button>
+                            </div>
+                        )}
+
+                        {/* CTA */}
+                        {filteredInteractions.length > 0 && (
+                            <div className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-4 lg:p-6 text-white">
+                                <div className="text-center">
+                                    <p className="text-sm opacity-90 mb-2">
+                                        Ready to connect with leads?
+                                    </p>
+                                    <button className="bg-white text-blue-600 px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
+                                        Export Contact List
                                     </button>
                                 </div>
-                            )}
-
-                            {/* Call to Action */}
-                            {filteredInteractions.length > 0 && (
-                                <div className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-4 lg:p-6 text-white">
-                                    <div className="text-center">
-                                        <p className="text-sm opacity-90 mb-2">Ready to connect with leads?</p>
-                                        <button className="bg-white text-blue-600 px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
-                                            Export Contact List
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
+
 };
 
 export default PropertyResponses;

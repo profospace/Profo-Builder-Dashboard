@@ -705,7 +705,7 @@ const Sidebar = () => {
 
     // Filter for mobile bottom nav (exclude Profile, Settings, Performance)
     const mobileNavItems = menuItems.filter(
-        (item) => !['Profile', 'Settings', 'Performance'].includes(item.name)
+        (item) => !['Profile', 'Settings', 'Performance', 'Callbacks'].includes(item.name)
     );
 
     const groupedMenus = menuItems.reduce((acc, item) => {
@@ -800,10 +800,10 @@ const Sidebar = () => {
                         <button
                             key={item.name}
                             onClick={() => navigate(item.route)}
-                            className={`flex flex-col items-center text-xs ${isActive ? 'text-blue-600' : 'text-gray-500'
+                            className={`flex flex-col items-center text-[10px] ${isActive ? 'text-blue-600' : 'text-gray-500'
                                 }`}
                         >
-                            <item.icon size={20} />
+                            <item.icon size={16} />
                             <span className="mt-1">{item.name.split(" ")[1] || item.name}</span>
                         </button>
                     );
