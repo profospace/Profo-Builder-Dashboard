@@ -260,6 +260,9 @@ const App = () => {
   //   }, []
   // )
 
+
+ 
+
   // Around line 38 - REPLACE the existing useEffect
   useEffect(() => {
     if (!user) {

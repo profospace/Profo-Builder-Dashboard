@@ -654,7 +654,7 @@
 
 // export default Sidebar;
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     LayoutDashboard,
     BookOpen,
@@ -665,11 +665,16 @@ import {
     ChevronUp,
 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { base_url } from '@/utils/baseurl';
+import { getAuthToken, getConfig } from '@/utils/config';
+import axios from 'axios';
 
 const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [expandedMenus, setExpandedMenus] = useState({});
+    const [unassignedBookings , setUnassignedBookings] = useState([])
+    const [stats ,setStats] = useState([])
 
     const toggleSubmenu = (menuName) => {
         setExpandedMenus((prev) => ({
@@ -677,6 +682,9 @@ const Sidebar = () => {
             [menuName]: !prev[menuName],
         }));
     };
+
+    console.log("unassignedBookings", unassignedBookings)
+
 
     // Full Menu
     const menuItems = [
@@ -694,10 +702,11 @@ const Sidebar = () => {
         //         { name: 'Real-time Data', route: '/performance/realtime', icon: MessageCircle },
         //     ],
         // },
-        { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS' },
-        { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
-        { name: 'RM_Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT' },
-        { name: 'Chats', icon: Calendar, route: '/chat-interface', category: 'CHAT' },
+        { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS', ...(unassignedBookings?.length > 0 && { badge: unassignedBookings.length }) },
+        { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS' },
+        // { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
+        { name: 'RM_Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT', ...(unassignedBookings?.length > 0 && { badge: unassignedBookings.length }) },
+        { name: 'Chats', icon: Calendar, route: '/chat-interface', category: 'CHAT', ...(stats?.totalUnread > 0 && { badge: stats?.totalUnread }) },
         { name: 'Offer', icon: Calendar, route: '/builder/offer/management', category: 'OFFER MANAGEMENT' },
         { name: 'Profile', icon: Calendar, route: '/profile', category: 'Extra' },
         { name: 'Settings', icon: Calendar, route: '/settings', category: 'Extra' },
@@ -713,6 +722,75 @@ const Sidebar = () => {
         acc[item.category].push(item);
         return acc;
     }, {});
+
+    /********************************* */
+     // unassigned bookings
+      const fetchUnassignedBookings = async () => {
+        try {
+            const response = await axios.get(`${base_url}/bookings/unassigned-bookings`, getConfig());
+          if (response.data.success) {
+            setUnassignedBookings(response.data.data.bookings || []);
+            // setBuilderStats(prev => ({
+            //   ...prev,
+            //   pendingAssignments: response.data.data.bookings?.length || 0
+            // }));
+          }
+        } catch (error) {
+          console.error('Error fetching unassigned bookings:', error);
+          // setUnassignedBookings([
+          //   {
+          //     id: '1',
+          //     property: { post_title: 'Luxury Apartment', address: 'Bandra West, Mumbai', price: 47100000 },
+          //     tokenPaidBy: { name: 'Rohit Sharma', phone: '+91 9988776655', email: 'rohit@email.com' },
+          //     siteVisitScheduledAt: '2024-01-16T10:00:00.000Z',
+          //     tokenAmount: 100,
+          //     priority: 'HIGH',
+          //     propertyType: 'Luxury',
+          //     createdAt: new Date().toISOString()
+          //   }
+          // ]);
+        }
+      };
+
+
+
+      /***** unread conversations */
+    const loadConversations = async () => {
+        try {
+            const token = JSON.parse(localStorage.getItem('user')).token;
+
+            // const params = new URLSearchParams({
+            //     page: 1,
+            //     limit: 20,
+            //     // ...filters
+            // });
+
+            const response = await fetch(`${base_url}/api/builders/conversations`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("data***", data)
+                // setConversations(data.data.conversations);
+                setStats(data.data.stats);
+            }
+        } catch (error) {
+            console.error('Error loading conversations:', error);
+        } 
+    };
+
+    console.log("stats", stats)
+    /********************************* */
+
+    useEffect(
+        ()=>{
+            fetchUnassignedBookings()
+            loadConversations()
+        },[]
+    )
 
     const renderMenuItem = (item) => {
         const hasSubmenu = item.hasSubmenu && item.submenu;
@@ -733,7 +811,7 @@ const Sidebar = () => {
                     <item.icon size={18} />
                     <span className="flex-1">{item.name}</span>
                     {item.badge && (
-                        <div className="min-w-5 h-5 bg-red-100 text-red-600 text-xs font-medium rounded-full flex items-center justify-center px-1">
+                        <div className="min-w-5 h-5 bg-[#b7ffd4] text-[#00C951] text-xs font-medium rounded-full flex items-center justify-center px-1">
                             {item.badge}
                         </div>
                     )}
@@ -765,7 +843,7 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop Sidebar */}
-            <div className="hidden md:flex w-64 h-screen bg-white flex-col shadow-lg border-r border-gray-100">
+            <div className="hidden md:flex w-56 h-screen bg-white flex-col shadow-lg border-r border-gray-100">
                 <div className="px-6 py-5 flex items-center">
                     <img
                         src="https://wityysaver.s3.ap-south-1.amazonaws.com/1758194017476-logo.png"

@@ -2012,12 +2012,13 @@ import {
   IndianRupee
 } from 'lucide-react';
 import { base_url } from '../utils/baseurl';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const RmPage = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('bookings');
   const [bookingSubTab, setBookingSubTab] = useState('unassigned');
   const [showAddRMModal, setShowAddRMModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
@@ -2029,7 +2030,20 @@ const RmPage = () => {
   const [dateFilter, setDateFilter] = useState({ from: '', to: '' });
   const [copied, setCopied] = useState(false);
 
+  const location = useLocation();
+  const { rmId } = location.state || {}; // safely extract rmId
+
+  console.log("Received RM ID:", rmId);
+
   const navigate = useNavigate()
+
+  useEffect(
+    ()=>{
+      if (rmId){
+        setBookingSubTab('assigned')
+      }
+    }, [location, rmId]
+  )
 
 
   const [loading, setLoading] = useState(false);
@@ -2463,398 +2477,781 @@ const RmPage = () => {
   //   );
   // };
 
+  // const UnassignedBookings = () => {
+  //   const filteredBookings = filterBookingsByDate(unassignedBookings, 'createdAt');
+
+  //   return (
+  //     <div className="space-y-4">
+  //       {filteredBookings.map((booking) => (
+  //         <Card
+  //           key={booking._id || booking.id}
+  //           className="rounded-2xl border shadow-sm hover:shadow-md transition-all duration-200 bg-white"
+  //         >
+  //           {/* Header */}
+  //           <CardHeader className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-4 py-3">
+  //             <div className="flex flex-wrap items-center justify-between w-full gap-2">
+  //               <CardTitle className="text-base font-semibold text-gray-900 truncate">
+  //                 {booking.property?.post_title || booking.property?.title}
+  //               </CardTitle>
+
+  //               <span
+  //                 className={`px-2 py-0.5 text-[10px] rounded-full font-medium ${booking.priority === "HIGH"
+  //                   ? "bg-red-100 text-red-600"
+  //                   : booking.priority === "MEDIUM"
+  //                     ? "bg-yellow-100 text-yellow-700"
+  //                     : "bg-green-100 text-green-700"
+  //                   }`}
+  //               >
+  //                 {booking.priority} PRIORITY
+  //               </span>
+  //             </div>
+  //           </CardHeader>
+
+  //           {/* Content */}
+  //           <CardContent className="px-4 pb-3 text-sm text-gray-700 space-y-2 sm:grid sm:grid-cols-3 sm:gap-4">
+  //             {/* Customer Info */}
+  //             <div className="flex flex-col gap-1">
+  //               <p className="font-medium truncate">{booking.tokenPaidBy?.name}</p>
+  //               <p className="text-gray-500 text-xs flex items-center gap-1">
+  //                 <Phone className="h-3 w-3" />
+  //                 {booking.tokenPaidBy?.phone}
+  //               </p>
+  //               {/* Hide on mobile */}
+  //               <p className="hidden sm:flex text-gray-500 text-xs items-center gap-1">
+  //                 <Mail className="h-3 w-3" />
+  //                 {booking.tokenPaidBy?.email}
+  //               </p>
+  //             </div>
+
+  //             {/* Property Info */}
+  //             <div className="hidden sm:flex flex-col gap-1">
+  //               <p className="flex items-center gap-1 text-xs text-gray-600 truncate">
+  //                 <MapPin className="h-3 w-3" />
+  //                 {booking.property?.address}
+  //               </p>
+  //               <p className="flex items-center gap-1 text-xs">
+  //                 <IndianRupee className="h-3 w-3 text-gray-500" />
+  //                 ₹{booking.property?.price?.toLocaleString("en-IN")}
+  //               </p>
+  //               <p className="flex items-center gap-1 text-xs">
+  //                 <IndianRupee className="h-3 w-3 text-gray-500" />
+  //                 Token: ₹{booking.tokenAmount}
+  //               </p>
+  //             </div>
+
+  //             {/* Token & Type — compact for mobile */}
+  //             <div className="flex flex-col gap-1 sm:hidden">
+  //               <p className="text-gray-600 text-xs flex items-center gap-1">
+  //                 <IndianRupee className="h-3 w-3" />
+  //                 ₹{booking.tokenAmount}
+  //               </p>
+  //               <p className="text-[11px] text-gray-500">Type: {booking.propertyType}</p>
+  //             </div>
+
+  //             {/* Additional Info (Desktop only) */}
+  //             <div className="hidden sm:flex flex-col gap-1 text-xs">
+  //               <p className="flex items-center gap-1 text-gray-600">
+  //                 <Clock className="h-3 w-3" />
+  //                 {formatDateTime(booking.siteVisitScheduledAt)}
+  //               </p>
+  //               <p className="text-gray-500">Created: {formatDate(booking.createdAt)}</p>
+  //             </div>
+  //           </CardContent>
+
+  //           {/* Footer Buttons */}
+  //           <CardFooter className="flex flex-col sm:flex-row sm:justify-end gap-2 px-4 pb-4">
+  //             <Button
+  //               onClick={() => {
+  //                 setSelectedBooking(booking);
+  //                 setShowAssignModal(true);
+  //               }}
+  //               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-sm rounded-xl"
+  //             >
+  //               Assign RM
+  //             </Button>
+  //             <Button
+  //               onClick={() => navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`)}
+  //               className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-sm rounded-xl"
+  //             >
+  //               User Summary
+  //             </Button>
+  //           </CardFooter>
+  //         </Card>
+  //       ))}
+
+  //       {filteredBookings.length === 0 && (
+  //         <div className="text-center py-16">
+  //           <Calendar className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+  //           <p className="text-gray-600 text-base font-medium">
+  //             No unassigned bookings found
+  //           </p>
+  //           <p className="text-gray-400 text-xs">
+  //             All bookings are assigned or no matches found
+  //           </p>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
+
+
+  // // Assigned Bookings Component
+  // const AssignedBookings = () => {
+  //   const filteredBookings = filterBookingsByDate(assignedBookings, 'assignedAt');
+
+  //   const getStatusColor = (status) => {
+  //     switch (status) {
+  //       case 'COMPLETED':
+  //         return 'bg-green-100 text-green-700';
+  //       case 'SCHEDULED':
+  //         return 'bg-blue-100 text-blue-700';
+  //       case 'MISSED':
+  //         return 'bg-red-100 text-red-700';
+  //       case 'IN_PROGRESS':
+  //         return 'bg-yellow-100 text-yellow-700';
+  //       default:
+  //         return 'bg-gray-100 text-gray-700';
+  //     }
+  //   };
+
+  //   return (
+  //     <div className="space-y-4">
+  //       {filteredBookings.map(booking => (
+  //         <div key={booking._id} className="border border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition-colors">
+  //           <div className="flex justify-between items-start mb-4">
+  //             <div className="flex-1">
+  //               <div className="flex items-center gap-3 mb-3">
+  //                 <h4 className="font-semibold text-gray-900 text-lg">
+  //                   {booking.property?.post_title}
+  //                 </h4>
+  //                 <span className={`px-3 py-1 text-xs rounded-full font-medium ${getStatusColor(booking.visitStatus)}`}>
+  //                   {booking.visitStatus}
+  //                 </span>
+  //                 <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
+  //                   booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+  //                     'bg-green-100 text-green-700'
+  //                   }`}>
+  //                   {booking.priority}
+  //                 </span>
+  //                 <button
+  //                   onClick={() => {
+  //                     navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
+  //                   }}
+  //                   className="px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
+  //                 >
+  //                   User Summary
+  //                 </button>
+  //               </div>
+
+
+  //               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+  //                 <div className="space-y-1">
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
+  //                   </p>
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Phone:</span> {booking.tokenPaidBy?.phone}
+  //                   </p>
+  //                 </div>
+  //                 <div className="space-y-1">
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">RM:</span> {booking.assignedRM?.name}
+  //                   </p>
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">RM Phone:</span> {booking.assignedRM?.phone}
+  //                   </p>
+  //                 </div>
+  //                 <div className="space-y-1">
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Assigned:</span> {formatDate(booking.assignedAt)}
+  //                   </p>
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Visit Date:</span> {formatDateTime(booking.siteVisitScheduledAt)}
+  //                   </p>
+  //                 </div>
+  //                 <div className="space-y-1">
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Price:</span> ₹{booking.property?.price?.toLocaleString('en-IN')}
+  //                   </p>
+  //                   <p className="text-gray-600">
+  //                     <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
+  //                   </p>
+  //                 </div>
+
+  //               </div>
+
+  //               {booking.visitDetails && (
+  //                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+  //                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+  //                     <div>
+  //                       <span className="font-medium text-gray-700">Duration:</span>
+  //                       <p className="text-gray-600">{booking.visitDetails.duration} mins</p>
+  //                     </div>
+  //                     <div>
+  //                       <span className="font-medium text-gray-700">Interest:</span>
+  //                       <p className="text-gray-600">{booking.visitDetails.customerInterest}</p>
+  //                     </div>
+  //                     <div>
+  //                       <span className="font-medium text-gray-700">Rating:</span>
+  //                       <p className="text-gray-600 flex items-center gap-1">
+  //                         <Star className="h-4 w-4 text-yellow-400 fill-current" />
+  //                         {booking.visitDetails.rmRating}/5
+  //                       </p>
+  //                     </div>
+  //                     <div>
+  //                       <span className="font-medium text-gray-700">Follow-up:</span>
+  //                       <p className="text-gray-600">
+  //                         {booking.visitDetails.followUpRequired ?
+  //                           `Required - ${formatDate(booking.visitDetails.followUpDate)}` :
+  //                           'Not Required'
+  //                         }
+  //                       </p>
+  //                     </div>
+  //                   </div>
+  //                   {booking.visitDetails.visitNotes && (
+  //                     <div className="mt-2">
+  //                       <span className="font-medium text-gray-700">Notes:</span>
+  //                       <p className="text-gray-600 mt-1">{booking.visitDetails.visitNotes}</p>
+  //                     </div>
+  //                   )}
+  //                 </div>
+  //               )}
+
+  //             </div>
+  //           </div>
+  //         </div>
+  //       ))}
+
+  //       {filteredBookings.length === 0 && (
+  //         <div className="text-center py-12">
+  //           <Users className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+  //           <p className="text-gray-500 text-lg">No assigned bookings found</p>
+  //           <p className="text-gray-400 text-sm">No bookings match your current filter criteria</p>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
+
+  // // RM Activity Component
+  // const RMActivity = () => {
+  //   const getAllActivities = () => {
+  //     const activities = [];
+
+  //     assignedBookings.forEach(booking => {
+  //       // Add assignment activity
+  //       activities.push({
+  //         id: `assign-${booking._id}`,
+  //         type: 'ASSIGNMENT',
+  //         booking: booking,
+  //         rmName: booking.assignedRM?.name,
+  //         timestamp: booking.assignedAt,
+  //         description: `Booking assigned to ${booking.assignedRM?.name}`,
+  //         property: booking.property?.post_title,
+  //         customer: booking.tokenPaidBy?.name
+  //       });
+
+  //       // Add RM actions
+  //       if (booking.rmActions && booking.rmActions.length > 0) {
+  //         booking.rmActions.forEach(action => {
+  //           activities.push({
+  //             id: `action-${action._id}`,
+  //             type: 'RM_ACTION',
+  //             booking: booking,
+  //             action: action.action,
+  //             rmName: booking.assignedRM?.name,
+  //             timestamp: action.performedAt,
+  //             description: `${action.action} - ${action.reason || 'No reason provided'}`,
+  //             property: booking.property?.post_title,
+  //             customer: booking.tokenPaidBy?.name,
+  //             metadata: action.metadata
+  //           });
+  //         });
+  //       }
+  //     });
+
+  //     return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  //   };
+
+  //   const allActivities = getAllActivities();
+  //   const filteredActivities = filterBookingsByDate(allActivities, 'timestamp');
+
+  //   const getActivityIcon = (type) => {
+  //     switch (type) {
+  //       case 'ASSIGNMENT':
+  //         return <UserPlus className="h-4 w-4 text-blue-600" />;
+  //       case 'RM_ACTION':
+  //         return <Activity className="h-4 w-4 text-green-600" />;
+  //       default:
+  //         return <FileText className="h-4 w-4 text-gray-600" />;
+  //     }
+  //   };
+
+  //   const getActivityColor = (type) => {
+  //     switch (type) {
+  //       case 'ASSIGNMENT':
+  //         return 'border-blue-200 bg-blue-50';
+  //       case 'RM_ACTION':
+  //         return 'border-green-200 bg-green-50';
+  //       default:
+  //         return 'border-gray-200 bg-gray-50';
+  //     }
+  //   };
+
+  //   return (
+  //     <div className="space-y-4">
+  //       {filteredActivities.map(activity => (
+  //         <div key={activity.id} className={`border rounded-xl p-6 ${getActivityColor(activity.type)} transition-colors`}>
+  //           <div className="flex items-start gap-4">
+  //             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white border flex items-center justify-center">
+  //               {getActivityIcon(activity.type)}
+  //             </div>
+  //             <div className="flex-1">
+  //               <div className="flex items-center justify-between mb-2">
+  //                 <h4 className="font-semibold text-gray-900">{activity.description}</h4>
+  //                 <span className="text-sm text-gray-500">{formatDateTime(activity.timestamp)}</span>
+  //               </div>
+  //               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+  //                 <div>
+  //                   <span className="font-medium text-gray-700">Property:</span>
+  //                   <p className="text-gray-600">{activity.property}</p>
+  //                 </div>
+  //                 <div>
+  //                   <span className="font-medium text-gray-700">Customer:</span>
+  //                   <p className="text-gray-600">{activity.customer}</p>
+  //                 </div>
+  //                 <div>
+  //                   <span className="font-medium text-gray-700">RM:</span>
+  //                   <p className="text-gray-600">{activity.rmName}</p>
+  //                 </div>
+  //               </div>
+
+  //               {activity.metadata && (
+  //                 <div className="mt-3 p-3 bg-white rounded-lg border">
+  //                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+  //                     {activity.metadata.visitStatus && (
+  //                       <div>
+  //                         <span className="font-medium text-gray-700">Status:</span>
+  //                         <p className="text-gray-600">{activity.metadata.visitStatus}</p>
+  //                       </div>
+  //                     )}
+  //                     {activity.metadata.customerInterest && (
+  //                       <div>
+  //                         <span className="font-medium text-gray-700">Interest:</span>
+  //                         <p className="text-gray-600">{activity.metadata.customerInterest}</p>
+  //                       </div>
+  //                     )}
+  //                     {activity.metadata.duration && (
+  //                       <div>
+  //                         <span className="font-medium text-gray-700">Duration:</span>
+  //                         <p className="text-gray-600">{activity.metadata.duration} mins</p>
+  //                       </div>
+  //                     )}
+  //                     {activity.metadata.rating && (
+  //                       <div>
+  //                         <span className="font-medium text-gray-700">Rating:</span>
+  //                         <p className="text-gray-600 flex items-center gap-1">
+  //                           <Star className="h-4 w-4 text-yellow-400 fill-current" />
+  //                           {activity.metadata.rating}/5
+  //                         </p>
+  //                       </div>
+  //                     )}
+  //                   </div>
+  //                 </div>
+  //               )}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       ))}
+
+  //       {filteredActivities.length === 0 && (
+  //         <div className="text-center py-12">
+  //           <Activity className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+  //           <p className="text-gray-500 text-lg">No RM activities found</p>
+  //           <p className="text-gray-400 text-sm">No activities match your current filter criteria</p>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
+
   const UnassignedBookings = () => {
-    const filteredBookings = filterBookingsByDate(unassignedBookings, 'createdAt');
+    const filteredBookings = filterBookingsByDate(unassignedBookings, "createdAt");
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-5">
         {filteredBookings.map((booking) => (
-          <Card
+          <motion.div
             key={booking._id || booking.id}
-            className="rounded-2xl border shadow-sm hover:shadow-md transition-all duration-200 bg-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.01 }}
+            transition={{ duration: 0.2 }}
           >
-            {/* Header */}
-            <CardHeader className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-4 py-3">
-              <div className="flex flex-wrap items-center justify-between w-full gap-2">
-                <CardTitle className="text-base font-semibold text-gray-900 truncate">
-                  {booking.property?.post_title || booking.property?.title}
-                </CardTitle>
-
+            <Card className="rounded-3xl backdrop-blur-xl bg-white/70 border border-gray-200/60 shadow-[0_4px_24px_-10px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.25)] transition-all duration-300">
+              {/* Header */}
+              <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 px-5 py-4">
+                <div>
+                  <CardTitle className="text-lg font-medium text-gray-900 tracking-tight">
+                    {booking.property?.post_title || booking.property?.title}
+                  </CardTitle>
+                </div>
                 <span
-                  className={`px-2 py-0.5 text-[10px] rounded-full font-medium ${booking.priority === "HIGH"
-                    ? "bg-red-100 text-red-600"
-                    : booking.priority === "MEDIUM"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-green-100 text-green-700"
+                  className={`px-3 py-1 text-[11px] rounded-full font-medium tracking-wide ${booking.priority === "HIGH"
+                      ? "bg-red-100 text-red-700"
+                      : booking.priority === "MEDIUM"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
                     }`}
                 >
                   {booking.priority} PRIORITY
                 </span>
-              </div>
-            </CardHeader>
+              </CardHeader>
 
-            {/* Content */}
-            <CardContent className="px-4 pb-3 text-sm text-gray-700 space-y-2 sm:grid sm:grid-cols-3 sm:gap-4">
-              {/* Customer Info */}
-              <div className="flex flex-col gap-1">
-                <p className="font-medium truncate">{booking.tokenPaidBy?.name}</p>
-                <p className="text-gray-500 text-xs flex items-center gap-1">
-                  <Phone className="h-3 w-3" />
-                  {booking.tokenPaidBy?.phone}
+              {/* Content */}
+              <CardContent className="px-5 pb-4 text-sm text-gray-700 grid sm:grid-cols-3 gap-4">
+                {/* Customer Info */}
+                <div className="flex flex-col gap-1">
+                  <p className="font-medium text-gray-900">{booking.tokenPaidBy?.name}</p>
+                  <p className="text-gray-500 text-xs flex items-center gap-1">
+                    <Phone className="h-3 w-3" /> {booking.tokenPaidBy?.phone}
+                  </p>
+                  <p className="hidden sm:flex text-gray-500 text-xs items-center gap-1">
+                    <Mail className="h-3 w-3" /> {booking.tokenPaidBy?.email}
+                  </p>
+                </div>
+
+                {/* Property Info */}
+                <div className="hidden sm:flex flex-col gap-1">
+                  <p className="flex items-center gap-1 text-xs text-gray-600 truncate">
+                    <MapPin className="h-3 w-3" /> {booking.property?.address}
+                  </p>
+                  <p className="flex items-center gap-1 text-xs">
+                    <IndianRupee className="h-3 w-3 text-gray-500" /> ₹
+                    {booking.property?.price?.toLocaleString("en-IN")}
+                  </p>
+                  <p className="flex items-center gap-1 text-xs">
+                    <IndianRupee className="h-3 w-3 text-gray-500" /> Token: ₹
+                    {booking.tokenAmount}
+                  </p>
+                </div>
+
+                {/* Additional Info */}
+                <div className="hidden sm:flex flex-col gap-1 text-xs text-gray-600">
+                  <p className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" /> {formatDateTime(booking.siteVisitScheduledAt)}
+                  </p>
+                  <p className="text-gray-500">Created: {formatDate(booking.createdAt)}</p>
+                </div>
+              </CardContent>
+
+              {/* Footer */}
+              <CardFooter className="flex flex-col sm:flex-row sm:justify-end gap-3 px-5 pb-5">
+                <Button
+                  onClick={() => {
+                    setSelectedBooking(booking);
+                    setShowAssignModal(true);
+                  }}
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-sm rounded-2xl shadow-sm"
+                >
+                  Assign RM
+                </Button>
+                <Button
+                  onClick={() =>
+                    navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`)
+                  }
+                  className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-sm rounded-2xl shadow-sm"
+                >
+                  User Summary
+                </Button>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        ))}
+
+        {filteredBookings.length === 0 && (
+          <div className="text-center py-20">
+            <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-700 text-base font-medium">No unassigned bookings found</p>
+            <p className="text-gray-400 text-xs">All bookings are assigned or filtered out</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // ===== Assigned Bookings ===== //
+  const AssignedBookings = () => {
+    const filteredBookings = filterBookingsByDate(assignedBookings, "assignedAt");
+
+    const getStatusColor = (status) => {
+      switch (status) {
+        case "COMPLETED":
+          return "bg-green-100 text-green-700";
+        case "SCHEDULED":
+          return "bg-blue-100 text-blue-700";
+        case "MISSED":
+          return "bg-red-100 text-red-700";
+        case "IN_PROGRESS":
+          return "bg-yellow-100 text-yellow-700";
+        default:
+          return "bg-gray-100 text-gray-700";
+      }
+    };
+
+    console.log("filteredBookings", filteredBookings)
+
+    return (
+      <div className="space-y-5">
+        {filteredBookings.map((booking) => (
+          <motion.div
+            key={booking._id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className={`rounded-3xl border border-gray-200/60 bg-white/70 backdrop-blur-xl p-6 hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] transition-all  ${rmId == booking?.assignedRM?._id ? "animate-blink border-blue-400 shadow-blue-300/50" : ""}`}
+          >
+            <div className="flex justify-between flex-wrap gap-3 mb-4">
+              <h4 className="font-medium text-gray-900 text-lg">
+                {booking.property?.post_title}
+              </h4>
+              <div className="flex flex-wrap gap-2 items-start">
+                <span
+                  className={`px-3 py-1 text-xs rounded-full ${getStatusColor(
+                    booking.visitStatus
+                  )}`}
+                >
+                  {booking.visitStatus}
+                </span>
+                <span
+                  className={`px-3 py-1 text-xs rounded-full ${booking.priority === "HIGH"
+                      ? "bg-red-100 text-red-700"
+                      : booking.priority === "MEDIUM"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
+                    }`}
+                >
+                  {booking.priority}
+                </span>
+                <Button
+                  onClick={() =>
+                    navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`)
+                  }
+                  className="bg-green-600 hover:bg-green-700 text-white text-xs rounded-2xl"
+                >
+                  User Summary
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-4 gap-4 text-sm text-gray-700">
+              <div>
+                <p>
+                  <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
                 </p>
-                {/* Hide on mobile */}
-                <p className="hidden sm:flex text-gray-500 text-xs items-center gap-1">
-                  <Mail className="h-3 w-3" />
-                  {booking.tokenPaidBy?.email}
+                <p>
+                  <span className="font-medium">Phone:</span> {booking.tokenPaidBy?.phone}
                 </p>
               </div>
-
-              {/* Property Info */}
-              <div className="hidden sm:flex flex-col gap-1">
-                <p className="flex items-center gap-1 text-xs text-gray-600 truncate">
-                  <MapPin className="h-3 w-3" />
-                  {booking.property?.address}
+              <div>
+                <p>
+                  <span className="font-medium">RM:</span> {booking.assignedRM?.name}
                 </p>
-                <p className="flex items-center gap-1 text-xs">
-                  <IndianRupee className="h-3 w-3 text-gray-500" />
-                  ₹{booking.property?.price?.toLocaleString("en-IN")}
-                </p>
-                <p className="flex items-center gap-1 text-xs">
-                  <IndianRupee className="h-3 w-3 text-gray-500" />
-                  Token: ₹{booking.tokenAmount}
+                <p>
+                  <span className="font-medium">RM Phone:</span> {booking.assignedRM?.phone}
                 </p>
               </div>
-
-              {/* Token & Type — compact for mobile */}
-              <div className="flex flex-col gap-1 sm:hidden">
-                <p className="text-gray-600 text-xs flex items-center gap-1">
-                  <IndianRupee className="h-3 w-3" />
-                  ₹{booking.tokenAmount}
+              <div>
+                <p>
+                  <span className="font-medium">Assigned:</span> {formatDate(booking.assignedAt)}
                 </p>
-                <p className="text-[11px] text-gray-500">Type: {booking.propertyType}</p>
-              </div>
-
-              {/* Additional Info (Desktop only) */}
-              <div className="hidden sm:flex flex-col gap-1 text-xs">
-                <p className="flex items-center gap-1 text-gray-600">
-                  <Clock className="h-3 w-3" />
+                <p>
+                  <span className="font-medium">Visit:</span>{" "}
                   {formatDateTime(booking.siteVisitScheduledAt)}
                 </p>
-                <p className="text-gray-500">Created: {formatDate(booking.createdAt)}</p>
               </div>
-            </CardContent>
+              <div>
+                <p>
+                  <span className="font-medium">Price:</span> ₹
+                  {booking.property?.price?.toLocaleString("en-IN")}
+                </p>
+                <p>
+                  <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
+                </p>
+              </div>
+            </div>
 
-            {/* Footer Buttons */}
-            <CardFooter className="flex flex-col sm:flex-row sm:justify-end gap-2 px-4 pb-4">
-              <Button
-                onClick={() => {
-                  setSelectedBooking(booking);
-                  setShowAssignModal(true);
-                }}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-sm rounded-xl"
-              >
-                Assign RM
-              </Button>
-              <Button
-                onClick={() => navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`)}
-                className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-sm rounded-xl"
-              >
-                User Summary
-              </Button>
-            </CardFooter>
-          </Card>
+            {booking.visitDetails && (
+              <div className="mt-4 p-4 rounded-2xl bg-gray-50 border text-sm text-gray-700">
+                <div className="grid md:grid-cols-4 gap-3">
+                  <div>
+                    <span className="font-medium">Duration:</span>{" "}
+                    {booking.visitDetails.duration} mins
+                  </div>
+                  <div>
+                    <span className="font-medium">Interest:</span>{" "}
+                    {booking.visitDetails.customerInterest}
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
+                    {booking.visitDetails.rmRating}/5
+                  </div>
+                  <div>
+                    <span className="font-medium">Follow-up:</span>{" "}
+                    {booking.visitDetails.followUpRequired
+                      ? `Required - ${formatDate(booking.visitDetails.followUpDate)}`
+                      : "Not Required"}
+                  </div>
+                </div>
+                {booking.visitDetails.visitNotes && (
+                  <p className="mt-2 text-gray-600">
+                    <span className="font-medium">Notes:</span>{" "}
+                    {booking.visitDetails.visitNotes}
+                  </p>
+                )}
+              </div>
+            )}
+          </motion.div>
         ))}
 
         {filteredBookings.length === 0 && (
           <div className="text-center py-16">
-            <Calendar className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 text-base font-medium">
-              No unassigned bookings found
-            </p>
-            <p className="text-gray-400 text-xs">
-              All bookings are assigned or no matches found
-            </p>
+            <Users className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-700 font-medium">No assigned bookings found</p>
           </div>
         )}
       </div>
     );
   };
 
-
-  // Assigned Bookings Component
-  const AssignedBookings = () => {
-    const filteredBookings = filterBookingsByDate(assignedBookings, 'assignedAt');
-
-    const getStatusColor = (status) => {
-      switch (status) {
-        case 'COMPLETED':
-          return 'bg-green-100 text-green-700';
-        case 'SCHEDULED':
-          return 'bg-blue-100 text-blue-700';
-        case 'MISSED':
-          return 'bg-red-100 text-red-700';
-        case 'IN_PROGRESS':
-          return 'bg-yellow-100 text-yellow-700';
-        default:
-          return 'bg-gray-100 text-gray-700';
-      }
-    };
-
-    return (
-      <div className="space-y-4">
-        {filteredBookings.map(booking => (
-          <div key={booking._id} className="border border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition-colors">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <h4 className="font-semibold text-gray-900 text-lg">
-                    {booking.property?.post_title}
-                  </h4>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${getStatusColor(booking.visitStatus)}`}>
-                    {booking.visitStatus}
-                  </span>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${booking.priority === 'HIGH' ? 'bg-red-100 text-red-700' :
-                    booking.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                    {booking.priority}
-                  </span>
-                  <button
-                    onClick={() => {
-                      navigate(`/user/bookings/${booking?.tokenPaidBy?._id}`);
-                    }}
-                    className="px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-gray-900 text-sm font-medium transition-colors"
-                  >
-                    User Summary
-                  </button>
-                </div>
-
-
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-                  <div className="space-y-1">
-                    <p className="text-gray-600">
-                      <span className="font-medium">Customer:</span> {booking.tokenPaidBy?.name}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Phone:</span> {booking.tokenPaidBy?.phone}
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-gray-600">
-                      <span className="font-medium">RM:</span> {booking.assignedRM?.name}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">RM Phone:</span> {booking.assignedRM?.phone}
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-gray-600">
-                      <span className="font-medium">Assigned:</span> {formatDate(booking.assignedAt)}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Visit Date:</span> {formatDateTime(booking.siteVisitScheduledAt)}
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-gray-600">
-                      <span className="font-medium">Price:</span> ₹{booking.property?.price?.toLocaleString('en-IN')}
-                    </p>
-                    <p className="text-gray-600">
-                      <span className="font-medium">Token:</span> ₹{booking.tokenAmount}
-                    </p>
-                  </div>
-
-                </div>
-
-                {booking.visitDetails && (
-                  <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="font-medium text-gray-700">Duration:</span>
-                        <p className="text-gray-600">{booking.visitDetails.duration} mins</p>
-                      </div>
-                      <div>
-                        <span className="font-medium text-gray-700">Interest:</span>
-                        <p className="text-gray-600">{booking.visitDetails.customerInterest}</p>
-                      </div>
-                      <div>
-                        <span className="font-medium text-gray-700">Rating:</span>
-                        <p className="text-gray-600 flex items-center gap-1">
-                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                          {booking.visitDetails.rmRating}/5
-                        </p>
-                      </div>
-                      <div>
-                        <span className="font-medium text-gray-700">Follow-up:</span>
-                        <p className="text-gray-600">
-                          {booking.visitDetails.followUpRequired ?
-                            `Required - ${formatDate(booking.visitDetails.followUpDate)}` :
-                            'Not Required'
-                          }
-                        </p>
-                      </div>
-                    </div>
-                    {booking.visitDetails.visitNotes && (
-                      <div className="mt-2">
-                        <span className="font-medium text-gray-700">Notes:</span>
-                        <p className="text-gray-600 mt-1">{booking.visitDetails.visitNotes}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {filteredBookings.length === 0 && (
-          <div className="text-center py-12">
-            <Users className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">No assigned bookings found</p>
-            <p className="text-gray-400 text-sm">No bookings match your current filter criteria</p>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  // RM Activity Component
+  // ===== RM Activity ===== //
   const RMActivity = () => {
-    const getAllActivities = () => {
-      const activities = [];
 
-      assignedBookings.forEach(booking => {
-        // Add assignment activity
-        activities.push({
-          id: `assign-${booking._id}`,
-          type: 'ASSIGNMENT',
-          booking: booking,
-          rmName: booking.assignedRM?.name,
-          timestamp: booking.assignedAt,
-          description: `Booking assigned to ${booking.assignedRM?.name}`,
-          property: booking.property?.post_title,
-          customer: booking.tokenPaidBy?.name
+      const getAllActivities = () => {
+        const activities = [];
+
+        assignedBookings.forEach(booking => {
+          // Add assignment activity
+          activities.push({
+            id: `assign-${booking._id}`,
+            type: 'ASSIGNMENT',
+            booking: booking,
+            rmName: booking.assignedRM?.name,
+            timestamp: booking.assignedAt,
+            description: `Booking assigned to ${booking.assignedRM?.name}`,
+            property: booking.property?.post_title,
+            customer: booking.tokenPaidBy?.name
+          });
+
+          // Add RM actions
+          if (booking.rmActions && booking.rmActions.length > 0) {
+            booking.rmActions.forEach(action => {
+              activities.push({
+                id: `action-${action._id}`,
+                type: 'RM_ACTION',
+                booking: booking,
+                action: action.action,
+                rmName: booking.assignedRM?.name,
+                timestamp: action.performedAt,
+                description: `${action.action} - ${action.reason || 'No reason provided'}`,
+                property: booking.property?.post_title,
+                customer: booking.tokenPaidBy?.name,
+                metadata: action.metadata
+              });
+            });
+          }
         });
 
-        // Add RM actions
-        if (booking.rmActions && booking.rmActions.length > 0) {
-          booking.rmActions.forEach(action => {
-            activities.push({
-              id: `action-${action._id}`,
-              type: 'RM_ACTION',
-              booking: booking,
-              action: action.action,
-              rmName: booking.assignedRM?.name,
-              timestamp: action.performedAt,
-              description: `${action.action} - ${action.reason || 'No reason provided'}`,
-              property: booking.property?.post_title,
-              customer: booking.tokenPaidBy?.name,
-              metadata: action.metadata
-            });
-          });
-        }
-      });
+        return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      };
 
-      return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    };
 
     const allActivities = getAllActivities();
-    const filteredActivities = filterBookingsByDate(allActivities, 'timestamp');
+    const filteredActivities = filterBookingsByDate(allActivities, "timestamp");
 
     const getActivityIcon = (type) => {
       switch (type) {
-        case 'ASSIGNMENT':
+        case "ASSIGNMENT":
           return <UserPlus className="h-4 w-4 text-blue-600" />;
-        case 'RM_ACTION':
+        case "RM_ACTION":
           return <Activity className="h-4 w-4 text-green-600" />;
         default:
           return <FileText className="h-4 w-4 text-gray-600" />;
       }
     };
 
-    const getActivityColor = (type) => {
-      switch (type) {
-        case 'ASSIGNMENT':
-          return 'border-blue-200 bg-blue-50';
-        case 'RM_ACTION':
-          return 'border-green-200 bg-green-50';
-        default:
-          return 'border-gray-200 bg-gray-50';
-      }
-    };
-
     return (
-      <div className="space-y-4">
-        {filteredActivities.map(activity => (
-          <div key={activity.id} className={`border rounded-xl p-6 ${getActivityColor(activity.type)} transition-colors`}>
+      <div className="space-y-5">
+        {filteredActivities.map((activity) => (
+          <motion.div
+            key={activity.id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="border border-gray-200/60 bg-white/70 backdrop-blur-xl rounded-3xl p-6 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.25)] transition-all"
+          >
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white border flex items-center justify-center">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white shadow-sm border flex items-center justify-center">
                 {getActivityIcon(activity.type)}
               </div>
               <div className="flex-1">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-gray-900">{activity.description}</h4>
-                  <span className="text-sm text-gray-500">{formatDateTime(activity.timestamp)}</span>
+                <div className="flex justify-between flex-wrap mb-2">
+                  <h4 className="font-medium text-gray-900">{activity.description}</h4>
+                  <span className="text-xs text-gray-500">
+                    {formatDateTime(activity.timestamp)}
+                  </span>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
                   <div>
-                    <span className="font-medium text-gray-700">Property:</span>
-                    <p className="text-gray-600">{activity.property}</p>
+                    <span className="font-medium">Property:</span> {activity.property}
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Customer:</span>
-                    <p className="text-gray-600">{activity.customer}</p>
+                    <span className="font-medium">Customer:</span> {activity.customer}
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">RM:</span>
-                    <p className="text-gray-600">{activity.rmName}</p>
+                    <span className="font-medium">RM:</span> {activity.rmName}
                   </div>
                 </div>
 
                 {activity.metadata && (
-                  <div className="mt-3 p-3 bg-white rounded-lg border">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div className="mt-3 p-3 bg-gray-50 rounded-2xl border text-sm text-gray-700">
+                    <div className="grid md:grid-cols-4 gap-3">
                       {activity.metadata.visitStatus && (
-                        <div>
-                          <span className="font-medium text-gray-700">Status:</span>
-                          <p className="text-gray-600">{activity.metadata.visitStatus}</p>
-                        </div>
+                        <p>
+                          <span className="font-medium">Status:</span>{" "}
+                          {activity.metadata.visitStatus}
+                        </p>
                       )}
                       {activity.metadata.customerInterest && (
-                        <div>
-                          <span className="font-medium text-gray-700">Interest:</span>
-                          <p className="text-gray-600">{activity.metadata.customerInterest}</p>
-                        </div>
+                        <p>
+                          <span className="font-medium">Interest:</span>{" "}
+                          {activity.metadata.customerInterest}
+                        </p>
                       )}
                       {activity.metadata.duration && (
-                        <div>
-                          <span className="font-medium text-gray-700">Duration:</span>
-                          <p className="text-gray-600">{activity.metadata.duration} mins</p>
-                        </div>
+                        <p>
+                          <span className="font-medium">Duration:</span>{" "}
+                          {activity.metadata.duration} mins
+                        </p>
                       )}
                       {activity.metadata.rating && (
-                        <div>
-                          <span className="font-medium text-gray-700">Rating:</span>
-                          <p className="text-gray-600 flex items-center gap-1">
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            {activity.metadata.rating}/5
-                          </p>
-                        </div>
+                        <p className="flex items-center gap-1">
+                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                          {activity.metadata.rating}/5
+                        </p>
                       )}
                     </div>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
 
         {filteredActivities.length === 0 && (
-          <div className="text-center py-12">
-            <Activity className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">No RM activities found</p>
-            <p className="text-gray-400 text-sm">No activities match your current filter criteria</p>
+          <div className="text-center py-16">
+            <Activity className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-700 font-medium">No RM activities found</p>
           </div>
         )}
       </div>

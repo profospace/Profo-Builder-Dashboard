@@ -2945,7 +2945,7 @@ const ChatInterface = () => {
 
         if (userData) {
             const token = JSON.parse(userData).token;
-            console.log("token", token)
+            // console.log("token", token)
             setBuilderData(JSON.parse(userData));
             setIsAuthenticated(true);
 
@@ -3179,7 +3179,7 @@ const ConversationsTab = ({ socketConnected }) => {
     return (
         <div className="h-full flex flex-col bg-white">
             {/* Connection Status Banner */}
-            {!socketConnected && (
+            {/* {!socketConnected && (
                 <div className="bg-yellow-50 border-b border-yellow-200 p-2 lg:p-3">
                     <div className="flex items-center justify-center space-x-2 text-yellow-800">
                         <WifiOff className="h-4 w-4 lg:h-5 lg:w-5" />
@@ -3188,7 +3188,7 @@ const ConversationsTab = ({ socketConnected }) => {
                         </span>
                     </div>
                 </div>
-            )}
+            )} */}
 
             {/* Stats Header - Desktop */}
             <div className="hidden lg:block border-b border-gray-200 p-6">
@@ -3634,7 +3634,7 @@ const ConversationView = ({ conversation, onBack, onUpdateLead, socketConnected 
             {/* Header */}
             <div className="bg-white border-b border-gray-200 px-3 py-2 lg:px-6 lg:py-2 sticky top-0 z-20 lg:static">
                 {/* Connection Status Banner */}
-                {!socketConnected && (
+                {/* {!socketConnected && (
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 mb-3">
                         <div className="flex items-center justify-center space-x-2 text-yellow-800">
                             <WifiOff className="h-4 w-4" />
@@ -3643,7 +3643,7 @@ const ConversationView = ({ conversation, onBack, onUpdateLead, socketConnected 
                             </span>
                         </div>
                     </div>
-                )}
+                )} */}
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
@@ -3726,12 +3726,12 @@ const ConversationView = ({ conversation, onBack, onUpdateLead, socketConnected 
                             </button>
                         )}
 
-                        <button
+                        {/* <button
                             onClick={() => setShowLeadUpdate(!showLeadUpdate)}
                             className="hidden lg:block p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full"
                         >
                             <MoreVertical className="h-5 w-5" />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 

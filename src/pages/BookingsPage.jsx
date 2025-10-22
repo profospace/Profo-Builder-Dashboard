@@ -1087,6 +1087,7 @@ function BookingsPage() {
 
     const handleViewBookings = (id) => navigate(`/view/property/booking/${id}`);
     const handleViewBookingDetail = (booking_id) => navigate(`/view/booking/info/${booking_id}`);
+    console.log("bookinhgs", sortedBookings)
 
     return (
         <div className="min-h-screen bg-gray-50 p-3">
@@ -1139,7 +1140,7 @@ function BookingsPage() {
                 )}
 
                 {/* Bookings Tab */}
-                {activeTab === 'bookings' && (
+                {/* {activeTab === 'bookings' && (
                     <div>
                         <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all">
                             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
@@ -1215,8 +1216,12 @@ function BookingsPage() {
                                                             >
                                                                 View
                                                             </button>
-                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
-                                                                Confirm
+                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition" onClick={() =>
+                                                                navigate("/rm-manager", {
+                                                                    state: booking?.assignedRM ? { rmId: booking.assignedRM } : {},
+                                                                })
+                                                            }>
+                                                                {booking?.assignedRM ? 'Assigned' : 'Confirm'}
                                                             </button>
                                                             <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-red-500 text-white hover:bg-red-600 transition">
                                                                 Cancel
@@ -1239,7 +1244,91 @@ function BookingsPage() {
                             )}
                         </div>
                     </div>
+                )} */}
+
+                {activeTab === 'bookings' && (
+                    <div className="space-y-4">
+                        {sortedBookings.length > 0 ? (
+                            <div className="grid grid-cols-1 gap-4 md:hidden"> {/* Mobile only */}
+                                {sortedBookings.map((booking) => (
+                                    <div
+                                        key={booking._id}
+                                        className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md p-4 transition-all hover:shadow-lg"
+                                    >
+                                        {/* Property & Customer */}
+                                        <div className="flex justify-between items-start mb-2">
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="text-sm font-semibold text-gray-900 truncate">{booking.propertyTitle}</h3>
+                                                <p className="text-[12px] text-gray-500 truncate">{booking.tokenPaidBy?.name || 'N/A'}</p>
+                                            </div>
+                                            <span className="text-[10px] text-gray-400">{formatDate(booking.bookedAt)}</span>
+                                        </div>
+
+                                        {/* Contact Info */}
+                                        <div className="flex justify-between items-center mb-2">
+                                            <div className="flex flex-col text-[11px] text-gray-600 truncate">
+                                                <span>{booking.tokenPaidBy?.email || 'N/A'}</span>
+                                                <span className="text-gray-400">{booking.tokenPaidBy?.phone || 'N/A'}</span>
+                                            </div>
+
+                                            {/* Status */}
+                                            <span
+                                                className={`inline-flex items-center px-2.5 py-0.5 text-[10px] font-medium rounded-full capitalize
+                  ${booking.finalPaymentStatus?.toLowerCase() === 'active'
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : booking.finalPaymentStatus?.toLowerCase() === 'inactive'
+                                                            ? 'bg-red-100 text-red-700'
+                                                            : booking.finalPaymentStatus?.toLowerCase() === 'pending'
+                                                                ? 'bg-orange-100 text-orange-700'
+                                                                : booking.finalPaymentStatus?.toLowerCase() === 'bouncing'
+                                                                    ? 'bg-purple-100 text-purple-700'
+                                                                    : booking.finalPaymentStatus?.toLowerCase() === 'on sale'
+                                                                        ? 'bg-blue-100 text-blue-700'
+                                                                        : 'bg-yellow-100 text-yellow-700'
+                                                    }`}
+                                            >
+                                                {booking.finalPaymentStatus || 'Pending'}
+                                            </span>
+                                        </div>
+
+                                        {/* Action Buttons */}
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            <button
+                                                onClick={() => handleViewBookingDetail(booking?._id)}
+                                                className="flex-1 px-3 py-1 text-[11px] font-medium rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+                                            >
+                                                View
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    navigate("/rm-manager", {
+                                                        state: booking?.assignedRM ? { rmId: booking.assignedRM } : {},
+                                                    })
+                                                }
+                                                className={`flex-1 px-3 py-1 text-[11px] font-medium rounded-full text-white transition ${booking?.assignedRM ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-500 hover:bg-green-600'
+                                                    }`}
+                                            >
+                                                {booking?.assignedRM ? 'Assigned' : 'Not Assigned'}
+                                            </button>
+                                            <button className="flex-1 px-3 py-1 text-[11px] font-medium rounded-full bg-red-500 text-white hover:bg-red-600 transition">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+                                <div className="bg-gray-100 p-4 rounded-full mb-2">
+                                    <Calendar size={28} className="text-gray-400" />
+                                </div>
+                                <h4 className="text-sm font-medium text-gray-700 mb-1">No bookings yet</h4>
+                                <p className="text-xs text-gray-500">No properties have received bookings.</p>
+                            </div>
+                        )}
+                    </div>
                 )}
+
 
                 {/* Analytics Tab */}
                 {activeTab === 'analytics' && (

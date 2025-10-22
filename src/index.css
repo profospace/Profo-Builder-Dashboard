@@ -157,3 +157,24 @@
     display: none;
     /* Chrome, Safari, Opera */
 }
+
+
+/* Blink the card */
+@keyframes blink {
+
+    0%,
+    100% {
+        background-color: rgba(59, 131, 246, 0.03);
+    }
+
+    /* blue-500/15 */
+    50% {
+        background-color: rgba(59, 130, 246, 0.35);
+    }
+
+    /* stronger blue flash */
+}
+
+.animate-blink {
+    animation: blink 0.8s ease-in-out 1s;
+}
