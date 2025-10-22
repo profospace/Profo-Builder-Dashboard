@@ -1182,14 +1182,26 @@ function BookingsPage() {
                                                     className={`transition-colors duration-200 hover:bg-gray-50 border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'
                                                         }`}
                                                 >
-                                                    <td className="px-3 py-2 font-medium text-gray-900 truncate max-w-[150px]">{booking.propertyTitle}</td>
-                                                    <td className="px-3 py-2 truncate max-w-[120px]">{booking.tokenPaidBy?.name || 'N/A'}</td>
-                                                    <td className="px-3 py-2">
+                                                    {/* <td className="px-3 py-4 font-medium text-gray-900 truncate max-w-[150px]">{booking.propertyTitle}</td> */}
+                                                    <td
+                                                        className="px-3 py-4 font-medium text-gray-900 max-w-[180px] overflow-hidden"
+                                                        style={{
+                                                            display: "-webkit-box",
+                                                            WebkitLineClamp: 2,
+                                                            WebkitBoxOrient: "vertical",
+                                                            wordBreak: "break-word",
+                                                        }}
+                                                    >
+                                                        {booking.propertyTitle}
+                                                    </td>
+
+                                                    <td className="px-3 py-4 truncate max-w-[120px]">{booking.tokenPaidBy?.name || 'N/A'}</td>
+                                                    <td className="px-3 py-4">
                                                         <div className="truncate max-w-[150px]">{booking.tokenPaidBy?.email || 'N/A'}</div>
                                                         <div className="text-[10px] text-gray-400 truncate">{booking.tokenPaidBy?.phone || 'N/A'}</div>
                                                     </td>
-                                                    <td className="px-3 py-2 text-gray-600 whitespace-nowrap">{formatDate(booking.bookedAt)}</td>
-                                                    <td className="px-3 py-2 whitespace-nowrap">
+                                                    <td className="px-3 py-4 text-gray-600 whitespace-nowrap">{formatDate(booking.bookedAt)}</td>
+                                                    <td className="px-3 py-4 whitespace-nowrap">
                                                         <span
                                                             className={`inline-flex items-center px-2.5 py-0.5 text-[10px] md:text-[11px] font-medium rounded-full capitalize
                                                                 ${booking.finalPaymentStatus?.toLowerCase() === 'active'
@@ -1205,10 +1217,10 @@ function BookingsPage() {
                                                                                     : 'bg-yellow-100 text-yellow-700'
                                                                 }`}
                                                         >
-                                                            {booking.finalPaymentStatus || 'Pending'}
+                                                            {booking?.bookingStatus}
                                                         </span>
                                                     </td>
-                                                    <td className="px-3 py-2 text-center">
+                                                    <td className="px-3 py-4 text-center">
                                                         <div className="flex items-center justify-center gap-1.5">
                                                             <button
                                                                 onClick={() => handleViewBookingDetail(booking?._id)}
@@ -1216,12 +1228,13 @@ function BookingsPage() {
                                                             >
                                                                 View
                                                             </button>
-                                                            <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition" onClick={() =>
+                                                            <button className={`flex-1 px-3 py-1 text-[11px] font-medium rounded-full text-white transition ${booking?.assignedRM ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-500 hover:bg-green-600'
+                                                                }`} onClick={() =>
                                                                 navigate("/rm-manager", {
                                                                     state: booking?.assignedRM ? { rmId: booking.assignedRM } : {},
                                                                 })
                                                             }>
-                                                                {booking?.assignedRM ? 'Assigned' : 'Confirm'}
+                                                                {booking?.assignedRM ? 'Assigned' : 'Not Assigned'}
                                                             </button>
                                                             <button className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-red-500 text-white hover:bg-red-600 transition">
                                                                 Cancel
@@ -1287,7 +1300,7 @@ function BookingsPage() {
                                                                         : 'bg-yellow-100 text-yellow-700'
                                                     }`}
                                             >
-                                                {booking.finalPaymentStatus || 'Pending'}
+                                                {booking?.bookingStatus}
                                             </span>
                                         </div>
 
