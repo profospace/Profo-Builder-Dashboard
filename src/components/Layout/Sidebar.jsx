@@ -871,7 +871,7 @@ const Sidebar = () => {
             </div>
 
             {/* Mobile Bottom Nav */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-inner flex justify-around items-center py-2 md:hidden z-50">
+            {/* <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-inner flex justify-around items-center py-2 md:hidden z-50">
                 {mobileNavItems.map((item) => {
                     const isActive = location.pathname === item.route;
                     return (
@@ -886,7 +886,36 @@ const Sidebar = () => {
                         </button>
                     );
                 })}
+            </div> */}
+
+            {/* Mobile Bottom Nav */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-inner flex justify-around items-center py-2 md:hidden z-50">
+                {mobileNavItems.map((item) => {
+                    const isActive = location.pathname === item.route;
+
+                    return (
+                        <button
+                            key={item.name}
+                            onClick={() => navigate(item.route)}
+                            className={`flex flex-col items-center text-[10px] ${isActive ? 'text-blue-600' : 'text-gray-500'}`}
+                        >
+                            {/* Icon wrapper relative to position badge */}
+                            <div className="relative">
+                                <item.icon size={16} />
+                                {item.badge && (
+                                    <div className="absolute -top-1 -right-4 min-w-[14px] h-4 bg-[#b7ffd4] text-[#00C951] text-[9px] font-medium rounded-full flex items-center justify-center px-1">
+                                        {item.badge}
+                                    </div>
+                                )}
+                            </div>
+
+                            <span className="mt-1">{item.name.split(" ")[1] || item.name}</span>
+                        </button>
+                    );
+                })}
             </div>
+
+
         </>
     );
 };
