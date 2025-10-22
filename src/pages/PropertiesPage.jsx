@@ -1874,7 +1874,7 @@ ${property.usp?.slice(0, 3).map(usp => `🔸 ${usp}`).join('\n') || ''}
                           <span className="text-2xl font-bold text-blue-600">{interactionCount}</span>
                         </div>
                         <button
-                          className="w-full bg-blue-600 text-white rounded-lg py-2 text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5"
+                          className="cursor-pointer w-full bg-blue-600 text-white rounded-lg py-2 text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5"
                           onClick={() => navigate('/enquiries')}
                         >
                           View Details
@@ -1963,7 +1963,7 @@ ${property.usp?.slice(0, 3).map(usp => `🔸 ${usp}`).join('\n') || ''}
                       </div>
 
                       {/* Middle Section - Action Buttons */}
-                      <div className="flex items-center gap-2 mx-6">
+                      {/* <div className="flex items-center gap-2 mx-6">
                         <button
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
                           onClick={() => handleEditProperty(property)}
@@ -1984,7 +1984,7 @@ ${property.usp?.slice(0, 3).map(usp => `🔸 ${usp}`).join('\n') || ''}
                           Share
                         </button>
 
-                      </div>
+                      </div> */}
 
                       {/* Right Section - Stats */}
                       <div className="flex-shrink-0">
