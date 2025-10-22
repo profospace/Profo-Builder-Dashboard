@@ -1140,9 +1140,9 @@ function BookingsPage() {
                 )}
 
                 {/* Bookings Tab */}
-                {/* {activeTab === 'bookings' && (
+                {activeTab === 'bookings' && (
                     <div>
-                        <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all">
+                        <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all hidden md:block">
                             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
                                 <h3 className="text-sm md:text-base font-semibold text-gray-900 tracking-tight">Bookings Overview</h3>
                                 <span className="text-xs text-gray-500">{sortedBookings.length} total</span>
@@ -1244,7 +1244,7 @@ function BookingsPage() {
                             )}
                         </div>
                     </div>
-                )} */}
+                )}
 
                 {activeTab === 'bookings' && (
                     <div className="space-y-4">

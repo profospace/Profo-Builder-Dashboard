@@ -668,6 +668,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { base_url } from '@/utils/baseurl';
 import { getAuthToken, getConfig } from '@/utils/config';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -675,6 +676,8 @@ const Sidebar = () => {
     const [expandedMenus, setExpandedMenus] = useState({});
     const [unassignedBookings , setUnassignedBookings] = useState([])
     const [stats ,setStats] = useState([])
+
+    const { callbacks } = useSelector(state => state.callbacks)
 
     const toggleSubmenu = (menuName) => {
         setExpandedMenus((prev) => ({
@@ -703,7 +706,7 @@ const Sidebar = () => {
         //     ],
         // },
         { name: 'Bookings', icon: MessageCircle, route: '/bookings', category: 'BOOKING OPERATIONS', ...(unassignedBookings?.length > 0 && { badge: unassignedBookings.length }) },
-        { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS' },
+        { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', ...(callbacks?.length > 0 && { badge: callbacks?.length }) },
         // { name: 'Callbacks', icon: Bell, route: '/callbacks', category: 'BOOKING OPERATIONS', badge: '2' },
         { name: 'RM_Bookings', icon: Calendar, route: '/rm-manager', category: 'TEAM MANAGEMENT', ...(unassignedBookings?.length > 0 && { badge: unassignedBookings.length }) },
         { name: 'Chats', icon: Calendar, route: '/chat-interface', category: 'CHAT', ...(stats?.totalUnread > 0 && { badge: stats?.totalUnread }) },
