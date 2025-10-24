@@ -2016,6 +2016,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import toast, { Toaster } from 'react-hot-toast';
 
 const RmPage = () => {
   const [activeTab, setActiveTab] = useState('bookings');
@@ -2037,13 +2038,14 @@ const RmPage = () => {
 
   const navigate = useNavigate()
 
-  useEffect(
-    ()=>{
-      if (rmId){
-        setBookingSubTab('assigned')
-      }
-    }, [location, rmId]
-  )
+  // useEffect(
+  //   () => {
+  //     if (rmId) {
+  //       setBookingSubTab('assigned')
+  //     }
+  //   }, [location, rmId]
+  // )
+
 
 
   const [loading, setLoading] = useState(false);
@@ -2226,6 +2228,47 @@ const RmPage = () => {
     }
   };
 
+  // const createRM = async (rmData) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await api.post('/rm/create', rmData);
+  //     if (response.data.success) {
+  //       setShowAddRMModal(false);
+  //       fetchAllRMs();
+  //       alert('RM created successfully!');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error creating RM:', error);
+  //     setError('Failed to create RM');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const assignBookingToRM = async (bookingId, rmId, notes) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await api.post(`/bookings/assign-booking`, {
+  //       rmId,
+  //       bookingId,
+  //       notes
+  //     });
+  //     if (response.data.success) {
+  //       setShowAssignModal(false);
+  //       fetchUnassignedBookings();
+  //       fetchAssignedBookings();
+  //       fetchAllRMs();
+  //       alert('Booking assigned successfully!');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error assigning booking:', error);
+  //     setError('Failed to assign booking');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // In createRM function, replace alert with toast
   const createRM = async (rmData) => {
     try {
       setLoading(true);
@@ -2233,16 +2276,21 @@ const RmPage = () => {
       if (response.data.success) {
         setShowAddRMModal(false);
         fetchAllRMs();
-        alert('RM created successfully!');
+        // Replace this line:
+        // alert('RM created successfully!');
+        // With:
+        toast.success('RM created successfully!');
       }
     } catch (error) {
       console.error('Error creating RM:', error);
       setError('Failed to create RM');
+      toast.error('Failed to create RM');
     } finally {
       setLoading(false);
     }
   };
 
+  // In assignBookingToRM function, replace alert with toast
   const assignBookingToRM = async (bookingId, rmId, notes) => {
     try {
       setLoading(true);
@@ -2256,11 +2304,15 @@ const RmPage = () => {
         fetchUnassignedBookings();
         fetchAssignedBookings();
         fetchAllRMs();
-        alert('Booking assigned successfully!');
+        // Replace this line:
+        // alert('Booking assigned successfully!');
+        // With:
+        toast.success('Booking assigned successfully!');
       }
     } catch (error) {
       console.error('Error assigning booking:', error);
       setError('Failed to assign booking');
+      toast.error('Failed to assign booking');
     } finally {
       setLoading(false);
     }
@@ -2279,14 +2331,44 @@ const RmPage = () => {
     fetchLeaderboard();
   }, []);
 
-  const handleCopy = (password) => {
-    // if (!rm.password) return;
+  // const handleCopy = (password) => {
+  //   // if (!rm.password) return;
 
+  //   navigator.clipboard.writeText(password).then(() => {
+  //     setCopied(true);
+  //     setTimeout(() => setCopied(false), 2000); // reset after 2 sec
+  //   });
+  // };
+
+  const handleCopy = (password) => {
     navigator.clipboard.writeText(password).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // reset after 2 sec
+      toast.success('Password copied to clipboard!'); // Add this line
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {
+      toast.error('Failed to copy password'); // Add error handling
     });
   };
+
+  useEffect(
+    () => {
+      if (rmId) {
+        setBookingSubTab('assigned')
+        // Show toast when navigating from rmId
+        setTimeout(() => {
+          if (assignedBookings.length === 0) {
+            toast('No assigned bookings available', {
+              icon: 'ℹ️',
+            });
+          } else if (assignedBookings.length === 1) {
+            toast.success('1 assigned booking found');
+          } else {
+            toast.success(`${assignedBookings.length} assigned bookings found`);
+          }
+        }, 500); // Small delay to ensure data is loaded
+      }
+    }, [rmId, assignedBookings.length]
+  )
 
   // Date Filter Component
   // const DateFilterComponent = () => (
@@ -2898,10 +2980,10 @@ const RmPage = () => {
                 </div>
                 <span
                   className={`px-3 py-1 text-[11px] rounded-full font-medium tracking-wide ${booking.priority === "HIGH"
-                      ? "bg-red-100 text-red-700"
-                      : booking.priority === "MEDIUM"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-green-100 text-green-700"
+                    ? "bg-red-100 text-red-700"
+                    : booking.priority === "MEDIUM"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-green-100 text-green-700"
                     }`}
                 >
                   {booking.priority} PRIORITY
@@ -3025,10 +3107,10 @@ const RmPage = () => {
                 </span>
                 <span
                   className={`px-3 py-1 text-xs rounded-full ${booking.priority === "HIGH"
-                      ? "bg-red-100 text-red-700"
-                      : booking.priority === "MEDIUM"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-green-100 text-green-700"
+                    ? "bg-red-100 text-red-700"
+                    : booking.priority === "MEDIUM"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-green-100 text-green-700"
                     }`}
                 >
                   {booking.priority}
@@ -3127,43 +3209,43 @@ const RmPage = () => {
   // ===== RM Activity ===== //
   const RMActivity = () => {
 
-      const getAllActivities = () => {
-        const activities = [];
+    const getAllActivities = () => {
+      const activities = [];
 
-        assignedBookings.forEach(booking => {
-          // Add assignment activity
-          activities.push({
-            id: `assign-${booking._id}`,
-            type: 'ASSIGNMENT',
-            booking: booking,
-            rmName: booking.assignedRM?.name,
-            timestamp: booking.assignedAt,
-            description: `Booking assigned to ${booking.assignedRM?.name}`,
-            property: booking.property?.post_title,
-            customer: booking.tokenPaidBy?.name
-          });
-
-          // Add RM actions
-          if (booking.rmActions && booking.rmActions.length > 0) {
-            booking.rmActions.forEach(action => {
-              activities.push({
-                id: `action-${action._id}`,
-                type: 'RM_ACTION',
-                booking: booking,
-                action: action.action,
-                rmName: booking.assignedRM?.name,
-                timestamp: action.performedAt,
-                description: `${action.action} - ${action.reason || 'No reason provided'}`,
-                property: booking.property?.post_title,
-                customer: booking.tokenPaidBy?.name,
-                metadata: action.metadata
-              });
-            });
-          }
+      assignedBookings.forEach(booking => {
+        // Add assignment activity
+        activities.push({
+          id: `assign-${booking._id}`,
+          type: 'ASSIGNMENT',
+          booking: booking,
+          rmName: booking.assignedRM?.name,
+          timestamp: booking.assignedAt,
+          description: `Booking assigned to ${booking.assignedRM?.name}`,
+          property: booking.property?.post_title,
+          customer: booking.tokenPaidBy?.name
         });
 
-        return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      };
+        // Add RM actions
+        if (booking.rmActions && booking.rmActions.length > 0) {
+          booking.rmActions.forEach(action => {
+            activities.push({
+              id: `action-${action._id}`,
+              type: 'RM_ACTION',
+              booking: booking,
+              action: action.action,
+              rmName: booking.assignedRM?.name,
+              timestamp: action.performedAt,
+              description: `${action.action} - ${action.reason || 'No reason provided'}`,
+              property: booking.property?.post_title,
+              customer: booking.tokenPaidBy?.name,
+              metadata: action.metadata
+            });
+          });
+        }
+      });
+
+      return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    };
 
 
     const allActivities = getAllActivities();
@@ -3801,87 +3883,292 @@ const RmPage = () => {
   //   </div>
   // );
 
-  const BookingAssignment = () => (
-    <div className="space-y-6 px-0 sm:px-6 lg:px-0 py-4">
-      {/* Date Filter */}
-      <DateFilterComponent />
+  // const BookingAssignment = () => (
+  //   <div className="space-y-6 px-0 sm:px-6 lg:px-0 py-4">
+  //     {/* Date Filter */}
+  //     <DateFilterComponent />
 
-      {/* Sub-tabs */}
-      <div className="bg-white rounded-sm md:rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Tabs Row */}
-        <div className="border-b border-gray-200">
-          {/* Desktop Tabs */}
-          <div className="hidden sm:flex">
-            {['unassigned', 'assigned', 'activity'].map((tab) => {
-              const isActive = bookingSubTab === tab;
-              const icons = {
-                unassigned: <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
-                assigned: <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
-                activity: <Activity className="h-4 w-4 sm:h-5 sm:w-5" />,
-              };
-              const labels = {
-                unassigned: `Unassigned (${unassignedBookings.length})`,
-                assigned: `Assigned (${assignedBookings.length})`,
-                activity: 'RM Activity',
-              };
+  //     {/* Sub-tabs */}
+  //     <div className="bg-white rounded-sm md:rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  //       {/* Tabs Row */}
+  //       <div className="border-b border-gray-200">
+  //         {/* Desktop Tabs */}
+  //         <div className="hidden sm:flex">
+  //           {['unassigned', 'assigned', 'activity'].map((tab) => {
+  //             const isActive = bookingSubTab === tab;
+  //             const icons = {
+  //               unassigned: <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
+  //               assigned: <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
+  //               activity: <Activity className="h-4 w-4 sm:h-5 sm:w-5" />,
+  //             };
+  //             const labels = {
+  //               unassigned: `Unassigned (${unassignedBookings.length})`,
+  //               assigned: `Assigned (${assignedBookings.length})`,
+  //               activity: 'RM Activity',
+  //             };
 
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setBookingSubTab(tab)}
-                  className={`flex-1 px-6 py-4 text-base font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
-                    ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }`}
-                >
-                  {icons[tab]}
-                  <span className="truncate">{labels[tab]}</span>
-                </button>
-              );
-            })}
+  //             return (
+  //               <button
+  //                 key={tab}
+  //                 onClick={() => setBookingSubTab(tab)}
+  //                 className={`flex-1 px-6 py-4 text-base font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
+  //                   ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
+  //                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+  //                   }`}
+  //               >
+  //                 {icons[tab]}
+  //                 <span className="truncate">{labels[tab]}</span>
+  //               </button>
+  //             );
+  //           })}
+  //         </div>
+
+  //         {/* Mobile Tabs */}
+  //         <div className="sm:hidden flex gap-2 p-2 bg-gray-50 overflow-x-auto">
+  //           {['unassigned', 'assigned', 'activity'].map((tab) => {
+  //             const isActive = bookingSubTab === tab;
+  //             const icons = {
+  //               unassigned: <AlertCircle className="h-4 w-4" />,
+  //               assigned: <CheckCircle className="h-4 w-4" />,
+  //               activity: <Activity className="h-4 w-4" />,
+  //             };
+  //             const labels = {
+  //               unassigned: `Unassigned (${unassignedBookings.length})`,
+  //               assigned: `Assigned (${assignedBookings.length})`,
+  //               activity: 'Activity',
+  //             };
+
+  //             return (
+  //               <button
+  //                 key={tab}
+  //                 onClick={() => setBookingSubTab(tab)}
+  //                 className={`flex-1 min-w-[110px] px-3 py-2 rounded-sm text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
+  //                   ? 'bg-blue-100 text-blue-700 shadow-sm'
+  //                   : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
+  //                   }`}
+  //               >
+  //                 {icons[tab]}
+  //                 <span className="truncate">{labels[tab]}</span>
+  //               </button>
+  //             );
+  //           })}
+  //         </div>
+  //       </div>
+
+  //       {/* Tab Content */}
+  //       <div className="p-4 sm:p-6 bg-gray-50">
+  //         {bookingSubTab === 'unassigned' && <UnassignedBookings />}
+  //         {bookingSubTab === 'assigned' && <AssignedBookings />}
+  //         {bookingSubTab === 'activity' && <RMActivity />}
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
+  const BookingAssignment = () => {
+
+    // Add this helper function to show toast when tab changes
+    // const handleTabChange = (tab) => {
+    //   setBookingSubTab(tab);
+
+    //   // Show toast based on the tab
+    //   if (tab === 'unassigned') {
+    //     if (unassignedBookings.length === 0) {
+    //       toast.info('No unassigned bookings available');
+    //     } else if (unassignedBookings.length === 1) {
+    //       toast.success('1 unassigned booking found');
+    //     } else {
+    //       toast.success(`${unassignedBookings.length} unassigned bookings found`);
+    //     }
+    //   } else if (tab === 'assigned') {
+    //     if (assignedBookings.length === 0) {
+    //       toast.info('No assigned bookings available');
+    //     } else if (assignedBookings.length === 1) {
+    //       toast.success('1 assigned booking found');
+    //     } else {
+    //       toast.success(`${assignedBookings.length} assigned bookings found`);
+    //     }
+    //   }
+    // };
+
+    // FIND THIS FUNCTION in BookingAssignment component and REPLACE it completely:
+    const handleTabChange = (tab) => {
+      setBookingSubTab(tab);
+
+      // Show toast based on the tab
+      if (tab === 'unassigned') {
+        if (unassignedBookings.length === 0) {
+          // CORRECT: Use toast() with icon, NOT toast.info()
+          toast('No unassigned bookings available', {
+            icon: 'ℹ️',
+          });
+        } else if (unassignedBookings.length === 1) {
+          toast.success('1 unassigned booking found');
+        } else {
+          toast.success(`${unassignedBookings.length} unassigned bookings found`);
+        }
+      } else if (tab === 'assigned') {
+        if (assignedBookings.length === 0) {
+          // CORRECT: Use toast() with icon, NOT toast.info()
+          toast('No assigned bookings available', {
+            icon: 'ℹ️',
+          });
+        } else if (assignedBookings.length === 1) {
+          toast.success('1 assigned booking found');
+        } else {
+          toast.success(`${assignedBookings.length} assigned bookings found`);
+        }
+      }
+    };
+
+    return (
+      <div className="space-y-6 px-0 sm:px-6 lg:px-0 py-4">
+        {/* Date Filter */}
+        <DateFilterComponent />
+
+        {/* Sub-tabs */}
+        <div className="bg-white rounded-sm md:rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          {/* Tabs Row */}
+          <div className="border-b border-gray-200">
+            {/* Desktop Tabs */}
+            <div className="hidden sm:flex">
+              {['unassigned', 'assigned', 'activity'].map((tab) => {
+                const isActive = bookingSubTab === tab;
+                const icons = {
+                  unassigned: <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
+                  assigned: <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />,
+                  activity: <Activity className="h-4 w-4 sm:h-5 sm:w-5" />,
+                };
+
+                const labels = {
+                  unassigned: unassignedBookings.length === 0
+                    ? 'No Unassigned'
+                    : unassignedBookings.length === 1
+                      ? '1 Unassigned'
+                      : `${unassignedBookings.length} Unassigned`,
+                  assigned: assignedBookings.length === 0
+                    ? 'No Assigned'
+                    : assignedBookings.length === 1
+                      ? '1 Assigned'
+                      : `${assignedBookings.length} Assigned`,
+                  activity: 'RM Activity',
+                };
+
+                return (
+                  <button
+                    key={tab}
+                    // UPDATE THIS LINE - replace setBookingSubTab with handleTabChange:
+                    onClick={() => handleTabChange(tab)}
+                    className={`flex-1 px-6 py-4 text-base font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
+                      ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
+                  >
+                    {icons[tab]}
+                    <span className="truncate">{labels[tab]}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Mobile Tabs */}
+            <div className="sm:hidden flex gap-2 p-2 bg-gray-50 overflow-x-auto">
+              {['unassigned', 'assigned', 'activity'].map((tab) => {
+                const isActive = bookingSubTab === tab;
+                const icons = {
+                  unassigned: <AlertCircle className="h-4 w-4" />,
+                  assigned: <CheckCircle className="h-4 w-4" />,
+                  activity: <Activity className="h-4 w-4" />,
+                };
+
+                const labels = {
+                  unassigned: unassignedBookings.length === 0
+                    ? 'No Unassigned'
+                    : unassignedBookings.length === 1
+                      ? '1 Unassigned'
+                      : `${unassignedBookings.length} Unassigned`,
+                  assigned: assignedBookings.length === 0
+                    ? 'No Assigned'
+                    : assignedBookings.length === 1
+                      ? '1 Assigned'
+                      : `${assignedBookings.length} Assigned`,
+                  activity: 'Activity',
+                };
+
+                return (
+                  <button
+                    key={tab}
+                    // UPDATE THIS LINE - replace setBookingSubTab with handleTabChange:
+                    onClick={() => handleTabChange(tab)}
+                    className={`flex-1 min-w-[110px] px-3 py-2 rounded-sm text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
+                      ? 'bg-blue-100 text-blue-700 shadow-sm'
+                      : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
+                      }`}
+                  >
+                    {icons[tab]}
+                    <span className="truncate">{labels[tab]}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Mobile Tabs */}
-          <div className="sm:hidden flex gap-2 p-2 bg-gray-50 overflow-x-auto">
-            {['unassigned', 'assigned', 'activity'].map((tab) => {
-              const isActive = bookingSubTab === tab;
-              const icons = {
-                unassigned: <AlertCircle className="h-4 w-4" />,
-                assigned: <CheckCircle className="h-4 w-4" />,
-                activity: <Activity className="h-4 w-4" />,
-              };
-              const labels = {
-                unassigned: `Unassigned (${unassignedBookings.length})`,
-                assigned: `Assigned (${assignedBookings.length})`,
-                activity: 'Activity',
-              };
-
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setBookingSubTab(tab)}
-                  className={`flex-1 min-w-[110px] px-3 py-2 rounded-sm text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 ${isActive
-                    ? 'bg-blue-100 text-blue-700 shadow-sm'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
-                    }`}
-                >
-                  {icons[tab]}
-                  <span className="truncate">{labels[tab]}</span>
-                </button>
-              );
-            })}
+          {/* Tab Content */}
+          <div className="p-4 sm:p-6 bg-gray-50">
+            {bookingSubTab === 'unassigned' && <UnassignedBookings />}
+            {bookingSubTab === 'assigned' && <AssignedBookings />}
+            {bookingSubTab === 'activity' && <RMActivity />}
           </div>
-        </div>
-
-        {/* Tab Content */}
-        <div className="p-4 sm:p-6 bg-gray-50">
-          {bookingSubTab === 'unassigned' && <UnassignedBookings />}
-          {bookingSubTab === 'assigned' && <AssignedBookings />}
-          {bookingSubTab === 'activity' && <RMActivity />}
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+
+  // useEffect(() => {
+  //   // Show toast for initial tab load
+  //   if (bookingSubTab === 'unassigned') {
+  //     if (unassignedBookings.length === 0) {
+  //       toast('No unassigned bookings available', {
+  //         icon: 'ℹ️',
+  //       });
+  //     } else if (unassignedBookings.length === 1) {
+  //       toast.success('1 unassigned booking found');
+  //     } else {
+  //       toast.success(`${unassignedBookings.length} unassigned bookings found`);
+  //     }
+  //   } else if (bookingSubTab === 'assigned') {
+  //     if (assignedBookings.length === 0) {
+  //       toast('No assigned bookings available', {
+  //         icon: 'ℹ️',
+  //       });
+  //     } else if (assignedBookings.length === 1) {
+  //       toast.success('1 assigned booking found');
+  //     } else {
+  //       toast.success(`${assignedBookings.length} assigned bookings found`);
+  //     }
+  //   }
+  // }, [unassignedBookings.length, assignedBookings.length]);
+
+
+
+  // REPLACE the useEffect for initial load with this:
+  useEffect(() => {
+    // Only show toast on initial load, not when rmId is present
+    if (!rmId) {
+      if (bookingSubTab === 'unassigned') {
+        if (unassignedBookings.length === 0) {
+          toast('No unassigned bookings available', {
+            icon: 'ℹ️',
+          });
+        } else if (unassignedBookings.length === 1) {
+          toast.success('1 unassigned booking found');
+        } else {
+          toast.success(`${unassignedBookings.length} unassigned bookings found`);
+        }
+      }
+    }
+  }, []);
 
 
 
@@ -4520,6 +4807,7 @@ const RmPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2">
         {/* Error Banner */}
         {error && (

@@ -234,6 +234,7 @@ import ChatInterface from './pages/ChatInterface';
 import BuilderOfferManagement from './pages/BuilderOfferManagement';
 import ViewPropertyBookingPage from './pages/ViewPropertyBookingPage';
 import ViewBookingInfo from './pages/ViewBookingInfo';
+import toast, { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const [propertyInteractionsFetched, setPropertyInteractionsFetched] = useState(false);
@@ -374,6 +375,31 @@ const App = () => {
   // Protected Routes Component (with layout)
   const ProtectedRoutes = () => (
     <DashboardLayout>
+      {/* Add this Toaster component */}
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            borderRadius: '12px',
+            padding: '12px 20px',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<Navigate to="/properties" replace />} />
         <Route
