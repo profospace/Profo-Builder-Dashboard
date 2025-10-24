@@ -187,8 +187,8 @@ const Settings = () => {
   }
 
   return (
-    <div className="">
-      <Breadcrumb pageName="Settings" />
+    <div className="p-2 mb-16">
+      {/* <Breadcrumb pageName="Settings" /> */}
 
       <div className="grid grid-cols-1 gap-8">
         {/* Profile Information Card */}
