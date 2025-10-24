@@ -1390,7 +1390,7 @@ const BuilderOfferManagement = () => {
             )}
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="flex items-center justify-between mb-8">
+                {/* <div className="flex items-center justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900">Offer Management</h1>
                         <p className="text-gray-600 mt-1">Create and manage promotional offers for your properties</p>
@@ -1411,9 +1411,36 @@ const BuilderOfferManagement = () => {
                             Create Offer
                         </button>
                     </div>
+                </div> */}
+
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 gap-4 lg:gap-0">
+                    {/* Title & Description */}
+                    <div className="flex-1">
+                        <h1 className="text-3xl font-bold text-gray-900">Offer Management</h1>
+                        <p className="text-gray-600 mt-1">Create and manage promotional offers for your properties</p>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex flex-row items-center gap-3">
+                        <button
+                            onClick={() => setShowMaxOffersModal(true)}
+                            className="flex items-center gap-2 bg-slate-600 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-md hover:shadow-lg  justify-center text-sm md:text-md "
+                        >
+                            <Settings size={20} />
+                            Set Max Offers
+                        </button>
+                        <button
+                            onClick={() => setShowCreateModal(true)}
+                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-md hover:shadow-lg  justify-center text-sm md:text-md"
+                        >
+                            <Plus size={20} />
+                            Create Offer
+                        </button>
+                    </div>
                 </div>
 
-                {stats && (
+
+                {/* {stats && (
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                         <StatCard
                             icon={<Package className="text-blue-600" size={24} />}
@@ -1440,11 +1467,77 @@ const BuilderOfferManagement = () => {
                             bgColor="bg-orange-50"
                         />
                     </div>
-                )}
+                )} */}
 
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                {stats && (
+                    <div>
+                        {/* Large screens: 4-column grid */}
+                        <div className="hidden lg:grid grid-cols-4 gap-6 mb-8">
+                            <StatCard
+                                icon={<Package className="text-blue-600" size={24} />}
+                                title="Total Offers"
+                                value={stats.totalOffers}
+                                bgColor="bg-blue-50"
+                            />
+                            <StatCard
+                                icon={<TrendingUp className="text-green-600" size={24} />}
+                                title="Active Offers"
+                                value={stats.activeOffers}
+                                bgColor="bg-green-50"
+                            />
+                            <StatCard
+                                icon={<Users className="text-purple-600" size={24} />}
+                                title="Total Usage"
+                                value={stats.totalUsage}
+                                bgColor="bg-purple-50"
+                            />
+                            <StatCard
+                                icon={<Calendar className="text-orange-600" size={24} />}
+                                title="Usage Rate"
+                                value={`${stats.totalPossibleUsage > 0 ? Math.round((stats.totalUsage / stats.totalPossibleUsage) * 100) : 0}%`}
+                                bgColor="bg-orange-50"
+                            />
+                        </div>
+
+                        {/* Small & medium screens: horizontal carousel */}
+                        <div className="lg:hidden flex gap-4 overflow-x-auto pb-2 mb-8 scrollbar-hide">
+                            <StatCard
+                                icon={<Package className="text-blue-600" size={24} />}
+                                title="Total Offers"
+                                value={stats.totalOffers}
+                                bgColor="bg-blue-50"
+                            />
+                            <StatCard
+                                icon={<TrendingUp className="text-green-600" size={24} />}
+                                title="Active Offers"
+                                value={stats.activeOffers}
+                                bgColor="bg-green-50"
+                            />
+                            <StatCard
+                                icon={<Users className="text-purple-600" size={24} />}
+                                title="Total Usage"
+                                value={stats.totalUsage}
+                                bgColor="bg-purple-50"
+                            />
+                            <StatCard
+                                icon={<Calendar className="text-orange-600" size={24} />}
+                                title="Usage Rate"
+                                value={`${stats.totalPossibleUsage > 0 ? Math.round((stats.totalUsage / stats.totalPossibleUsage) * 100) : 0}%`}
+                                bgColor="bg-orange-50"
+                            />
+                        </div>
+                    </div>
+                )
+
+                }
+
+
+               
+
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mb-10">
                     <div className="p-6 border-b border-gray-200">
                         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                            {/* Search Input */}
                             <div className="flex-1 relative w-full md:w-auto">
                                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                 <input
@@ -1455,14 +1548,14 @@ const BuilderOfferManagement = () => {
                                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 />
                             </div>
+
+                            {/* Status Filters */}
                             <div className="flex gap-2">
                                 {['all', 'active', 'expired', 'inactive'].map((status) => (
                                     <button
                                         key={status}
                                         onClick={() => setFilterStatus(status)}
-                                        className={`px-4 py-2 rounded-lg font-medium capitalize transition-all ${filterStatus === status
-                                            ? 'bg-blue-600 text-white'
-                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        className={`px-4 py-2 rounded-lg font-medium capitalize transition-all ${filterStatus === status ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                             }`}
                                     >
                                         {status}
@@ -1472,6 +1565,7 @@ const BuilderOfferManagement = () => {
                         </div>
                     </div>
 
+                    {/* Offers Content */}
                     <div className="overflow-x-auto">
                         {loading ? (
                             <div className="flex items-center justify-center py-12">
@@ -1484,168 +1578,256 @@ const BuilderOfferManagement = () => {
                                 <p className="text-gray-500 mt-2">Create your first offer to get started</p>
                             </div>
                         ) : (
-                            <table className="w-full">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Offer Details
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Discount
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Validity
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Usage
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {filteredOffers.map((offer) => (
-                                        <React.Fragment key={offer._id}>
-                                            <tr className="hover:bg-gray-50 transition-colors">
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-start gap-3">
-                                                        <div className="flex-1">
-                                                            <h3 className="font-semibold text-gray-900">{offer.title}</h3>
-                                                            <p className="text-sm text-gray-600 mt-1 line-clamp-2">{offer.description}</p>
-                                                            {offer.attachedToProperties && offer.attachedToProperties.length > 0 && (
-                                                                <button
-                                                                    onClick={() => setExpandedOfferId(expandedOfferId === offer._id ? null : offer._id)}
-                                                                    className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 mt-2"
-                                                                >
-                                                                    <Link2 size={12} />
-                                                                    {offer.attachedToProperties.length} {offer.attachedToProperties.length === 1 ? 'Property' : 'Properties'}
-                                                                    {expandedOfferId === offer._id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="font-semibold text-lg text-gray-900">
-                                                        {offer.discountType === 'PERCENTAGE' ? `${offer.discountValue}%` : `₹${offer.discountValue}`}
-                                                    </div>
-                                                    <div className="text-xs text-gray-500 capitalize">{offer.discountType.toLowerCase()}</div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="text-sm">
-                                                        <div className="text-gray-600">
-                                                            {new Date(offer.validFrom).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                                                        </div>
-                                                        <div className="text-gray-400">to</div>
-                                                        <div className="text-gray-600">
-                                                            {new Date(offer.validUntil).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="flex-1 bg-gray-200 rounded-full h-2">
-                                                            <div
-                                                                className="bg-blue-600 h-2 rounded-full transition-all"
-                                                                style={{ width: `${(offer.currentUsageCount / offer.maxUsageCount) * 100}%` }}
-                                                            ></div>
-                                                        </div>
-                                                        <span className="text-sm font-medium text-gray-700">
-                                                            {offer.currentUsageCount}/{offer.maxUsageCount}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(getOfferStatus(offer))}`}>
-                                                        {getOfferStatus(offer)}
-                                                    </span>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-2">
-                                                        <button
-                                                            onClick={() => {
-                                                                setSelectedOffer(offer);
-                                                                setShowAttachModal(true);
-                                                            }}
-                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                                            title="Attach to Property"
-                                                        >
-                                                            <Link2 size={18} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => fetchOfferAnalytics(offer._id)}
-                                                            className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                                                            title="View Analytics"
-                                                        >
-                                                            <Eye size={18} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => openEditModal(offer)}
-                                                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                                                            title="Edit"
-                                                        >
-                                                            <Edit2 size={18} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleDeactivateOffer(offer._id)}
-                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                            title="Deactivate"
-                                                        >
-                                                            <Trash2 size={18} />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {expandedOfferId === offer._id && offer.attachedToProperties && (
-                                                <tr>
-                                                    <td colSpan="6" className="px-6 py-4 bg-gray-50">
-                                                        <div className="space-y-2">
-                                                            <h4 className="font-medium text-gray-900 text-sm mb-3">Attached Properties:</h4>
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                                {offer.attachedToProperties.map((ap) => (
-                                                                    <div key={ap.propertyId._id || ap.propertyId} className="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200">
-                                                                        <div className="flex-1 flex items-center gap-3">
-                                                                            {ap.propertyId?.post_images?.[0]?.url && (
-                                                                                <img
-                                                                                    src={ap.propertyId.post_images[0].url}
-                                                                                    alt={ap.propertyId?.title || 'Property'}
-                                                                                    className="w-12 h-12 object-cover rounded"
-                                                                                />
-                                                                            )}
-                                                                            <div>
-                                                                                <p className="font-medium text-gray-900 text-sm">
-                                                                                    {ap.propertyId?.title || ap.propertyId?.post_title || 'Property'}
-                                                                                </p>
-                                                                                <p className="text-xs text-gray-500 mt-1">
-                                                                                    Attached: {new Date(ap.attachedAt).toLocaleDateString('en-IN')}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <button
-                                                                            onClick={() => handleDetachFromProperty(offer._id, ap.propertyId._id || ap.propertyId)}
-                                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                                            title="Detach"
-                                                                        >
-                                                                            <Unlink size={16} />
-                                                                        </button>
-                                                                    </div>
-                                                                ))}
+                            <>
+                                {/* --- Table for Large Screens --- */}
+                                <table className="hidden lg:table w-full">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Offer Details
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Discount
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Validity
+                                            </th>
+                                            {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Usage
+                                            </th> */}
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Status
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {filteredOffers.map((offer) => (
+                                            <React.Fragment key={offer._id}>
+                                                {/* Table row */}
+                                                <tr className="hover:bg-gray-50 transition-colors">
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-start gap-3">
+                                                            <div className="flex-1">
+                                                                <h3 className="font-semibold text-gray-900">{offer.title}</h3>
+                                                                <p className="text-sm text-gray-600 mt-1 line-clamp-2">{offer.description}</p>
+                                                                {offer.attachedToProperties && offer.attachedToProperties.length > 0 && (
+                                                                    <button
+                                                                        onClick={() => setExpandedOfferId(expandedOfferId === offer._id ? null : offer._id)}
+                                                                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 mt-2"
+                                                                    >
+                                                                        <Link2 size={12} />
+                                                                        {offer.attachedToProperties.length} {offer.attachedToProperties.length === 1 ? 'Property' : 'Properties'}
+                                                                        {expandedOfferId === offer._id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                                                                    </button>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="font-semibold text-lg text-gray-900">
+                                                            {offer.discountType === 'PERCENTAGE' ? `${offer.discountValue}%` : `₹${offer.discountValue}`}
+                                                        </div>
+                                                        <div className="text-xs text-gray-500 capitalize">{offer.discountType.toLowerCase()}</div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="text-sm">
+                                                            <div className="text-gray-600">
+                                                                {new Date(offer.validFrom).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                                                            </div>
+                                                            <div className="text-gray-400">to</div>
+                                                            <div className="text-gray-600">
+                                                                {new Date(offer.validUntil).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    {/* <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="flex-1 bg-gray-200 rounded-full h-2">
+                                                                <div
+                                                                    className="bg-blue-600 h-2 rounded-full transition-all"
+                                                                    style={{ width: `${(offer.currentUsageCount / offer.maxUsageCount) * 100}%` }}
+                                                                ></div>
+                                                            </div>
+                                                            <span className="text-sm font-medium text-gray-700">
+                                                                {offer.currentUsageCount}/{offer.maxUsageCount}
+                                                            </span>
+                                                        </div>
+                                                    </td> */}
+                                                    <td className="px-6 py-4">
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(getOfferStatus(offer))}`}>
+                                                            {getOfferStatus(offer)}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setSelectedOffer(offer);
+                                                                    setShowAttachModal(true);
+                                                                }}
+                                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                                title="Attach to Property"
+                                                            >
+                                                                <Link2 size={18} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => fetchOfferAnalytics(offer._id)}
+                                                                className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                                                                title="View Analytics"
+                                                            >
+                                                                <Eye size={18} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => openEditModal(offer)}
+                                                                className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                                                title="Edit"
+                                                            >
+                                                                <Edit2 size={18} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDeactivateOffer(offer._id)}
+                                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                                title="Deactivate"
+                                                            >
+                                                                <Trash2 size={18} />
+                                                            </button>
+                                                        </div>
+                                                    </td>
                                                 </tr>
-                                            )}
-                                        </React.Fragment>
+
+                                                {/* Expanded attached properties */}
+                                                {expandedOfferId === offer._id && offer.attachedToProperties && (
+                                                    <tr>
+                                                        <td colSpan="6" className="px-6 py-4 bg-gray-50">
+                                                            <div className="space-y-2">
+                                                                <h4 className="font-medium text-gray-900 text-sm mb-3">Attached Properties:</h4>
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                                    {offer.attachedToProperties.map((ap) => (
+                                                                        <div key={ap.propertyId._id || ap.propertyId} className="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200">
+                                                                            <div className="flex-1 flex items-center gap-3">
+                                                                                {ap.propertyId?.post_images?.[0]?.url && (
+                                                                                    <img
+                                                                                        src={ap.propertyId.post_images[0].url}
+                                                                                        alt={ap.propertyId?.title || 'Property'}
+                                                                                        className="w-12 h-12 object-cover rounded"
+                                                                                    />
+                                                                                )}
+                                                                                <div>
+                                                                                    <p className="font-medium text-gray-900 text-sm">
+                                                                                        {ap.propertyId?.title || ap.propertyId?.post_title || 'Property'}
+                                                                                    </p>
+                                                                                    <p className="text-xs text-gray-500 mt-1">
+                                                                                        Attached: {new Date(ap.attachedAt).toLocaleDateString('en-IN')}
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button
+                                                                                onClick={() => handleDetachFromProperty(offer._id, ap.propertyId._id || ap.propertyId)}
+                                                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                                                title="Detach"
+                                                                            >
+                                                                                <Unlink size={16} />
+                                                                            </button>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
+                                    </tbody>
+                                </table>
+
+                                {/* --- Card View for Medium & Small Screens --- */}
+                                <div className="lg:hidden space-y-4 p-4">
+                                    {filteredOffers.map((offer) => (
+                                        <div key={offer._id} className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 space-y-3">
+                                            <div className="flex items-start justify-between">
+                                                <div>
+                                                    <h3 className="font-semibold text-gray-900">{offer.title}</h3>
+                                                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">{offer.description}</p>
+                                                </div>
+                                                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(getOfferStatus(offer))}`}>
+                                                    {getOfferStatus(offer)}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex justify-between text-sm text-gray-700">
+                                                <span>
+                                                    Discount:{' '}
+                                                    <span className="font-medium">
+                                                        {offer.discountType === 'PERCENTAGE'
+                                                            ? `${offer.discountValue}%`
+                                                            : `₹${offer.discountValue}`}
+                                                    </span>
+                                                </span>
+                                                <span className="capitalize text-gray-500">{offer.discountType.toLowerCase()}</span>
+                                            </div>
+
+                                            <div className="text-sm text-gray-600">
+                                                Valid:{' '}
+                                                {new Date(offer.validFrom).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} -{' '}
+                                                {new Date(offer.validUntil).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                            </div>
+
+                                            {/* <div className="flex items-center gap-2">
+                                                <div className="flex-1 bg-gray-200 rounded-full h-2">
+                                                    <div
+                                                        className="bg-blue-600 h-2 rounded-full transition-all"
+                                                        style={{ width: `${(offer.currentUsageCount / offer.maxUsageCount) * 100}%` }}
+                                                    ></div>
+                                                </div>
+                                                <span className="text-xs font-medium text-gray-700">
+                                                    {offer.currentUsageCount}/{offer.maxUsageCount}
+                                                </span>
+                                            </div> */}
+
+                                            <div className="flex justify-end gap-3 pt-2">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedOffer(offer);
+                                                        setShowAttachModal(true);
+                                                    }}
+                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                                                    title="Attach to Property"
+                                                >
+                                                    <Link2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => fetchOfferAnalytics(offer._id)}
+                                                    className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                                                    title="View Analytics"
+                                                >
+                                                    <Eye size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => openEditModal(offer)}
+                                                    className="p-2 text-green-600 hover:bg-green-50 rounded-lg"
+                                                    title="Edit"
+                                                >
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeactivateOffer(offer._id)}
+                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                                                    title="Deactivate"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
+
             </div>
 
             {showCreateModal && (
@@ -1717,8 +1899,25 @@ const BuilderOfferManagement = () => {
     );
 };
 
+// const StatCard = ({ icon, title, value, bgColor }) => (
+//     <div className={`${bgColor} rounded-xl p-6 border border-gray-200`}>
+//         <div className="flex items-center justify-between">
+//             <div>
+//                 <p className="text-gray-600 text-sm font-medium">{title}</p>
+//                 <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
+//             </div>
+//             <div className="p-3 bg-white rounded-lg shadow-sm">
+//                 {icon}
+//             </div>
+//         </div>
+//     </div>
+// );
+
 const StatCard = ({ icon, title, value, bgColor }) => (
-    <div className={`${bgColor} rounded-xl p-6 border border-gray-200`}>
+    <div
+        className={`${bgColor} rounded-xl p-6 border border-gray-200 
+                min-w-[200px] md:min-w-[240px] flex-shrink-0`}
+    >
         <div className="flex items-center justify-between">
             <div>
                 <p className="text-gray-600 text-sm font-medium">{title}</p>
@@ -1730,6 +1929,7 @@ const StatCard = ({ icon, title, value, bgColor }) => (
         </div>
     </div>
 );
+
 
 const OfferModal = ({ title, formData, setFormData, onSubmit, onClose, isEdit = false }) => {
     return (
