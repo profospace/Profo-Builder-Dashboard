@@ -2933,6 +2933,109 @@ const disconnectSocket = () => {
 
 // ===== BUILDER MAIN DASHBOARD =====
 
+// const ChatInterface = () => {
+//     const [activeTab, setActiveTab] = useState('conversations');
+//     const [builderData, setBuilderData] = useState(null);
+//     const [isAuthenticated, setIsAuthenticated] = useState(false);
+//     const [socketConnected, setSocketConnected] = useState(false);
+//     const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+//     useEffect(() => {
+//         const userData = localStorage.getItem('user');
+
+//         if (userData) {
+//             const token = JSON.parse(userData).token;
+//             // console.log("token", token)
+//             setBuilderData(JSON.parse(userData));
+//             setIsAuthenticated(true);
+
+//             // Connect socket
+//             const socketInstance = connectSocket(token);
+
+//             socketInstance.on('connect', () => setSocketConnected(true));
+//             socketInstance.on('disconnect', () => setSocketConnected(false));
+//         }
+
+//         return () => {
+//             // Don't disconnect on unmount, keep connection alive for real-time updates
+//         };
+//     }, []);
+
+//     const handleLogin = (data) => {
+//         setBuilderData(data.builder);
+//         setIsAuthenticated(true);
+//     };
+
+//     const handleLogout = () => {
+//         localStorage.removeItem('builderToken');
+//         localStorage.removeItem('builderData');
+//         localStorage.removeItem('user');
+//         setIsAuthenticated(false);
+//         setBuilderData(null);
+//         disconnectSocket();
+//         setSocketConnected(false);
+//     };
+
+//     return (
+//         <div className="max-h-screen bg-gray-50">
+
+//             {/* Mobile Navigation Menu */}
+//             {showMobileMenu && (
+//                 <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowMobileMenu(false)}>
+//                     <div className="bg-white w-64 h-full shadow-lg" onClick={(e) => e.stopPropagation()}>
+//                         <div className="p-4 bg-blue-600 text-white">
+//                             <h2 className="text-xl font-bold">{builderData?.name || 'Builder'}</h2>
+//                             <p className="text-sm opacity-90">{builderData?.company || 'Dashboard'}</p>
+//                         </div>
+//                         <div className="p-2 space-y-1">
+//                             <button
+//                                 onClick={() => { setActiveTab('conversations'); setShowMobileMenu(false); }}
+//                                 className={`w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 transition-colors ${activeTab === 'conversations' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+//                             >
+//                                 <MessageCircle className="h-5 w-5" />
+//                                 <span className="font-medium">Conversations</span>
+//                             </button>
+//                             <button
+//                                 onClick={() => { setActiveTab('properties'); setShowMobileMenu(false); }}
+//                                 className={`w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 transition-colors ${activeTab === 'properties' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+//                             >
+//                                 <Home className="h-5 w-5" />
+//                                 <span className="font-medium">Properties</span>
+//                             </button>
+//                             <button
+//                                 onClick={() => { setActiveTab('analytics'); setShowMobileMenu(false); }}
+//                                 className={`w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 transition-colors ${activeTab === 'analytics' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+//                             >
+//                                 <BarChart3 className="h-5 w-5" />
+//                                 <span className="font-medium">Analytics</span>
+//                             </button>
+//                             <button
+//                                 onClick={() => { setActiveTab('profile'); setShowMobileMenu(false); }}
+//                                 className={`w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 transition-colors ${activeTab === 'profile' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+//                             >
+//                                 <User className="h-5 w-5" />
+//                                 <span className="font-medium">Profile</span>
+//                             </button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             )}
+
+
+
+//             {/* Main Content */}
+//             <main className="h-[calc(100vh-140px)] lg:h-[calc(100vh-90px)] overflow-none">
+//                 <div className="max-w-7xl mx-auto h-full">
+//                     {activeTab === 'conversations' && <ConversationsTab socketConnected={socketConnected} />}
+//                     {activeTab === 'properties' && <PropertiesTab />}
+//                     {activeTab === 'analytics' && <AnalyticsTab />}
+//                     {activeTab === 'profile' && <ProfileTab builderData={builderData} />}
+//                 </div>
+//             </main>
+//         </div>
+//     );
+// };
+
 const ChatInterface = () => {
     const [activeTab, setActiveTab] = useState('conversations');
     const [builderData, setBuilderData] = useState(null);
